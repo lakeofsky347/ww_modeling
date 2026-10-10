@@ -34,7 +34,7 @@
     pipeline/ww/build_ww.py   从解包数据生成 pipeline/out/ww.json
     pipeline/ww/validation/   校验：动作帧表 action_frames.json、副词条档位、用例、报告 REPORT.md / TEAM_BENCHMARK.md
     pipeline/out/ww.json      处理后的模拟数据（构建输入）
-    assets-src/icons/ww/      角色头像源文件 + manifest.json
+    assets-src/icons/ww/      角色头像（64 张，128×128 webp）+ manifest.json + 抓取脚本 ../fetch_icons.py
     pipeline/ww/MECHANICS.md   机制说明；VALIDATION_CASES.md 用例格式
 
 ## 三、重新生成数据（可选）
@@ -76,3 +76,9 @@
 - 共鸣链：多数后期角色只建模到 0 链，超出部分按已建模链数计算（界面标“按 N 链”）
 - 谐度/偏移机制尚未完整建模；只算单目标，护盾不计，治疗只统计总量
 - 尤诺队在 40 秒基准下相对排名偏高，原因尚未完全核实（见 TEAM_BENCHMARK.md）
+
+## 许可证
+
+- 代码：[MIT](LICENSE)，Copyright (c) 2026 lakeofsky347
+- 游戏数据、角色头像等游戏素材的版权归库洛游戏（Kuro Games）所有，不在 MIT 许可范围内。本仓库收录它们仅用于非商业的同人研究，权利方提出要求即删除
+- 模拟结果基于社区数据整理，仅供娱乐参考，不代表游戏内实际数值
