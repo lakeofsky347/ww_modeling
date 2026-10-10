@@ -1,0 +1,63 @@
+{
+ "name": "折枝 单人 自动搜索",
+ "duration": 20,
+ "mode": "expected",
+ "team": [
+  {
+   "id": 1105,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050026,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "echoId": 390080005,
+     "cost": 4,
+     "main": "Crit",
+     "set": 8,
+     "subs": [
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 8
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 8
+    }
+   ]
+  }
+ ],
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": 0
+ },
+ "rotation": {
+  "mode": "search"
+ }
+}

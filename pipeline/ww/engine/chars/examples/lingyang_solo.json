@@ -1,0 +1,76 @@
+{
+ "name": "凌阳 单人 自动搜索",
+ "duration": 25,
+ "team": [
+  {
+   "id": 1104,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21040015,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 1,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 1
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 1
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 1
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 1
+    }
+   ]
+  }
+ ],
+ "start": {
+  "energy": "full",
+  "concerto": 0
+ },
+ "rotation": {
+  "mode": "search",
+  "start": 0
+ },
+ "mode": "expected",
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "search": {
+  "beamWidth": 48,
+  "maxExpansions": 60000,
+  "topN": 3
+ }
+}

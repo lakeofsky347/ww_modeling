@@ -1,0 +1,15 @@
+.DS_Store
+node_modules/
+__pycache__/
+*.pyc
+*.bak*
+*.log
+# raw upstream game data / caches / third-party reference clones (not redistributed)
+ww-WutheringWaves_Data/
+cache/
+pipeline/ww/validation/refs/
+# official character avatars: copyright of the game publisher, not redistributed here.
+# fetch locally with `python3 assets-src/icons/fetch_icons.py --game <game>`, then build without --no-avatars
+assets-src/icons/*/*.webp
+assets-src/icons/raw/
+dist/*/assets/avatars/

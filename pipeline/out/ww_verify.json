@@ -1,0 +1,172 @@
+{
+ "errors": [],
+ "checks": {
+  "loader faded": {
+   "ok": true
+  },
+  "worker used": {
+   "ok": true
+  },
+  "presets == CLI": {
+   "ok": true
+  },
+  "default 349833": {
+   "ok": true,
+   "info": 349833
+  },
+  "timeline est/data-dur": {
+   "ok": true
+  },
+  "resource svg": {
+   "ok": true
+  },
+  "mech legend + badges": {
+   "ok": true
+  },
+  "search candidates": {
+   "ok": true,
+   "info": 5
+  },
+  "export == CLI": {
+   "ok": true,
+   "info": 349833
+  },
+  "apply candidate": {
+   "ok": true,
+   "info": [
+    349833,
+    349833
+   ]
+  },
+  "delete step": {
+   "ok": true
+  },
+  "invalid explained": {
+   "ok": true,
+   "info": {
+    "steps": 2,
+    "err": "非法动作已跳过：\n第 17 步「R」：共鸣能量不足（40.2/150）\n第 18 步「R」：共鸣能量不足（40.2/150）"
+   }
+  },
+  "drag reorder": {
+   "ok": true,
+   "info": [
+    "S2 S1 R E E A A A A Q E H H E H H R R",
+    "S2 S1 R R E E A A A A Q E H H E H H R"
+   ]
+  },
+  "search again == default": {
+   "ok": true,
+   "info": 349833
+  },
+  "tier edit changes total": {
+   "ok": true,
+   "info": 355924
+  },
+  "localStorage persists": {
+   "ok": true,
+   "info": [
+    355924,
+    355924
+   ]
+  },
+  "picker lists 64": {
+   "ok": true,
+   "info": 64
+  },
+  "no-module → search disabled": {
+   "ok": true,
+   "info": {
+    "noModule": true,
+    "note": "炽霞 暂无角色模块（专属资源/强化动作未建模），自动搜索已禁用，仅支持手动序列",
+    "disabled": true,
+    "total": 95662.71663307709,
+    "err": null
+   }
+  },
+  "mobile no horizontal overflow": {
+   "ok": true,
+   "info": {
+    "sw": 390,
+    "cw": 390
+   }
+  },
+  "mobile default total": {
+   "ok": true,
+   "info": 349833
+  },
+  "no console errors": {
+   "ok": true,
+   "info": []
+  },
+  "fetch failures shown": {
+   "ok": true
+  }
+ },
+ "first_result_s": 0.98,
+ "presets": [
+  {
+   "preset": "今汐/折枝/守岸人 · 满协奏开局（默认）",
+   "page": 349833,
+   "hero": 349833,
+   "cli": 349833,
+   "ms": 128,
+   "seqEqual": true
+  },
+  {
+   "preset": "今汐/折枝/守岸人 · 30s 冷启动",
+   "page": 250297,
+   "hero": 250297,
+   "cli": 250297,
+   "ms": 178,
+   "seqEqual": true
+  },
+  {
+   "preset": "长离/折枝/守岸人 · 满协奏开局",
+   "page": 307757,
+   "hero": 307757,
+   "cli": 307757,
+   "ms": 115,
+   "seqEqual": true
+  },
+  {
+   "preset": "今汐 单人 · 手动循环",
+   "page": 177777,
+   "hero": 177777,
+   "cli": 177777,
+   "ms": 2,
+   "seqEqual": true
+  },
+  {
+   "preset": "长离 单人 · 自动搜索",
+   "page": 210115,
+   "hero": 210115,
+   "cli": 210115,
+   "ms": 112,
+   "seqEqual": true
+  },
+  {
+   "preset": "折枝 单人 · 自动搜索",
+   "page": 119377,
+   "hero": 119377,
+   "cli": 119377,
+   "ms": 196,
+   "seqEqual": true
+  },
+  {
+   "preset": "守岸人 单人 · 自动搜索",
+   "page": 21404,
+   "hero": 21404,
+   "cli": 21404,
+   "ms": 176,
+   "seqEqual": true
+  }
+ ],
+ "console_errors": [],
+ "fetch_failures": {
+  "404": "数据请求失败：HTTP 404（../data/ww.json?v=76bf6eff3a81）",
+  "badjson": "数据 JSON 解析失败：Unexpected end of JSON input",
+  "version": "数据版本不匹配：页面需要 3.7.8 @9218d612，实际为 0.0.0 @9218d612（可能是缓存的旧数据，请强制刷新）"
+ },
+ "all_ok": true
+}

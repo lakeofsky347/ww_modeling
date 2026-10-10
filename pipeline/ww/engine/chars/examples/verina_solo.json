@@ -1,0 +1,61 @@
+{
+ "name": "维里奈 单人（仅检查循环，不比伤害）",
+ "duration": 25,
+ "mode": "expected",
+ "team": [
+  {
+   "id": 1503,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050024,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 7
+    }
+   ]
+  }
+ ],
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": 0
+ },
+ "rotation": {
+  "mode": "search"
+ },
+ "search": {
+  "beamWidth": 48,
+  "maxExpansions": 60000,
+  "topN": 3
+ }
+}

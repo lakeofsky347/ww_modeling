@@ -1,0 +1,78 @@
+{
+ "name": "心（同奏）单人 40s 自动搜索",
+ "duration": 40,
+ "mode": "expected",
+ "team": [
+  {
+   "id": 1311,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050116,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 36,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 36
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 36
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 36
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 36
+    }
+   ],
+   "module": {
+    "mode": "unison"
+   }
+  }
+ ],
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": 0
+ },
+ "rotation": {
+  "mode": "search"
+ },
+ "search": {
+  "beamWidth": 48,
+  "maxExpansions": 60000,
+  "topN": 3
+ }
+}

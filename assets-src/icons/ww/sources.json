@@ -1,0 +1,609 @@
+{
+ "source": {
+  "name": "encore.moe（api.encore.moe 资源 + api-v2 角色表）",
+  "site": "https://encore.moe",
+  "robots": "encore.moe/robots.txt：User-agent * 无 Disallow（只列 Allow）；api.encore.moe 与 api-v2.encore.moe 的 /robots.txt 返回 404（无 robots）。",
+  "terms": "https://encore.moe/terms（2026-07-24 更新）：要求合法、尊重地使用，不得滥用、干扰服务运行或绕过访问控制；未禁止批量下载或自动化访问。About 页注明提供公开 API，素材来自游戏解包（WW_Asset）。",
+  "snapshot": "raw/_robots/encore.moe_robots.txt, raw/_robots/encore_terms.html",
+  "roster_list": "/workspace/gamedata/cache/encore/3.7.8/api-v2.encore.moe__api__zh-Hans__character（本地 encore 缓存，只读）"
+ },
+ "copyright": "头像版权归各游戏厂商所有（鸣潮：库洛游戏 Kuro Games；崩坏：星穹铁道：米哈游 HoYoverse；明日方舟：终末地：上海鹰角网络 Hypergryph/Gryphline）。随包分发前需要 Skylake 自己评估。",
+ "output": {
+  "size": "128x128",
+  "format": "webp RGBA（等比缩放居中，透明填充）",
+  "quality": "80（超过 15KB 时依次降到 75/70/65/60）"
+ },
+ "stats": {
+  "roster": 64,
+  "matched": 64,
+  "total_bytes": 559172,
+  "max_file": {
+   "id": "1407",
+   "bytes": 10638
+  },
+  "over_15kb": []
+ },
+ "unmatched": [],
+ "errors": [],
+ "files": {
+  "1102": {
+   "bytes": 9614,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1103": {
+   "bytes": 8436,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1104": {
+   "bytes": 8944,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1105": {
+   "bytes": 9022,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1106": {
+   "bytes": 9278,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1107": {
+   "bytes": 8732,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1108": {
+   "bytes": 8940,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1109": {
+   "bytes": 7812,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1110": {
+   "bytes": 9022,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1202": {
+   "bytes": 9152,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1203": {
+   "bytes": 8482,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1204": {
+   "bytes": 8576,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1205": {
+   "bytes": 9430,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1206": {
+   "bytes": 9550,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1207": {
+   "bytes": 9822,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1208": {
+   "bytes": 9480,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1209": {
+   "bytes": 9210,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1210": {
+   "bytes": 9484,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1211": {
+   "bytes": 9344,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1212": {
+   "bytes": 7194,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1301": {
+   "bytes": 8536,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1302": {
+   "bytes": 8512,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1303": {
+   "bytes": 6776,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1304": {
+   "bytes": 8378,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1305": {
+   "bytes": 6770,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1306": {
+   "bytes": 8862,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1307": {
+   "bytes": 8994,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1308": {
+   "bytes": 8258,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1309": {
+   "bytes": 6724,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1310": {
+   "bytes": 8116,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1311": {
+   "bytes": 9954,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1312": {
+   "bytes": 9290,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1402": {
+   "bytes": 8226,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1403": {
+   "bytes": 8992,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1404": {
+   "bytes": 10310,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1405": {
+   "bytes": 8456,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1406": {
+   "bytes": 6724,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1407": {
+   "bytes": 10638,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1408": {
+   "bytes": 8116,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1409": {
+   "bytes": 9082,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1410": {
+   "bytes": 9082,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1411": {
+   "bytes": 9716,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1412": {
+   "bytes": 9734,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1413": {
+   "bytes": 10258,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1501": {
+   "bytes": 6724,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1502": {
+   "bytes": 8116,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1503": {
+   "bytes": 8720,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1504": {
+   "bytes": 9414,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1505": {
+   "bytes": 9312,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1506": {
+   "bytes": 8356,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1507": {
+   "bytes": 8860,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1508": {
+   "bytes": 8386,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1509": {
+   "bytes": 8866,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1510": {
+   "bytes": 8460,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1511": {
+   "bytes": 9266,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1601": {
+   "bytes": 9354,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1602": {
+   "bytes": 8670,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1603": {
+   "bytes": 10136,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1604": {
+   "bytes": 8116,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1605": {
+   "bytes": 6724,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1606": {
+   "bytes": 9368,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1607": {
+   "bytes": 8742,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1608": {
+   "bytes": 7574,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  },
+  "1610": {
+   "bytes": 7980,
+   "quality": 80,
+   "orig_size": [
+    256,
+    256
+   ],
+   "match_rule": "id 一致且中文名一致"
+  }
+ },
+ "request_log": "raw/requests.log（累计）；每个原始文件旁有 .retrieved 记录下载时间与 URL",
+ "requests_this_run": 0,
+ "updated_at": "2026-10-09T23:47:53+08:00"
+}

@@ -1,0 +1,32 @@
+{
+ "_说明": "预期行为例外表（module_audit.js 读取）。匹配的 WARN 降级为 EXPECTED：不影响退出码、不计入 WARN，但在控制台/JSON/MD 中单独列出。字段：id（角色 id）、name（仅供阅读）、check（检查项 id：search/signature/anomaly/bane/stamina/timestop/chain/durations/team）、match（可选，正则，匹配该检查的说明文字；缺省 = 该检查的任何 WARN）、reason（原因）、source、added。只降级 WARN，FAIL 不受影响。",
+ "entries": [
+  {
+   "id": 1505,
+   "name": "守岸人",
+   "check": "search",
+   "match": "单人从不放 R",
+   "reason": "按游戏规则，单人时星域只能停留在第 1 阶段（浅析，只加共鸣效率）；第 2/3 阶段需要队友变奏入场推进，所以单人纯伤害窗口里不放 R 是正确行为。",
+   "source": "建模师",
+   "added": "2026-10-09"
+  },
+  {
+   "id": 1106,
+   "name": "釉瑚",
+   "check": "search",
+   "match": "单人从不放 R",
+   "reason": "釉瑚的 R 是全队治疗（无伤害增益），单人纯伤害窗口不放 R 正确；队伍 team_youhu.json 中会放 R。",
+   "source": "stream A 建模师",
+   "added": "2026-10-09"
+  },
+  {
+   "id": 1110,
+   "name": "穗穗",
+   "check": "search",
+   "match": "单人从不放 R",
+   "reason": "穗穗的 R 价值在队伍（霜渐上限/增益），单人纯伤害窗口不放 R；队伍 team_hiyuki.json 中会放 R。",
+   "source": "stream A 建模师",
+   "added": "2026-10-09"
+  }
+ ]
+}

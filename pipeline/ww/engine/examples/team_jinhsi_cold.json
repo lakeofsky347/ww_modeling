@@ -1,0 +1,155 @@
+{
+ "name": "今汐/折枝/守岸人 30s 冷启动",
+ "duration": 30,
+ "mode": "expected",
+ "team": [
+  {
+   "id": 1304,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21010026,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "echoId": 6000059,
+     "cost": 4,
+     "main": "CritDamage",
+     "set": 5,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 5
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 5
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 5
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 5
+    }
+   ]
+  },
+  {
+   "id": 1105,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050026,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "echoId": 390080005,
+     "cost": 4,
+     "main": "Crit",
+     "set": 8
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 8
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 8
+    }
+   ]
+  },
+  {
+   "id": 1505,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050036,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "echoId": 6000060,
+     "cost": 4,
+     "main": "HealChange",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "LifeMax%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "LifeMax%",
+     "set": 7
+    }
+   ]
+  }
+ ],
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": [
+   0,
+   0,
+   0
+  ]
+ },
+ "rotation": {
+  "mode": "search",
+  "start": 2
+ },
+ "search": {
+  "beamWidth": 32,
+  "maxExpansions": 30000,
+  "topN": 5
+ }
+}

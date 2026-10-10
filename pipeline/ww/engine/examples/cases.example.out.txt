@@ -1,0 +1,64 @@
+action frames: /workspace/gamedata/pipeline/ww/validation/action_frames.json
+
+=== [0] 今汐 解放单发 probe（静态面板） ===
+probe: 今汐 R 移岁诛邪 Lv10 | ATK 1,830.0 HP 15,385.0 CR 21.10% CD 258.80%
+  技能伤害: expected 11,129.3 | crit 21,573.9 | noncrit 8,336.1
+    base=1,830.0[T]  multiplier=499.81%[T]  bonus=2.0200[K]  deepen=1.0000[K]  crit=1.3351[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]  effRes=10.00%
+  技能伤害: expected 25,968.3 | crit 50,338.9 | noncrit 19,450.9
+    base=1,830.0[T]  multiplier=1,166.22%[T]  bonus=2.0200[K]  deepen=1.0000[K]  crit=1.3351[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 37,097.6 | crit 71,912.8 | noncrit 27,787.0
+
+=== [1] 长离 单人 手动循环 20s ===
+sequence: E A E A Q R H A A A A H
+total(expected) 147,768 | DPS 7,388 | 20s (ended 14.20s) | swaps 0 | liberations 1
+  [1] 长离: 147,768 | ATK 2,025.8 HP 14,947.5 CR 35.00% CD 214.80% ER 100.0% | end E 14.5/125 C 87.8
+  by type: 共鸣技能 48.75% · 共鸣解放 26.56% · 声骸技能 14.88% · 普攻 7.52% · 重击 2.29%
+  representative hit: 长离 离火照丹心/技能伤害 @6.20s = 39,246.8
+    base=2,151.8[T]  multiplier=1,212.75%[T]  bonus=2.2000[K]  deepen=1.0000[K]  crit=1.4018[T]  defense=0.5419[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  per action/hit (top 8; zones = buffs at first occurrence):
+   - 长离 R 离火照丹心/技能伤害 ×1: 39,247
+       base=2,151.8[T]  multiplier=1,212.75%[T]  bonus=2.2000[K]  deepen=1.0000[K]  crit=1.4018[T]  defense=0.5419[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+   - 长离 H 焚身以火·焚身以火/焚身以火伤害 ×2: 29,796
+       base=2,414.3[T]  multiplier=196.25%[T]  bonus=2.7600[K]  deepen=1.0000[K]  crit=1.4018[T]  defense=0.5419[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+   - 长离 E 赫羽三相·心眼·劫/心眼·劫伤害 ×4: 22,621
+       base=2,151.8[T]  multiplier=245.64%[T]  bonus=1.7000[K]  deepen=1.0000[K]  crit=1.4018[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+   - 长离 A 赫羽三相·心眼·征/心眼·征伤害 ×6: 19,615
+       base=2,151.8[T]  multiplier=117.90%[T]  bonus=2.2800[K]  deepen=1.0000[K]  crit=1.4018[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+   - 长离 Q 声骸·燎照之骑/{1} ×1: 7,698
+       base=2,151.8[T]  multiplier=282.80%[T]  bonus=2.0000[K]  deepen=1.0000[K]  crit=1.4018[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+   - 长离 Q 声骸·燎照之骑/{2} ×1: 7,698
+       base=2,151.8[T]  multiplier=282.80%[T]  bonus=2.0000[K]  deepen=1.0000[K]  crit=1.4018[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+   - 长离 Q 声骸·燎照之骑/{0} ×1: 6,598
+       base=2,151.8[T]  multiplier=242.40%[T]  bonus=2.0000[K]  deepen=1.0000[K]  crit=1.4018[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+   - 长离 A 衔火洞明·普攻第四段伤害/普攻第四段伤害 ×2: 4,601
+       base=2,151.8[T]  multiplier=50.70%[T]  bonus=2.0000[K]  deepen=1.0000[K]  crit=1.4018[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+
+=== [2] 今汐/折枝/守岸人 25s 自动搜索 + 抗性削减 ===
+sequence: S2 R S1 R E A E A A A E H S2 E E E S3 Q S1 Q H
+total(expected) 313,025 | DPS 12,521 | 25s (ended 25.00s) | swaps 5 | liberations 2
+  [1] 今汐: 248,992 | ATK 1,830.0 HP 15,385.0 CR 13.00% CD 242.60% ER 100.0% | end E 30.0/150 C 86.1
+  [2] 折枝: 56,426 | ATK 1,645.0 HP 16,810.0 CR 35.00% CD 222.00% ER 142.0% | end E 45.4/125 C 44.0
+  [3] 守岸人: 7,607 | ATK 1,050.0 HP 30,898.9 CR 5.00% CD 150.00% ER 241.0% | end E 175.0/175 C 0.0
+  by type: 共鸣技能 54.76% · 共鸣解放 18.21% · 普攻 12.93% · 变奏技能 5.52% · 重击 5.17% · 声骸技能 3.42%
+  representative hit: 今汐 惊龙破空（韶光 50）/惊龙破空·炳星伤害 @15.27s = 107,239.0
+    base=2,055.0[T]  multiplier=2,574.92%[T]  bonus=2.3200[K]  deepen=1.4000[K]  crit=1.1854[T]  defense=0.5013[K]  resistance=1.0500[K]  dmgReduce=1.0000[U]
+  per action/hit (top 8; zones = buffs at first occurrence):
+   - 今汐 E 惊龙破空（韶光 50）/惊龙破空·炳星伤害 ×1: 107,239
+       base=2,055.0[T]  multiplier=2,574.92%[T]  bonus=2.3200[K]  deepen=1.4000[K]  crit=1.1854[T]  defense=0.5013[K]  resistance=1.0500[K]  dmgReduce=1.0000[U]
+   - 今汐 R 移岁诛邪/技能伤害 ×2: 56,996
+       base=2,055.0[T]  multiplier=499.81%[T]  bonus=2.3200[K]  deepen=1.1500[K]  crit=1.1854[T]  defense=0.5013[K]  resistance=1.0500[K]  dmgReduce=1.0000[U]
+   - 今汐 E 万物一心·逐天取月技能/逐天取月技能伤害 ×3: 20,982
+       base=2,055.0[T]  multiplier=100.76%[T]  bonus=2.3200[K]  deepen=1.4000[K]  crit=1.1854[T]  defense=0.5013[K]  resistance=1.0500[K]  dmgReduce=1.0000[U]
+   - 今汐 H 浮光霁寒·重击伤害/重击伤害 ×6: 16,180
+       base=2,055.0[T]  multiplier=119.30%[T]  bonus=2.8000[K]  deepen=1.1500[K]  crit=1.1854[T]  defense=0.5013[K]  resistance=1.0500[K]  dmgReduce=1.0000[U]
+   - 折枝 E 妙笔丹青·神来之笔/神来之笔伤害 ×2: 13,552
+       base=1,750.0[T]  multiplier=298.22%[T]  bonus=1.4200[K]  deepen=1.1500[K]  crit=1.4270[T]  defense=0.5013[K]  resistance=1.0500[K]  dmgReduce=1.0000[U]
+   - 折枝 I 柔翰生辉/技能伤害 ×2: 10,159
+       base=1,750.0[T]  multiplier=258.48%[T]  bonus=1.3000[K]  deepen=1.1500[K]  crit=1.4270[T]  defense=0.5013[K]  resistance=1.0500[K]  dmgReduce=1.0000[U]
+   - 今汐 E 流光夕影·神霓飞芒/神霓飞芒伤害 ×3: 8,217
+       base=2,055.0[T]  multiplier=39.48%[T]  bonus=2.3200[K]  deepen=1.4000[K]  crit=1.1854[T]  defense=0.5013[K]  resistance=1.0500[K]  dmgReduce=1.0000[U]
+   - 今汐 A 万物一心·凌霄·普攻第四段/凌霄·普攻第四段伤害 ×2: 7,775
+       base=2,055.0[T]  multiplier=112.02%[T]  bonus=2.3200[K]  deepen=1.4000[K]  crit=1.1854[T]  defense=0.5013[K]  resistance=1.0500[K]  dmgReduce=1.0000[U]
+  search: expanded 2960, top: 313,025 / 312,906 / 312,038 / 311,474 / 311,267
+
+zone mech legend: T=table K=corroborated C=community U=unsolved · engine ww-engine-0.1 · data 3.7.8

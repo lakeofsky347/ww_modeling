@@ -1,0 +1,511 @@
+{
+ "_说明": "专武/角色定位手工表（module_audit.js 用）。优先级：模块 audit 元数据 > 本表 > 数据推断（低置信）。sig=null 表示无专武（跳过检查）；TODO 条目待建模师补充。字段：sig, sigName, alts(可选，默认按武器类型取常驻5★/活动5★/4★), role(dps|subdps|support，可选，缺省按队伍伤害占比推断), anomaly(可选，缺省扫描模块源码 addAnomaly), solo/team/teamMi(可选，示例配置文件名), note, source",
+ "characters": {
+  "1102": {
+   "name": "散华",
+   "weaponType": 2,
+   "sig": null,
+   "source": "stream A：无专属 5★ 武器（常驻/4★ 角色）"
+  },
+  "1103": {
+   "name": "白芷",
+   "weaponType": 5,
+   "sig": null,
+   "source": "stream A：无专属 5★ 武器（常驻/4★ 角色）"
+  },
+  "1104": {
+   "name": "凌阳",
+   "weaponType": 4,
+   "sig": null,
+   "source": "stream A：无专属 5★ 武器（常驻/4★ 角色）"
+  },
+  "1105": {
+   "name": "折枝",
+   "weaponType": 5,
+   "sig": 21050026,
+   "role": "subdps",
+   "team": "team_jinhsi_cold.json",
+   "teamMi": 1,
+   "source": "1105_zhezhi.js SIG；VALIDATION_CASES §2：冷开局团队 30s 排第一，单人与掣傀之手相差<1%",
+   "sigName": "琼枝冰绡"
+  },
+  "1106": {
+   "name": "釉瑚",
+   "weaponType": 4,
+   "sig": null,
+   "source": "stream A：无专属 5★ 武器（常驻/4★ 角色）"
+  },
+  "1107": {
+   "name": "珂莱塔",
+   "weaponType": 3,
+   "sig": 21030016,
+   "role": "dps",
+   "source": "1107_carlotta.js 注释",
+   "sigName": "死与舞"
+  },
+  "1108": {
+   "name": "绯雪",
+   "weaponType": 2,
+   "sig": 21020086,
+   "role": "dps",
+   "source": "stream A 模块 audit.sig（17:3x）",
+   "sigName": "灼霜"
+  },
+  "1109": {
+   "name": "洛瑟菈",
+   "weaponType": 5,
+   "sig": 21050086,
+   "role": "support",
+   "source": "stream A 模块 audit.sig（17:3x）；存帧为“很可能”专武（低）",
+   "sigName": "存帧"
+  },
+  "1110": {
+   "name": "穗穗",
+   "weaponType": 5,
+   "sig": 21050096,
+   "role": "support",
+   "source": "stream A 模块 audit.sig（17:3x）"
+  },
+  "1202": {
+   "name": "炽霞",
+   "weaponType": 3,
+   "sig": null,
+   "source": "stream A：无专属 5★ 武器（常驻/4★ 角色）"
+  },
+  "1203": {
+   "name": "安可",
+   "weaponType": 5,
+   "sig": null,
+   "source": "stream A：无专属 5★ 武器（常驻/4★ 角色）"
+  },
+  "1204": {
+   "name": "莫特斐",
+   "weaponType": 3,
+   "sig": null,
+   "source": "stream A：无专属 5★ 武器（常驻/4★ 角色）"
+  },
+  "1205": {
+   "name": "长离",
+   "weaponType": 2,
+   "sig": 21020016,
+   "role": "dps",
+   "source": "1205_changli.js SIG",
+   "sigName": "赫奕流明"
+  },
+  "1206": {
+   "name": "布兰特",
+   "weaponType": 2,
+   "sig": 21020036,
+   "sigName": "不灭航路",
+   "role": "dps",
+   "source": "stream A：布兰特专武（Prydwen）；模块待建（批次 1）"
+  },
+  "1207": {
+   "name": "露帕",
+   "weaponType": 1,
+   "sig": 21010036,
+   "sigName": "焰痕",
+   "role": "subdps",
+   "source": "stream A：露帕专武（Prydwen）；模块待建（批次 1）"
+  },
+  "1208": {
+   "name": "嘉贝莉娜",
+   "weaponType": 3,
+   "sig": 21030036,
+   "sigName": "光影双生",
+   "role": "dps",
+   "solo": "galbrena_solo.json",
+   "source": "1208_galbrena.js audit（stream A）；Prydwen 专武推荐"
+  },
+  "1209": {
+   "name": "莫宁",
+   "weaponType": 1,
+   "sig": 21010066,
+   "sigName": "宙算仪轨",
+   "role": "support",
+   "source": "stream A：武器被动“治疗时队伍暴伤提升”与莫宁定位一致；模块待建（批次 1）"
+  },
+  "1210": {
+   "name": "爱弥斯",
+   "weaponType": 2,
+   "sig": 21020076,
+   "role": "dps",
+   "anomaly": "burst",
+   "source": "1210_aemeath.js SIG",
+   "sigName": "永远的启明星"
+  },
+  "1211": {
+   "name": "达妮娅",
+   "weaponType": 5,
+   "sig": 21050076,
+   "role": "subdps",
+   "source": "stream A 模块 audit.sig（17:3x）",
+   "sigName": "赝作的矮星"
+  },
+  "1212": {
+   "name": "景燃",
+   "weaponType": 1,
+   "sig": 21010076,
+   "role": "dps",
+   "source": "stream A 模块 audit.sig（17:3x）",
+   "sigName": "千般渡"
+  },
+  "1301": {
+   "name": "卡卡罗",
+   "weaponType": 1,
+   "sig": null,
+   "source": "stream A：无专属 5★ 武器（常驻/4★ 角色）"
+  },
+  "1302": {
+   "name": "吟霖",
+   "weaponType": 5,
+   "sig": 21050016,
+   "sigName": "掣傀之手",
+   "role": "subdps",
+   "source": "stream A：吟霖专武（Prydwen）；模块待建（批次 1）"
+  },
+  "1303": {
+   "name": "渊武",
+   "weaponType": 4,
+   "sig": null,
+   "source": "stream A：无专属 5★ 武器（常驻/4★ 角色）"
+  },
+  "1304": {
+   "name": "今汐",
+   "weaponType": 1,
+   "sig": 21010026,
+   "role": "dps",
+   "source": "engine/examples/jinhsi_solo.json + VALIDATION_CASES §2 装备对比",
+   "sigName": "时和岁稔"
+  },
+  "1305": {
+   "name": "相里要",
+   "weaponType": 4,
+   "sigName": "诸方玄枢",
+   "role": "dps",
+   "source": "stream A：相里要专武（Prydwen）；worker-B 1305_xiangliyao.js 已建模",
+   "sig": 21040016
+  },
+  "1306": {
+   "name": "奥古斯塔",
+   "weaponType": 1,
+   "sig": 21010046,
+   "role": "dps",
+   "source": "1306_augusta.js SIG / audit",
+   "sigName": "驭冕铸雷之权"
+  },
+  "1307": {
+   "name": "卜灵",
+   "weaponType": 5,
+   "sig": null,
+   "role": "support",
+   "source": "worker-B：4★ 角色，无专属武器"
+  },
+  "1308": {
+   "name": "丽贝卡",
+   "weaponType": 3,
+   "sig": 21030066,
+   "sigName": "碎骨",
+   "role": "support",
+   "source": "worker-B：武器被动「附加【骇破·偏移】时」与丽贝卡回路一致（同期 5★ 迅枪）；allthings.how / lootbar 露西配队指南"
+  },
+  "1309": {
+   "name": "漂泊者·导电",
+   "weaponType": 2,
+   "sig": null,
+   "role": "subdps",
+   "source": "worker-B：漂泊者无专属武器"
+  },
+  "1310": {
+   "name": "漂泊者·导电",
+   "weaponType": 2,
+   "sig": null,
+   "role": "subdps",
+   "source": "worker-B：漂泊者无专属武器"
+  },
+  "1311": {
+   "name": "心",
+   "weaponType": 5,
+   "sig": 21050116,
+   "anomaly": "flare",
+   "source": "1311_hsin.js SIG",
+   "sigName": "玉阙玄华"
+  },
+  "1312": {
+   "name": "锁暝",
+   "weaponType": 2,
+   "sig": 21020107,
+   "sigName": "沉冥",
+   "role": "subdps",
+   "source": "worker-B：武器被动「获得同奏时」与锁暝同奏机制一致（同期 5★ 迅刀）"
+  },
+  "1402": {
+   "name": "秧秧",
+   "weaponType": 2,
+   "sig": null,
+   "source": "worker-B：无专属 5★ 武器"
+  },
+  "1403": {
+   "name": "秋水",
+   "weaponType": 3,
+   "sig": null,
+   "source": "worker-B：无专属 5★ 武器"
+  },
+  "1404": {
+   "name": "忌炎",
+   "weaponType": 1,
+   "sig": 21010016,
+   "role": "dps",
+   "source": "1404_jiyan.js（worker-B）：专武被动 重击/共鸣解放",
+   "sigName": "苍鳞千嶂"
+  },
+  "1405": {
+   "name": "鉴心",
+   "weaponType": 4,
+   "sig": null,
+   "source": "worker-B：无专属 5★ 武器"
+  },
+  "1406": {
+   "name": "漂泊者·气动",
+   "weaponType": 2,
+   "sig": 21020046,
+   "role": "support",
+   "source": "worker-B：气动漂泊者",
+   "sigName": "血誓盟约"
+  },
+  "1407": {
+   "name": "夏空",
+   "weaponType": 3,
+   "sig": 21030026,
+   "role": "subdps",
+   "source": "worker-B：风蚀/气动副C",
+   "sigName": "林间的咏叹调",
+   "team": "team_cartethyia_ciaccona.json",
+   "teamMi": 1,
+   "anomaly": "erosion"
+  },
+  "1408": {
+   "name": "漂泊者·气动",
+   "weaponType": 2,
+   "sig": 21020046,
+   "role": "support",
+   "source": "worker-B：气动漂泊者",
+   "sigName": "血誓盟约"
+  },
+  "1409": {
+   "name": "卡提希娅",
+   "weaponType": 2,
+   "sig": 21020056,
+   "role": "dps",
+   "anomaly": "erosion",
+   "source": "1409_cartethyia.js SIG",
+   "sigName": "不屈命定之冠"
+  },
+  "1410": {
+   "name": "尤诺",
+   "weaponType": 4,
+   "sig": 21040046,
+   "role": "support",
+   "source": "worker-B",
+   "sigName": "万物持存的注释"
+  },
+  "1411": {
+   "name": "仇远",
+   "weaponType": 2,
+   "sig": 21020066,
+   "role": "subdps",
+   "source": "worker-B：声骸技能/重击（裁竹）",
+   "sigName": "裁竹"
+  },
+  "1412": {
+   "name": "西格莉卡",
+   "weaponType": 4,
+   "sig": 21040066,
+   "role": "dps",
+   "source": "worker-B：声骸技能/气动（昭日译注）",
+   "sigName": "昭日译注"
+  },
+  "1413": {
+   "name": "清宵",
+   "weaponType": 2,
+   "sig": 21020106,
+   "role": "dps",
+   "source": "worker-B：集谐偏移（云琅）",
+   "sigName": "云琅"
+  },
+  "1501": {
+   "name": "漂泊者·衍射",
+   "weaponType": 2,
+   "sig": null,
+   "source": "worker-B：无专属 5★ 武器",
+   "role": "subdps",
+   "team": "team_phoebe_rover.json",
+   "teamMi": 1,
+   "anomaly": "frazzle",
+   "solo": "rover_spectro_solo.json"
+  },
+  "1502": {
+   "name": "漂泊者·衍射",
+   "weaponType": 2,
+   "sig": null,
+   "source": "worker-B：无专属 5★ 武器",
+   "role": "subdps",
+   "team": "team_zani_rover.json",
+   "teamMi": 1,
+   "anomaly": "frazzle",
+   "solo": "rover_spectro_f_solo.json"
+  },
+  "1503": {
+   "name": "维里奈",
+   "weaponType": 5,
+   "sig": null,
+   "role": "support",
+   "team": "team_carlotta_verina.json",
+   "note": "常驻角色，无限定专武 → 跳过专武检查",
+   "source": "—",
+   "sigName": null
+  },
+  "1504": {
+   "name": "灯灯",
+   "weaponType": 1,
+   "sig": null,
+   "role": "subdps",
+   "source": "worker-B：4★ 角色，无专属武器"
+  },
+  "1505": {
+   "name": "守岸人",
+   "weaponType": 5,
+   "sig": 21050036,
+   "role": "support",
+   "team": "team_jinhsi.json",
+   "teamMi": 2,
+   "source": "1505_shorekeeper.js；VALIDATION_CASES §2：团队语境排第一；队伍检查改用默认满协奏队伍 team_jinhsi.json（冷开局 30s 守岸人攒不满协奏，见 MECHANICS §10）",
+   "sigName": "星序协响"
+  },
+  "1506": {
+   "name": "菲比",
+   "weaponType": 5,
+   "sig": 21050046,
+   "role": "dps",
+   "anomaly": "frazzle",
+   "source": "1506_phoebe.js SIG",
+   "sigName": "和光回唱"
+  },
+  "1507": {
+   "name": "赞妮",
+   "weaponType": 4,
+   "sig": 21040036,
+   "role": "dps",
+   "source": "1507_zani.js（worker-B）",
+   "team": "team_zani.json",
+   "teamMi": 0,
+   "sigName": "焰光裁定"
+  },
+  "1508": {
+   "name": "千咲",
+   "weaponType": 1,
+   "sig": 21010056,
+   "role": "support",
+   "source": "worker-B",
+   "sigName": "昙切",
+   "team": "team_cartethyia_chisa.json",
+   "teamMi": 2,
+   "anomaly": "bane"
+  },
+  "1509": {
+   "name": "琳奈",
+   "weaponType": 3,
+   "sig": 21030046,
+   "role": "support",
+   "source": "worker-B",
+   "sigName": "溢彩荧辉"
+  },
+  "1510": {
+   "name": "陆·赫斯",
+   "weaponType": 4,
+   "sig": 21040056,
+   "role": "dps",
+   "source": "worker-B",
+   "sigName": "白昼之脊"
+  },
+  "1511": {
+   "name": "露西",
+   "weaponType": 3,
+   "sig": 21030056,
+   "role": "dps",
+   "source": "worker-B：骇破·偏移→重击加深（蜃影 / Spectral Trigger；allthings.how）",
+   "sigName": "蜃影"
+  },
+  "1601": {
+   "name": "桃祈",
+   "weaponType": 1,
+   "sig": null,
+   "source": "worker-B：无专属 5★ 武器"
+  },
+  "1602": {
+   "name": "丹瑾",
+   "weaponType": 2,
+   "sig": null,
+   "source": "worker-B：无专属 5★ 武器"
+  },
+  "1603": {
+   "name": "椿",
+   "weaponType": 2,
+   "sig": 21020026,
+   "role": "dps",
+   "source": "1603_camellya.js（worker-B）",
+   "sigName": "裁春"
+  },
+  "1604": {
+   "name": "漂泊者·湮灭",
+   "weaponType": 2,
+   "sig": null,
+   "source": "worker-B：无专属 5★ 武器"
+  },
+  "1605": {
+   "name": "漂泊者·湮灭",
+   "weaponType": 2,
+   "sig": null,
+   "source": "worker-B：无专属 5★ 武器"
+  },
+  "1606": {
+   "name": "洛可可",
+   "weaponType": 4,
+   "sig": 21040026,
+   "role": "subdps",
+   "source": "1606_roccia.js（worker-B）",
+   "team": "team_camellya_roccia.json",
+   "teamMi": 1,
+   "sigName": "悲喜剧"
+  },
+  "1607": {
+   "name": "坎特蕾拉",
+   "weaponType": 5,
+   "sig": 21050056,
+   "role": "subdps",
+   "source": "1607_cantarella.js（worker-B）",
+   "team": "team_phrolova_cantarella.json",
+   "teamMi": 1,
+   "sigName": "海的呢喃"
+  },
+  "1608": {
+   "name": "弗洛洛",
+   "weaponType": 5,
+   "sig": 21050066,
+   "role": "dps",
+   "source": "1608_phrolova.js（worker-B）",
+   "team": "team_phrolova.json",
+   "teamMi": 0,
+   "sigName": "幽冥的忘忧章"
+  },
+  "1610": {
+   "name": "秧秧·玄翎",
+   "weaponType": 2,
+   "sig": 21020096,
+   "role": "dps",
+   "source": "worker-B：虚湮/重击（天之苍苍）",
+   "anomaly": "bane",
+   "sigName": "天之苍苍"
+  }
+ }
+}

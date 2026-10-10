@@ -1,0 +1,186 @@
+{
+ "name": "漂泊者·湮灭（男）+ 丹瑾 + 维里奈（公开配队 Havoc Rover + Danjin + Verina）",
+ "duration": 25,
+ "mode": "expected",
+ "team": [
+  {
+   "id": 1604,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21020015,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 6,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 6
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 6
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 6
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 6
+    }
+   ]
+  },
+  {
+   "id": 1602,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21020015,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 6,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 6
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 6
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 6
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 6
+    }
+   ]
+  },
+  {
+   "id": 1503,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050036,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 7,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 7
+    }
+   ]
+  }
+ ],
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": [
+   0,
+   100,
+   100
+  ]
+ },
+ "rotation": {
+  "mode": "search",
+  "start": 0
+ },
+ "search": {
+  "beamWidth": 48,
+  "maxExpansions": 60000,
+  "topN": 3
+ },
+ "sources": [
+  "https://wutheringwavesguides.com/",
+  "https://gamerant.com/wuthering-waves-best-danjin-team-comps-composition-wuwa/"
+ ]
+}

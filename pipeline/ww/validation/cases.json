@@ -1,0 +1,1548 @@
+{
+ "_说明": "WW 引擎交叉验证用例。expect.* = wuwa-tools（参考 A）公式在完全相同输入下的值，容差 0.5%；_ref 同时给出 wuwa-calc-site（参考 B）。生成：tools/gen_cases.py → 引擎跑 draft → tools/ref_compute.js。",
+ "defaults": {
+  "enemy": {
+   "level": 90,
+   "resTier": 0.1,
+   "resShred": 0
+  },
+  "mode": "expected",
+  "conditionals": "off"
+ },
+ "cases": [
+  {
+   "name": "C1 基线：今汐 R 两段，Lv90 对 Lv90，抗 10%",
+   "isolates": [
+    "base",
+    "multiplier",
+    "bonus",
+    "crit",
+    "defense",
+    "resistance"
+   ],
+   "team": [
+    {
+     "id": 1304,
+     "level": 90,
+     "chain": 0,
+     "skillLevels": {
+      "basic": 10,
+      "skill": 10,
+      "liberation": 10,
+      "intro": 10,
+      "forte": 10,
+      "outro": 1
+     },
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": [
+      {
+       "cost": 4,
+       "main": "Crit",
+       "subs": [
+        {
+         "stat": "critDmg",
+         "value": 0.162
+        },
+        {
+         "stat": "atkPct",
+         "value": 0.086
+        },
+        {
+         "stat": "critRate",
+         "value": 0.081
+        }
+       ]
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      }
+     ]
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "action": "R"
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "expected": 25491.3,
+    "crit": 32961.8,
+    "noncrit": 19832.6
+   },
+   "_ref": {
+    "A_wuwa-tools": {
+     "expected": 25491.3,
+     "crit": 32961.8,
+     "noncrit": 19832.6
+    },
+    "B_wuwa-calc-site": {
+     "expected": 25460.4,
+     "crit": 32921,
+     "noncrit": 19807,
+     "note": "B 的 crit/noncrit 为逐段 Math.floor 后求和；面板 ATK 按 B 的取整规则重算"
+    }
+   }
+  },
+  {
+   "name": "C2 无视防御+减防：长离 R，无视 15%、减防 10%",
+   "isolates": [
+    "defense(ignore/reduce)"
+   ],
+   "team": [
+    {
+     "id": 1205,
+     "level": 90,
+     "chain": 0,
+     "skillLevels": {
+      "basic": 10,
+      "skill": 10,
+      "liberation": 10,
+      "intro": 10,
+      "forte": 10,
+      "outro": 1
+     },
+     "weapon": {
+      "id": 21020023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": [
+      {
+       "cost": 4,
+       "main": "Crit",
+       "subs": [
+        {
+         "stat": "critDmg",
+         "value": 0.162
+        },
+        {
+         "stat": "atkPct",
+         "value": 0.086
+        },
+        {
+         "stat": "critRate",
+         "value": 0.081
+        }
+       ]
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      }
+     ]
+    }
+   ],
+   "enemy": {
+    "level": 90,
+    "resTier": 0.1,
+    "defIgnore": 0.15,
+    "defReduce": 0.1
+   },
+   "probe": {
+    "member": 0,
+    "action": "R"
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "expected": 22619.9,
+    "crit": 29248.9,
+    "noncrit": 17598.6
+   },
+   "_ref": {
+    "A_wuwa-tools": {
+     "expected": 22619.9,
+     "crit": 29248.9,
+     "noncrit": 17598.6
+    },
+    "B_wuwa-calc-site": {
+     "expected": 22599.6,
+     "crit": 29222,
+     "noncrit": 17582,
+     "note": "B 的 crit/noncrit 为逐段 Math.floor 后求和；面板 ATK 按 B 的取整规则重算"
+    }
+   }
+  },
+  {
+   "name": "C3 负抗：卡卡罗 R，敌 Lv100，减抗 30% → 有效 −20%",
+   "isolates": [
+    "resistance(<0)",
+    "defense(enemy lv100)"
+   ],
+   "team": [
+    {
+     "id": 1301,
+     "level": 90,
+     "chain": 0,
+     "skillLevels": {
+      "basic": 10,
+      "skill": 10,
+      "liberation": 10,
+      "intro": 10,
+      "forte": 10,
+      "outro": 1
+     },
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": [
+      {
+       "cost": 4,
+       "main": "Crit",
+       "subs": [
+        {
+         "stat": "critDmg",
+         "value": 0.162
+        },
+        {
+         "stat": "atkPct",
+         "value": 0.086
+        },
+        {
+         "stat": "critRate",
+         "value": 0.081
+        }
+       ]
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      }
+     ]
+    }
+   ],
+   "enemy": {
+    "level": 100,
+    "resTier": 0.1,
+    "resShred": 0.3
+   },
+   "probe": {
+    "member": 0,
+    "action": "R"
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "expected": 9942.2,
+    "crit": 14058.5,
+    "noncrit": 7716
+   },
+   "_ref": {
+    "A_wuwa-tools": {
+     "expected": 9942.2,
+     "crit": 14058.5,
+     "noncrit": 7716
+    },
+    "B_wuwa-calc-site": {
+     "expected": 9929.5,
+     "crit": 14040,
+     "noncrit": 7706,
+     "note": "B 的 crit/noncrit 为逐段 Math.floor 后求和；面板 ATK 按 B 的取整规则重算"
+    }
+   }
+  },
+  {
+   "name": "C4 高抗：散华 E，免疫档 100% 减抗 10% → 有效 90%",
+   "isolates": [
+    "resistance(>=0.8)"
+   ],
+   "team": [
+    {
+     "id": 1102,
+     "level": 90,
+     "chain": 0,
+     "skillLevels": {
+      "basic": 10,
+      "skill": 10,
+      "liberation": 10,
+      "intro": 10,
+      "forte": 10,
+      "outro": 1
+     },
+     "weapon": {
+      "id": 21020023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": [
+      {
+       "cost": 4,
+       "main": "Crit",
+       "subs": [
+        {
+         "stat": "critDmg",
+         "value": 0.162
+        },
+        {
+         "stat": "atkPct",
+         "value": 0.086
+        },
+        {
+         "stat": "critRate",
+         "value": 0.081
+        }
+       ]
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      }
+     ]
+    }
+   ],
+   "enemy": {
+    "level": 90,
+    "resTier": 1,
+    "resShred": 0.1
+   },
+   "probe": {
+    "member": 0,
+    "action": "E"
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "expected": 998,
+    "crit": 1345.9,
+    "noncrit": 809.8
+   },
+   "_ref": {
+    "A_wuwa-tools": {
+     "expected": 998,
+     "crit": 1345.9,
+     "noncrit": 809.8
+    },
+    "B_wuwa-calc-site": {
+     "expected": 548.7,
+     "crit": 740,
+     "noncrit": 445,
+     "note": "B 的 crit/noncrit 为逐段 Math.floor 后求和；面板 ATK 按 B 的取整规则重算"
+    }
+   }
+  },
+  {
+   "name": "C5 加深（攻击方同区）：折枝 E，全伤加深 15% + 技能加深 25%",
+   "isolates": [
+    "deepen(attacker, additive)"
+   ],
+   "team": [
+    {
+     "id": 1105,
+     "level": 90,
+     "chain": 0,
+     "skillLevels": {
+      "basic": 10,
+      "skill": 10,
+      "liberation": 10,
+      "intro": 10,
+      "forte": 10,
+      "outro": 1
+     },
+     "weapon": {
+      "id": 21050023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": [
+      {
+       "cost": 4,
+       "main": "Crit",
+       "subs": [
+        {
+         "stat": "critDmg",
+         "value": 0.162
+        },
+        {
+         "stat": "atkPct",
+         "value": 0.086
+        },
+        {
+         "stat": "critRate",
+         "value": 0.081
+        }
+       ]
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      }
+     ]
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "action": "E",
+    "extraStats": [
+     {
+      "key": "deep:all",
+      "value": 0.15
+     },
+     {
+      "key": "deep:skill",
+      "value": 0.25
+     }
+    ]
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "expected": 5396.7,
+    "crit": 6978.3,
+    "noncrit": 4198.7
+   },
+   "_ref": {
+    "A_wuwa-tools": {
+     "expected": 5396.7,
+     "crit": 6978.3,
+     "noncrit": 4198.7
+    },
+    "B_wuwa-calc-site": {
+     "expected": 5396.5,
+     "crit": 6978,
+     "noncrit": 4198,
+     "note": "B 的 crit/noncrit 为逐段 Math.floor 后求和；面板 ATK 按 B 的取整规则重算"
+    }
+   }
+  },
+  {
+   "name": "C6 加深（攻击方+目标易伤）：今汐 R，加深 15% + 目标受伤加深 10%",
+   "isolates": [
+    "deepen(attacker+target)"
+   ],
+   "note": "引擎没有单独的受击方键，按 MECHANICS §1『同区相加』写成 deep:all 0.25；参考 B 把 DMG Taken 拆成独立乘区",
+   "team": [
+    {
+     "id": 1304,
+     "level": 90,
+     "chain": 0,
+     "skillLevels": {
+      "basic": 10,
+      "skill": 10,
+      "liberation": 10,
+      "intro": 10,
+      "forte": 10,
+      "outro": 1
+     },
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": [
+      {
+       "cost": 4,
+       "main": "Crit",
+       "subs": [
+        {
+         "stat": "critDmg",
+         "value": 0.162
+        },
+        {
+         "stat": "atkPct",
+         "value": 0.086
+        },
+        {
+         "stat": "critRate",
+         "value": 0.081
+        }
+       ]
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      }
+     ]
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "action": "R",
+    "extraStats": [
+     {
+      "key": "deep:all",
+      "value": 0.15
+     },
+     {
+      "key": "deep:all",
+      "value": 0.1
+     }
+    ]
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "expected": 31864.1,
+    "crit": 41202.2,
+    "noncrit": 24790.7
+   },
+   "_ref": {
+    "A_wuwa-tools": {
+     "expected": 31864.1,
+     "crit": 41202.2,
+     "noncrit": 24790.7
+    },
+    "B_wuwa-calc-site": {
+     "expected": 32207.4,
+     "crit": 41645,
+     "noncrit": 25057,
+     "note": "B 的 crit/noncrit 为逐段 Math.floor 后求和；面板 ATK 按 B 的取整规则重算"
+    },
+    "B_split": {
+     "amplify": 0.15,
+     "taken": 0.1
+    }
+   }
+  },
+  {
+   "name": "C7 类型加成同区相加：相里要 R，解放伤害加成 +30%（叠在元素加成上）",
+   "isolates": [
+    "bonus(additive)"
+   ],
+   "team": [
+    {
+     "id": 1305,
+     "level": 90,
+     "chain": 0,
+     "skillLevels": {
+      "basic": 10,
+      "skill": 10,
+      "liberation": 10,
+      "intro": 10,
+      "forte": 10,
+      "outro": 1
+     },
+     "weapon": {
+      "id": 21040023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": [
+      {
+       "cost": 4,
+       "main": "Crit",
+       "subs": [
+        {
+         "stat": "critDmg",
+         "value": 0.162
+        },
+        {
+         "stat": "atkPct",
+         "value": 0.086
+        },
+        {
+         "stat": "critRate",
+         "value": 0.081
+        }
+       ]
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      }
+     ]
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "action": "R",
+    "extraStats": [
+     {
+      "key": "dmg:liberation",
+      "value": 0.3
+     }
+    ]
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "expected": 26707.5,
+    "crit": 41573,
+    "noncrit": 18667.7
+   },
+   "_ref": {
+    "A_wuwa-tools": {
+     "expected": 26707.5,
+     "crit": 41573,
+     "noncrit": 18667.7
+    },
+    "B_wuwa-calc-site": {
+     "expected": 26701.2,
+     "crit": 41563,
+     "noncrit": 18663,
+     "note": "B 的 crit/noncrit 为逐段 Math.floor 后求和；面板 ATK 按 B 的取整规则重算"
+    }
+   }
+  },
+  {
+   "name": "C8 生命缩放：守岸人 洞悉伤害（X3，HP×19.64%×3）",
+   "isolates": [
+    "base(HP scaling)"
+   ],
+   "team": [
+    {
+     "id": 1505,
+     "level": 90,
+     "chain": 0,
+     "skillLevels": {
+      "basic": 10,
+      "skill": 10,
+      "liberation": 10,
+      "intro": 10,
+      "forte": 10,
+      "outro": 1
+     },
+     "weapon": {
+      "id": 21050023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": [
+      {
+       "cost": 4,
+       "main": "Crit",
+       "subs": [
+        {
+         "stat": "critDmg",
+         "value": 0.162
+        },
+        {
+         "stat": "atkPct",
+         "value": 0.086
+        },
+        {
+         "stat": "critRate",
+         "value": 0.081
+        }
+       ]
+      },
+      {
+       "cost": 3,
+       "main": "LifeMax%"
+      },
+      {
+       "cost": 3,
+       "main": "LifeMax%"
+      },
+      {
+       "cost": 1,
+       "main": "LifeMax%"
+      },
+      {
+       "cost": 1,
+       "main": "LifeMax%"
+      }
+     ]
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "action": "X3"
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "expected": 15071,
+    "crit": 20325.2,
+    "noncrit": 12229.4
+   },
+   "_ref": {
+    "A_wuwa-tools": {
+     "expected": 15071,
+     "crit": 20325.2,
+     "noncrit": 12229.4
+    },
+    "B_wuwa-calc-site": {
+     "expected": 15071,
+     "crit": 20325,
+     "noncrit": 12229,
+     "note": "B 的 crit/noncrit 为逐段 Math.floor 后求和；面板 ATK 按 B 的取整规则重算"
+    }
+   }
+  },
+  {
+   "name": "C9 防御缩放：桃祈 R（DEF×449.71%）",
+   "isolates": [
+    "base(DEF scaling)"
+   ],
+   "team": [
+    {
+     "id": 1601,
+     "level": 90,
+     "chain": 0,
+     "skillLevels": {
+      "basic": 10,
+      "skill": 10,
+      "liberation": 10,
+      "intro": 10,
+      "forte": 10,
+      "outro": 1
+     },
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": [
+      {
+       "cost": 4,
+       "main": "Crit",
+       "subs": [
+        {
+         "stat": "critDmg",
+         "value": 0.162
+        },
+        {
+         "stat": "atkPct",
+         "value": 0.086
+        },
+        {
+         "stat": "critRate",
+         "value": 0.081
+        }
+       ]
+      },
+      {
+       "cost": 3,
+       "main": "Def%"
+      },
+      {
+       "cost": 3,
+       "main": "Def%"
+      },
+      {
+       "cost": 1,
+       "main": "Def%"
+      },
+      {
+       "cost": 1,
+       "main": "Def%"
+      }
+     ]
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "action": "R"
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "expected": 11640.1,
+    "crit": 15698.2,
+    "noncrit": 9445.3
+   },
+   "_ref": {
+    "A_wuwa-tools": {
+     "expected": 11640.1,
+     "crit": 15698.2,
+     "noncrit": 9445.3
+    },
+    "B_wuwa-calc-site": {
+     "expected": 11640.1,
+     "crit": 15698,
+     "noncrit": 9445,
+     "note": "B 的 crit/noncrit 为逐段 Math.floor 后求和；面板 ATK 按 B 的取整规则重算"
+    }
+   }
+  },
+  {
+   "name": "C10 攻击方等级：散华 R，角色 Lv80 对敌 Lv90",
+   "isolates": [
+    "defense(800+8·Lv攻)"
+   ],
+   "team": [
+    {
+     "id": 1102,
+     "level": 80,
+     "chain": 0,
+     "skillLevels": {
+      "basic": 10,
+      "skill": 10,
+      "liberation": 10,
+      "intro": 10,
+      "forte": 10,
+      "outro": 1
+     },
+     "weapon": {
+      "id": 21020023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": [
+      {
+       "cost": 4,
+       "main": "Crit",
+       "subs": [
+        {
+         "stat": "critDmg",
+         "value": 0.162
+        },
+        {
+         "stat": "atkPct",
+         "value": 0.086
+        },
+        {
+         "stat": "critRate",
+         "value": 0.081
+        }
+       ]
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 3,
+       "main": "elemDmg"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      },
+      {
+       "cost": 1,
+       "main": "Atk%"
+      }
+     ]
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "action": "R"
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "expected": 10560.1,
+    "crit": 14241.6,
+    "noncrit": 8569
+   },
+   "_ref": {
+    "A_wuwa-tools": {
+     "expected": 10560.1,
+     "crit": 14241.6,
+     "noncrit": 8569
+    },
+    "B_wuwa-calc-site": {
+     "expected": 10838.2,
+     "crit": 14616,
+     "noncrit": 8794,
+     "note": "B 的 crit/noncrit 为逐段 Math.floor 后求和；面板 ATK 按 B 的取整规则重算"
+    }
+   }
+  },
+  {
+   "name": "N1 风蚀 1 层 卡提希娅（逐跳）",
+   "isolates": [
+    "anomalyBase",
+    "multiplier"
+   ],
+   "team": [
+    {
+     "id": 1409,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "erosion",
+    "stacks": 1,
+    "ticks": 3
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "first": 745.9,
+    "ticks": [
+     745.9,
+     745.9,
+     745.9
+    ]
+   },
+   "_ref": {
+    "B_wuwa-calc-site": {
+     "ticks": [
+      745.9,
+      745.9,
+      745.9
+     ],
+     "sum": 2237.8,
+     "count": 3,
+     "note": "B：OnTick 3s，首跳在 t=3s；引擎/原始数据 bExecutePeriodicEffectOnApplication=True → 首跳 t=0。逐跳数值一致，时序差 3s。"
+    },
+    "A_wuwa-tools": "未建模异常效应，无参考值"
+   }
+  },
+  {
+   "name": "N2 风蚀 3 层 卡提希娅（逐跳）",
+   "isolates": [
+    "anomalyBase",
+    "multiplier"
+   ],
+   "team": [
+    {
+     "id": 1409,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "erosion",
+    "stacks": 3,
+    "ticks": 5
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "first": 3729.7,
+    "ticks": [
+     3729.7,
+     3729.7,
+     3729.7,
+     3729.7,
+     3729.7
+    ]
+   },
+   "_ref": {
+    "B_wuwa-calc-site": {
+     "ticks": [
+      3729.7,
+      3729.7,
+      3729.7,
+      3729.7,
+      3729.7
+     ],
+     "sum": 18648.7,
+     "count": 5,
+     "note": "B 风蚀 maxStacks=10（原始数据 cap=3）、持续 15s；引擎 14.8s 共 5 跳（t=0,3,6,9,12），B 为 t=3..15 共 5 跳。"
+    },
+    "A_wuwa-tools": "未建模异常效应，无参考值"
+   }
+  },
+  {
+   "name": "N3 光噪 10 层 菲比（逐跳衰减）",
+   "isolates": [
+    "anomalyBase",
+    "multiplier",
+    "decay"
+   ],
+   "team": [
+    {
+     "id": 1506,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "frazzle",
+    "stacks": 10,
+    "ticks": 6
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "first": 4136,
+    "ticks": [
+     4136,
+     3731.7,
+     3327.4,
+     2923.1,
+     2518.8,
+     2114.5
+    ]
+   },
+   "_ref": {
+    "B_wuwa-calc-site": {
+     "ticks": [
+      4136,
+      3731.7,
+      3327.4,
+      2923.1,
+      2518.8,
+      2114.5
+     ],
+     "sum": 18751.6,
+     "count": 6,
+     "note": "B：每次到期结算后 −1 层，B 的到期间隔 1.5s；引擎/原始数据 3s。按层数逐跳数值相同，但 B 的 DPS 为引擎 2 倍（结构差异）。"
+    },
+    "A_wuwa-tools": "未建模异常效应，无参考值"
+   }
+  },
+  {
+   "name": "N4 电磁 10 层 心（逐跳减半）",
+   "isolates": [
+    "anomalyBase",
+    "multiplier",
+    "decay"
+   ],
+   "team": [
+    {
+     "id": 1311,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "flare",
+    "stacks": 10,
+    "ticks": 6
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "first": 6893.4,
+    "ticks": [
+     6893.4,
+     3524.2,
+     1502.7
+    ]
+   },
+   "_ref": {
+    "B_wuwa-calc-site": {
+     "ticks": [
+      6893.4,
+      3524.2,
+      1502.7
+     ],
+     "sum": 11920.2,
+     "count": 3,
+     "note": "B：5s 到期结算后层数减半(floor)并刷新持续 → 10/5/2/1 共 4 跳（第 4 跳 1 层 = 828.8）；引擎 15s 不刷新 → 3 跳。expect 只列共有的前 3 跳。"
+    },
+    "A_wuwa-tools": "未建模异常效应，无参考值"
+   }
+  },
+  {
+   "name": "N5 聚爆 10 层引爆 爱弥斯",
+   "isolates": [
+    "anomalyBase",
+    "multiplier"
+   ],
+   "team": [
+    {
+     "id": 1210,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "burst",
+    "stacks": 10,
+    "ticks": 1
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "first": 11580.9,
+    "ticks": [
+     11580.9
+    ]
+   },
+   "_ref": {
+    "B_wuwa-calc-site": {
+     "ticks": [
+      11580.9
+     ],
+     "sum": 11580.9,
+     "count": 1,
+     "note": "B：层数 ≥10 时按当前层数结算后清空；与引擎一致。"
+    },
+    "A_wuwa-tools": "未建模异常效应，无参考值"
+   }
+  },
+  {
+   "name": "N6 霜渐 5 层 绯雪（施加即结算）",
+   "isolates": [
+    "anomalyBase",
+    "multiplier"
+   ],
+   "team": [
+    {
+     "id": 1108,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "chafe",
+    "stacks": 5,
+    "ticks": 1
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "first": 1726.8,
+    "ticks": [
+     1726.8
+    ]
+   },
+   "_ref": {
+    "B_wuwa-calc-site": {
+     "ticks": [
+      1726.8
+     ],
+     "sum": 1726.8,
+     "count": 1,
+     "note": "B：OnBuffAdd 结算；表用 2450 起（对应原始 10011000/10011100），非 10010000 半值表。"
+    },
+    "A_wuwa-tools": "未建模异常效应，无参考值"
+   }
+  },
+  {
+   "name": "N7 光噪 10 层 + 光噪伤害加成 30%（加成区）",
+   "isolates": [
+    "bonus"
+   ],
+   "team": [
+    {
+     "id": 1506,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "frazzle",
+    "stacks": 10,
+    "ticks": 1,
+    "extraStats": [
+     {
+      "key": "dmg:anomaly:frazzle",
+      "value": 0.3
+     }
+    ]
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "first": 5376.8,
+    "ticks": [
+     5376.8
+    ]
+   },
+   "_ref": {
+    "B_wuwa-calc-site": {
+     "ticks": [
+      5376.8
+     ],
+     "sum": 5376.8,
+     "count": 1,
+     "note": "B：以状态名开头的 DMG Bonus 进入 (1+dmgBonus)。"
+    },
+    "A_wuwa-tools": "未建模异常效应，无参考值"
+   }
+  },
+  {
+   "name": "N8 风蚀 3 层 + 风蚀加深 50% + 目标受伤 +10%（加深区）",
+   "isolates": [
+    "deepen",
+    "targetTaken"
+   ],
+   "team": [
+    {
+     "id": 1409,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "erosion",
+    "stacks": 3,
+    "ticks": 1,
+    "extraStats": [
+     {
+      "key": "deep:anomaly:erosion",
+      "value": 0.5
+     }
+    ]
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "first": 5967.6,
+    "ticks": [
+     5967.6
+    ]
+   },
+   "_ref": {
+    "B_wuwa-calc-site": {
+     "ticks": [
+      6154.1
+     ],
+     "sum": 6154.1,
+     "count": 1,
+     "note": "B：(1+0.5)×(1+0.1)=1.65 独立相乘；引擎 1+0.5+0.1=1.60 同区相加 → 预期差 −3.03%（结构差异）。"
+    },
+    "A_wuwa-tools": "未建模异常效应，无参考值",
+    "verdict": "待实测：目标受伤加深与攻击方加深同区相加（引擎，5967.6）还是独立相乘（B，6154.1），差 3.03%。expect 暂用引擎值作回归基线。"
+   },
+   "enemy": {
+    "level": 90,
+    "resTier": 0.1,
+    "resShred": 0,
+    "damageTaken": 0.1
+   },
+   "pendingInGameTest": true
+  },
+  {
+   "name": "N9 电磁 10 层 + 减抗 20%（抗性 −10%）",
+   "isolates": [
+    "resistance"
+   ],
+   "team": [
+    {
+     "id": 1311,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "flare",
+    "stacks": 10,
+    "ticks": 1,
+    "extraStats": [
+     {
+      "key": "resShred:all",
+      "value": 0.2
+     }
+    ]
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "first": 8042.3,
+    "ticks": [
+     8042.3
+    ]
+   },
+   "_ref": {
+    "B_wuwa-calc-site": {
+     "ticks": [
+      8042.3
+     ],
+     "sum": 8042.3,
+     "count": 1,
+     "note": "有效抗性 −10% → 1.05，两侧一致。"
+    },
+    "A_wuwa-tools": "未建模异常效应，无参考值"
+   }
+  },
+  {
+   "name": "N10 风蚀 3 层 施加者 Lv80（等级基础值）",
+   "isolates": [
+    "anomalyBase",
+    "defense"
+   ],
+   "team": [
+    {
+     "id": 1409,
+     "level": 80,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "erosion",
+    "stacks": 3,
+    "ticks": 1
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "first": 1980.5,
+    "ticks": [
+     1980.5
+    ]
+   },
+   "_ref": {
+    "B_wuwa-calc-site": {
+     "ticks": [
+      3729.7
+     ],
+     "sum": 3729.7,
+     "count": 1,
+     "note": "B：基础值固定 3674、单位等级固定 90；引擎/原始数据 Lv80 基础 2005、DEF 按 Lv80 → 预期大幅偏低（结构差异，原始数据支持引擎）。"
+    },
+    "A_wuwa-tools": "未建模异常效应，无参考值",
+    "verdict": "expect 采用引擎/原始数据值（Lv80 基础 2005）；B 固定 3674 与 Lv90 属其自身简化，不作为期望。"
+   }
+  },
+  {
+   "name": "N11 光噪 10 层 + 队伍全伤害加深 15%（不应计入）",
+   "isolates": [
+    "amplifyScope"
+   ],
+   "team": [
+    {
+     "id": 1506,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "frazzle",
+    "stacks": 10,
+    "ticks": 1,
+    "extraStats": [
+     {
+      "key": "deep:all",
+      "value": 0.15
+     }
+    ]
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "first": 4136,
+    "ticks": [
+     4136
+    ]
+   },
+   "_ref": {
+    "B_wuwa-calc-site": {
+     "ticks": [
+      4136
+     ],
+     "sum": 4136,
+     "count": 1,
+     "note": "B：@Team 的普通 DMG Amplify 不进入异常（仅目标侧或状态名开头的 buff）；引擎同样过滤 → 应与 N3 首跳相同。"
+    },
+    "A_wuwa-tools": "未建模异常效应，无参考值"
+   }
+  },
+  {
+   "name": "N4b 电磁 10 层 心（减半续时，electroRefreshOnHalve=true）",
+   "isolates": [
+    "decay"
+   ],
+   "team": [
+    {
+     "id": 1311,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "flare",
+    "stacks": 10,
+    "ticks": 6,
+    "electroRefreshOnHalve": true
+   },
+   "expect": {
+    "tolerancePct": 0.5,
+    "count": 4,
+    "ticks": [
+     6893.4,
+     3524.2,
+     1502.7,
+     828.8
+    ],
+    "sum": 12749.1
+   },
+   "_ref": {
+    "B_wuwa-calc-site": {
+     "ticks": [
+      6893.4,
+      3524.2,
+      1502.7,
+      828.8
+     ],
+     "sum": 12749.1,
+     "count": 4
+    },
+    "note": "MECH.electroDecay 读法 B（非默认）；默认 3 跳见 N4"
+   }
+  },
+  {
+   "name": "N12 虚湮 3 层 减防探针（心 Lv90 → Lv90 敌人）",
+   "isolates": [
+    "defense",
+    "bane"
+   ],
+   "team": [
+    {
+     "id": 1311,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "bane",
+    "stacks": 3
+   },
+   "expect": {
+    "tolerancePct": 0.1,
+    "defReduce": 0.06,
+    "defZones": [
+     0.501319,
+     0.50637,
+     0.511523,
+     0.516782
+    ]
+   },
+   "_ref": {
+    "table": "buff.json 10060000 减防 2%/层 上限 3（REPORT §9.1）",
+    "note": "expect = 引擎值（防御区 0 层 0.501319 → 3 层 0.516782，+3.08%）；参考 B 同减防表，未单独核对防御区"
+   }
+  }
+ ]
+}

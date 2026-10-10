@@ -1,0 +1,118 @@
+{
+  "name": "奥古斯塔/守岸人 25s 自动搜索（Prydwen：守岸人为奥古斯塔队最佳第三位；伊诺无模块，2 人部分队）",
+  "duration": 25,
+  "mode": "expected",
+  "enemy": {
+    "level": 90,
+    "resTier": 0.1,
+    "resShred": 0
+  },
+  "start": {
+    "energy": "full",
+    "concerto": [
+      0,
+      100
+    ]
+  },
+  "rotation": {
+    "mode": "search",
+    "start": 1
+  },
+  "search": {
+    "beamWidth": 32,
+    "maxExpansions": 30000,
+    "topN": 5
+  },
+  "team": [
+    {
+      "id": 1306,
+      "level": 90,
+      "chain": 0,
+      "weapon": {
+        "id": 21010046,
+        "level": 90,
+        "rank": 1
+      },
+      "echoes": [
+        {
+          "cost": 4,
+          "main": "Crit",
+          "set": 20,
+          "subs": [
+            {
+              "stat": "critRate",
+              "value": 0.081
+            },
+            {
+              "stat": "critDmg",
+              "value": 0.162
+            },
+            {
+              "stat": "atkPct",
+              "value": 0.086
+            }
+          ]
+        },
+        {
+          "cost": 3,
+          "main": "elemDmg",
+          "set": 20
+        },
+        {
+          "cost": 3,
+          "main": "elemDmg",
+          "set": 20
+        },
+        {
+          "cost": 1,
+          "main": "Atk%",
+          "set": 3
+        },
+        {
+          "cost": 1,
+          "main": "Atk%",
+          "set": 3
+        }
+      ]
+    },
+    {
+      "id": 1505,
+      "level": 90,
+      "chain": 0,
+      "weapon": {
+        "id": 21050036,
+        "rank": 1
+      },
+      "echoes": [
+        {
+          "echoId": 6000060,
+          "cost": 4,
+          "main": "HealChange",
+          "set": 7
+        },
+        {
+          "cost": 3,
+          "main": "EnergyEfficiency",
+          "set": 7
+        },
+        {
+          "cost": 3,
+          "main": "EnergyEfficiency",
+          "set": 7
+        },
+        {
+          "cost": 1,
+          "main": "LifeMax%",
+          "set": 7
+        },
+        {
+          "cost": 1,
+          "main": "LifeMax%",
+          "set": 7
+        }
+      ]
+    }
+  ],
+  "source": "https://www.prydwen.gg/wuthering-waves/characters/augusta （Synergies：Iuno/Mortefi/Rebecca + The Shorekeeper/Verina）",
+  "preset": "奥古斯塔/守岸人 · 自动搜索"
+}

@@ -1,0 +1,188 @@
+{
+ "name": "安可/散华/维里奈 公开配队",
+ "duration": 30,
+ "team": [
+  {
+   "id": 1203,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050015,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 2,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 2
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 2
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 2
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 2
+    }
+   ]
+  },
+  {
+   "id": 1102,
+   "level": 90,
+   "chain": 6,
+   "weapon": {
+    "id": 21020015,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 8,
+     "echoId": 6000052,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "energyRegen",
+       "value": 0.1
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 8
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 8
+    }
+   ]
+  },
+  {
+   "id": 1503,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050036,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 7,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 7
+    }
+   ]
+  }
+ ],
+ "start": {
+  "energy": "full",
+  "concerto": [
+   0,
+   100,
+   100
+  ]
+ },
+ "rotation": {
+  "mode": "search",
+  "start": 2
+ },
+ "sources": [
+  "https://gamerant.com/wuthering-waves-wuwa-encore-team-comp-composition/",
+  "https://www.destructoid.com/best-encore-build-wuthering-waves-weapons-echoes-team-comp/"
+ ],
+ "mode": "expected",
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "search": {
+  "beamWidth": 48,
+  "maxExpansions": 60000,
+  "topN": 3
+ },
+ "preset": "安可/散华/维里奈 · 自动搜索"
+}

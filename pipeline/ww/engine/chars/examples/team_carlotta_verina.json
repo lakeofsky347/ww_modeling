@@ -1,0 +1,155 @@
+{
+ "name": "珂莱塔/折枝/维里奈 40s 自动搜索（维里奈开局协奏 0）",
+ "duration": 25,
+ "mode": "expected",
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": [
+   0,
+   100,
+   100
+  ]
+ },
+ "rotation": {
+  "mode": "search",
+  "start": 2
+ },
+ "search": {
+  "beamWidth": 32,
+  "maxExpansions": 30000,
+  "topN": 5
+ },
+ "team": [
+  {
+   "id": 1107,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21030016,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 10,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 10
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 10
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 10
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 10
+    }
+   ]
+  },
+  {
+   "id": 1105,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050026,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "echoId": 390080005,
+     "cost": 4,
+     "main": "Crit",
+     "set": 8
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 8
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 8
+    }
+   ]
+  },
+  {
+   "id": 1503,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050024,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 7
+    }
+   ]
+  }
+ ],
+ "windowNote": "满协奏开局（循环中维里奈以延奏切入珂莱塔/折枝，Prydwen 珂莱塔轴）；冷开局下搜索不会为辅助花场上时间攒协奏（已知局限，见 MECHANICS §10）"
+}

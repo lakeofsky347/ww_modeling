@@ -1,0 +1,81 @@
+{
+ "name": "忌炎 单人 自动搜索（苍鳞千嶂，啸谷长风；起手破阵值 30 = 变奏入场后的准备状态，估计）",
+ "duration": 25,
+ "mode": "expected",
+ "team": [
+  {
+   "id": 1404,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21010016,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 4,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 4
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 4
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 4
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 4
+    }
+   ],
+   "module": {
+    "start": {
+     "pz": 30
+    }
+   }
+  }
+ ],
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": 0
+ },
+ "rotation": {
+  "mode": "search",
+  "start": 0
+ },
+ "search": {
+  "beamWidth": 48,
+  "maxExpansions": 60000,
+  "topN": 3
+ }
+}

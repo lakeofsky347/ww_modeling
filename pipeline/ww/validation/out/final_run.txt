@@ -1,0 +1,96 @@
+
+=== [0] C1 基线：今汐 R 两段，Lv90 对 Lv90，抗 10% ===
+probe: 今汐 R 移岁诛邪 Lv10 | ATK 1,465.8 HP 15,385.0 CR 43.10% CD 166.20%
+  技能伤害: expected 7,647.4 | crit 9,888.6 | noncrit 5,949.8
+    base=1,465.8[T]  multiplier=499.81%[T]  bonus=1.8000[C]  deepen=1.0000[C]  crit=1.2853[T]  defense=0.5013[C]  resistance=0.9000[C]  dmgReduce=1.0000[U]  effRes=10.00%
+  技能伤害: expected 17,843.9 | crit 23,073.2 | noncrit 13,882.8
+    base=1,465.8[T]  multiplier=1,166.22%[T]  bonus=1.8000[C]  deepen=1.0000[C]  crit=1.2853[T]  defense=0.5013[C]  resistance=0.9000[C]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 25,491.3 | crit 32,961.8 | noncrit 19,832.6
+  expect expected: 25,491.27 vs 25,491.30 (±0.5%) OK
+  expect crit: 32,961.77 vs 32,961.80 (±0.5%) OK
+  expect noncrit: 19,832.59 vs 19,832.60 (±0.5%) OK
+
+=== [1] C2 无视防御+减防：长离 R，无视 15%、减防 10% ===
+probe: 长离 R 离火照丹心 Lv10 | ATK 1,774.6 HP 14,947.5 CR 43.10% CD 166.20%
+  技能伤害: expected 22,619.9 | crit 29,248.9 | noncrit 17,598.6
+    base=1,774.6[T]  multiplier=1,212.75%[T]  bonus=1.6000[C]  deepen=1.0000[C]  crit=1.2853[T]  defense=0.5679[C]  resistance=0.9000[C]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 22,619.9 | crit 29,248.9 | noncrit 17,598.6
+  expect expected: 22,619.88 vs 22,619.90 (±0.5%) OK
+  expect crit: 29,248.89 vs 29,248.90 (±0.5%) OK
+  expect noncrit: 17,598.61 vs 17,598.60 (±0.5%) OK
+
+=== [2] C3 负抗：卡卡罗 R，敌 Lv100，减抗 30% → 有效 −20% ===
+probe: 卡卡罗 R 幻影蚀刻 Lv10 | ATK 1,504.9 HP 15,060.0 CR 35.10% CD 182.20%
+  技能伤害: expected 9,942.2 | crit 14,058.5 | noncrit 7,716.0
+    base=1,504.9[T]  multiplier=596.43%[T]  bonus=1.6000[C]  deepen=1.0000[C]  crit=1.2885[T]  defense=0.4884[C]  resistance=1.1000[C]  dmgReduce=1.0000[U]  effRes=-20.00%
+  SUM expected 9,942.2 | crit 14,058.5 | noncrit 7,716.0
+  expect expected: 9,942.21 vs 9,942.20 (±0.5%) OK
+  expect crit: 14,058.51 vs 14,058.50 (±0.5%) OK
+  expect noncrit: 7,715.98 vs 7,716.00 (±0.5%) OK
+
+=== [3] C4 高抗：散华 E，免疫档 100% 减抗 10% → 有效 90% ===
+probe: 散华 E 朔雪永冻 Lv10 | ATK 1,435.4 HP 14,622.5 CR 35.10% CD 166.20%
+  技能伤害: expected 998.0 | crit 1,345.9 | noncrit 809.8
+    base=1,435.4[T]  multiplier=359.85%[T]  bonus=1.7200[C]  deepen=1.0000[C]  crit=1.2324[T]  defense=0.5013[C]  resistance=0.1818[C]  dmgReduce=1.0000[U]  effRes=90.00%
+  SUM expected 998.0 | crit 1,345.9 | noncrit 809.8
+  expect expected: 997.96 vs 998.00 (±0.5%) OK
+  expect crit: 1,345.88 vs 1,345.90 (±0.5%) OK
+  expect noncrit: 809.79 vs 809.80 (±0.5%) OK
+
+=== [4] C5 加深（攻击方同区）：折枝 E，全伤加深 15% + 技能加深 25% ===
+probe: 折枝 E 以形写神·短按技能伤害 Lv10 | ATK 1,407.1 HP 20,530.9 CR 43.10% CD 166.20%
+  短按技能伤害: expected 5,396.7 | crit 6,978.3 | noncrit 4,198.7
+    base=1,407.1[T]  multiplier=295.26%[T]  bonus=1.6000[C]  deepen=1.4000[C]  crit=1.2853[T]  defense=0.5013[C]  resistance=0.9000[C]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 5,396.7 | crit 6,978.3 | noncrit 4,198.7
+  expect expected: 5,396.73 vs 5,396.70 (±0.5%) OK
+  expect crit: 6,978.31 vs 6,978.30 (±0.5%) OK
+  expect noncrit: 4,198.74 vs 4,198.70 (±0.5%) OK
+
+=== [5] C6 加深（攻击方+目标易伤）：今汐 R，加深 15% + 目标受伤加深 10% ===
+probe: 今汐 R 移岁诛邪 Lv10 | ATK 1,465.8 HP 15,385.0 CR 43.10% CD 166.20%
+  技能伤害: expected 9,559.2 | crit 12,360.7 | noncrit 7,437.2
+    base=1,465.8[T]  multiplier=499.81%[T]  bonus=1.8000[C]  deepen=1.2500[C]  crit=1.2853[T]  defense=0.5013[C]  resistance=0.9000[C]  dmgReduce=1.0000[U]  effRes=10.00%
+  技能伤害: expected 22,304.8 | crit 28,841.5 | noncrit 17,353.5
+    base=1,465.8[T]  multiplier=1,166.22%[T]  bonus=1.8000[C]  deepen=1.2500[C]  crit=1.2853[T]  defense=0.5013[C]  resistance=0.9000[C]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 31,864.1 | crit 41,202.2 | noncrit 24,790.7
+  expect expected: 31,864.09 vs 31,864.10 (±0.5%) OK
+  expect crit: 41,202.22 vs 41,202.20 (±0.5%) OK
+  expect noncrit: 24,790.74 vs 24,790.70 (±0.5%) OK
+
+=== [6] C7 类型加成同区相加：相里要 R，解放伤害加成 +30%（叠在元素加成上） ===
+probe: 相里要 R 思维矩阵·思维矩阵伤害 Lv10 | ATK 1,485.4 HP 15,185.0 CR 35.10% CD 222.70%
+  思维矩阵伤害: expected 26,707.5 | crit 41,573.0 | noncrit 18,667.7
+    base=1,485.4[T]  multiplier=1,466.06%[T]  bonus=1.9000[C]  deepen=1.0000[C]  crit=1.4307[T]  defense=0.5013[C]  resistance=0.9000[C]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 26,707.5 | crit 41,573.0 | noncrit 18,667.7
+  expect expected: 26,707.46 vs 26,707.50 (±0.5%) OK
+  expect crit: 41,572.99 vs 41,573.00 (±0.5%) OK
+  expect noncrit: 18,667.71 vs 18,667.70 (±0.5%) OK
+
+=== [7] C8 生命缩放：守岸人 洞悉伤害（X3，HP×19.64%×3） ===
+probe: 守岸人 I 故此证明·洞悉伤害 Lv10 | ATK 988.0 HP 46,002.8 CR 35.10% CD 166.20%
+  洞悉伤害: expected 15,071.0 | crit 20,325.2 | noncrit 12,229.4
+    base=46,002.8[T]  multiplier=58.92%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.2324[T]  defense=0.5013[C]  resistance=0.9000[C]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 15,071.0 | crit 20,325.2 | noncrit 12,229.4
+  expect expected: 15,071.01 vs 15,071.00 (±0.5%) OK
+  expect crit: 20,325.21 vs 20,325.20 (±0.5%) OK
+  expect noncrit: 12,229.37 vs 12,229.40 (±0.5%) OK
+
+=== [8] C9 防御缩放：桃祈 R（DEF×449.71%） ===
+probe: 桃祈 R 不动如山 Lv10 | ATK 920.2 HP 13,510.0 CR 35.10% CD 166.20%
+  技能伤害: expected 11,640.1 | crit 15,698.2 | noncrit 9,445.3
+    base=4,156.3[T]  multiplier=449.71%[T]  bonus=1.1200[C]  deepen=1.0000[C]  crit=1.2324[T]  defense=0.5013[C]  resistance=0.9000[C]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 11,640.1 | crit 15,698.2 | noncrit 9,445.3
+  expect expected: 11,640.08 vs 11,640.10 (±0.5%) OK
+  expect crit: 15,698.15 vs 15,698.20 (±0.5%) OK
+  expect noncrit: 9,445.34 vs 9,445.30 (±0.5%) OK
+
+=== [9] C10 攻击方等级：散华 R，角色 Lv80 对敌 Lv90 ===
+probe: 散华 R 焦瞑冻土 Lv10 | ATK 1,401.9 HP 13,944.1 CR 35.10% CD 166.20%
+  技能伤害: expected 10,560.1 | crit 14,241.6 | noncrit 8,569.0
+    base=1,401.9[T]  multiplier=809.48%[T]  bonus=1.7200[C]  deepen=1.0000[C]  crit=1.2324[T]  defense=0.4878[C]  resistance=0.9000[C]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 10,560.1 | crit 14,241.6 | noncrit 8,569.0
+  expect expected: 10,560.07 vs 10,560.10 (±0.5%) OK
+  expect crit: 14,241.63 vs 14,241.60 (±0.5%) OK
+  expect noncrit: 8,568.97 vs 8,569.00 (±0.5%) OK
+
+zone mech legend: T=table C=community U=unsolved · engine ww-engine-0.1 · data 3.7.8

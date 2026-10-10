@@ -1,0 +1,13 @@
+{
+  "name": "ww-damage-sim",
+  "version": "3.1.0",
+  "private": true,
+  "description": "鸣潮伤害建模与模拟器（数据版本 3.7.8，上游 Arikatsu/WutheringWaves_Data 9218d61）",
+  "scripts": {
+    "test": "node --test pipeline/ww/engine/test/",
+    "build": "python3 pipeline/build_pages.py --dist dist",
+    "sim": "node pipeline/ww/engine/cli.js",
+    "all": "npm test && npm run build"
+  },
+  "engines": { "node": ">=18" }
+}

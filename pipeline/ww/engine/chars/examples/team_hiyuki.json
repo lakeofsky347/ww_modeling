@@ -1,0 +1,198 @@
+{
+ "name": "绯雪/洛瑟菈/穗穗 公开配队",
+ "duration": 30,
+ "team": [
+  {
+   "id": 1108,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21020086,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 30,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 30
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 30
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 30
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 30
+    }
+   ]
+  },
+  {
+   "id": 1109,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050086,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 30,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "Atk%",
+     "set": 30
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 30
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 30
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 30
+    }
+   ]
+  },
+  {
+   "id": 1110,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050096,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 33,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "Atk%",
+     "set": 33
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 33
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 33
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 33
+    }
+   ]
+  }
+ ],
+ "start": {
+  "energy": "full",
+  "concerto": [
+   0,
+   100,
+   100
+  ]
+ },
+ "rotation": {
+  "mode": "search",
+  "start": 0
+ },
+ "sources": [
+  "https://arabwuwa.com/teams/hiyuki-lucilla-suisui-152/",
+  "https://arabwuwa.com/rotations/hiyuki-lucilla-and-suisui-rotation-114/"
+ ],
+ "mode": "expected",
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "search": {
+  "beamWidth": 48,
+  "maxExpansions": 60000,
+  "topN": 3
+ },
+ "preset": "绯雪/洛瑟菈/穗穗 · 霜冻 自动搜索",
+ "reference": {
+  "arabwuwa_team_dps": 101029,
+  "arabwuwa_qingxiao_team_dps": 93893,
+  "ratio_vs_qingxiao": 1.076,
+  "shares": {
+   "绯雪": "81-85%",
+   "洛瑟菈": "12.7-15.1%",
+   "穗穗": "2.4-3.6%"
+  },
+  "note": "Lv100/20% 抗性/统一词条，只比相对值"
+ }
+}

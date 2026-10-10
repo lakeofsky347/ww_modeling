@@ -1,0 +1,62 @@
+== counts
+  resonators: 64
+  weapons: 124
+  echoes: 319
+  echoSubStats: 19
+  sonatas: 37
+  enemies: 310
+  resonatorHits: 2074
+  resonatorHitsHigh: 2023
+  echoHits: 457
+  echoHitsHigh: 336
+[PASS] count resonators == encore list (64) - repo=64
+[PASS] count weapons == encore list (124) - repo=124
+[PASS] count echoes == encore list (319) - repo=319
+[PASS] count enemies == encore list (310) - repo=310
+[PASS] resonators == 64 playable (RoleType 1, non-trial)
+[PASS] every resonator has 6 chains
+[PASS] every resonator has skill types 1,2,3,5,6,11 - []
+[PASS] every resonator has >=2 inherent skills - []
+[PASS] liberation cost == baseproperty.EnergyMax/100 for all - []
+[PASS] every sonata has >=1 piece effect with text
+  sonata piece patterns: [('1',), ('2', '5'), ('3',)]
+== names
+[PASS] no missing zh names (resonators/weapons/sonatas) - [('echoes', 60200501), ('echoes', 60200613), ('enemies', 340000111)]
+  missing zh names overall: [('echoes', 60200501), ('echoes', 60200613), ('enemies', 340000111)]
+  missing en names overall: 15 [('echoes', 60200501), ('echoes', 60200601), ('echoes', 60200602), ('echoes', 60200603), ('echoes', 60200604), ('echoes', 60200605), ('echoes', 60200606), ('echoes', 60200607), ('echoes', 60200608), ('echoes', 60200609)]
+[PASS] no missing skill names - []
+== monotonic
+[PASS] resonator hit multipliers non-decreasing across skill levels - 0 []
+[PASS] echo hit multipliers non-decreasing across echo ranks - []
+[PASS] resonator HP/ATK/DEF non-decreasing over (level,breach) - []
+[PASS] weapon main/sub non-decreasing - []
+[PASS] enemy DEF = 792+8*Lv on growth curve 0
+  resonator hits: 2074, high 2023 (97.5%)
+  echo hits: 457, high 336
+== encore.moe spot checks (cache bucket 3.7.8)
+
+  char base stats (96 lv/breach points x HP/ATK/DEF): 18/18
+  skill present: 60/60
+  skill name: 60/60
+  skill param display strings (all levels): 208/208
+  damage row exported: 385/385
+  damage RateLv (per level) vs encore: 385/385
+  damage Energy units (ours energy): 385/385
+  damage ElementPower units (ours concerto): 385/385
+  damage ToughLv units (ours toughness): 385/385
+  damage WeaknessLvl units (ours offTune): 385/385
+  damage Type label vs encore: 384/384
+  chain name: 36/36
+  chain desc text (tags stripped): 36/36
+  weapon stat curve (96 points): 4/4
+  weapon passive params: 2/2
+  echo cooldown: 2/2
+  echo rank params: 2/2
+  echo cost: 2/2
+  echo sonata groups: 2/2
+  sonata piece text: 6/6
+  monster PropertyId link: 1/1
+  monster base stat: 3/3
+[PASS] encore spot checks all matched (3136/3136)
+
+RESULT: 0 failing checks

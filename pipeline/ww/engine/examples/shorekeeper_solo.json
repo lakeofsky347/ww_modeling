@@ -1,0 +1,57 @@
+{
+ "name": "守岸人 单人 自动搜索",
+ "duration": 20,
+ "mode": "expected",
+ "team": [
+  {
+   "id": 1505,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050036,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "echoId": 6000060,
+     "cost": 4,
+     "main": "HealChange",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "LifeMax%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "LifeMax%",
+     "set": 7
+    }
+   ]
+  }
+ ],
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": 0
+ },
+ "rotation": {
+  "mode": "search"
+ }
+}

@@ -1,0 +1,186 @@
+{
+ "name": "丹瑾 + 桃祈 + 鉴心（公开配队 Danjin + Taoqi + Jianxin）",
+ "duration": 25,
+ "mode": "expected",
+ "team": [
+  {
+   "id": 1602,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21020015,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 6,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 6
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 6
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 6
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 6
+    }
+   ]
+  },
+  {
+   "id": 1601,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21010044,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Def%",
+     "set": 8,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "Def%",
+     "set": 8
+    },
+    {
+     "cost": 3,
+     "main": "Def%",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Def%",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Def%",
+     "set": 8
+    }
+   ]
+  },
+  {
+   "id": 1405,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21040015,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 8,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 8
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 8
+    }
+   ]
+  }
+ ],
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": [
+   0,
+   100,
+   100
+  ]
+ },
+ "rotation": {
+  "mode": "search",
+  "start": 0
+ },
+ "search": {
+  "beamWidth": 48,
+  "maxExpansions": 60000,
+  "topN": 3
+ },
+ "sources": [
+  "https://gamerant.com/wuthering-waves-best-danjin-team-comps-composition-wuwa/",
+  "https://wutheringwaves.gg/danjin-guide/"
+ ]
+}

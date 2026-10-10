@@ -1,0 +1,189 @@
+{
+ "name": "心（同奏）+ 锁暝 + 守岸人（公开配队 Hsin + Suoming + Shorekeeper）",
+ "duration": 25,
+ "mode": "expected",
+ "team": [
+  {
+   "id": 1311,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050116,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 36,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 36
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 36
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 36
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 36
+    }
+   ],
+   "module": {
+    "mode": "unison"
+   }
+  },
+  {
+   "id": 1312,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21020107,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 3,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 3
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 3
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 3
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 3
+    }
+   ]
+  },
+  {
+   "id": 1505,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050036,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "HealChange",
+     "set": 7,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "LifeMax%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "LifeMax%",
+     "set": 7
+    }
+   ]
+  }
+ ],
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": [
+   0,
+   100,
+   100
+  ]
+ },
+ "rotation": {
+  "mode": "search",
+  "start": 1
+ },
+ "search": {
+  "beamWidth": 48,
+  "maxExpansions": 60000,
+  "topN": 3
+ },
+ "sources": [
+  "https://allthings.how/best-teams-for-hsin-in-wuthering-waves-electro-flare-and-unison/",
+  "https://www.ldshop.gg/blog/wuthering-waves/hsin-team-guide.html"
+ ]
+}

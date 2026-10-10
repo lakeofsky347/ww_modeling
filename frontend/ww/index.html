@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="ww">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>鸣潮 · 伤害模拟器</title>
+<link rel="stylesheet" href="../assets/theme/common.css">
+<link rel="stylesheet" href="../assets/theme/ww.css">
+<link rel="icon" type="image/svg+xml" href="../assets/theme/favicon-ww.svg">
+</head>
+<body>
+<!-- 页面骨架：容器 id 固定，引擎往里渲染；见 COMPONENTS.md -->
+<header class="ww-top" id="ww-top">
+  <div class="ww-brand">
+    <svg class="mark" viewBox="0 0 32 32" fill="none" stroke="#d9b46a" stroke-width="1.5"><circle cx="16" cy="16" r="14" stroke-opacity=".5"/><path d="M3 16q3-8 6 0t6 0 6 0 6 0 3 0" stroke="#f1d9a0"/><circle cx="16" cy="16" r="7" stroke="#7fd6dc" stroke-opacity=".6"/></svg>
+    <div><h1>鸣潮 · 伤害模拟器</h1><div class="sub">Wuthering Waves · Resonance Lab <span id="ww-ver"></span></div></div>
+  </div>
+  <div id="ww-top-actions" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+</header>
+
+<main class="ww-layout">
+  <div class="ww-col">
+    <section class="ww-panel"><header><h2>编队</h2><span class="en">Team</span></header><div id="ww-team"></div></section>
+    <section class="ww-panel"><header><h2>共鸣者配置</h2><span class="en">Resonator</span></header><div id="ww-build"></div></section>
+    <section class="ww-panel"><header><h2>目标</h2><span class="en">Target</span></header><div id="ww-enemy"></div></section>
+    <section class="ww-panel"><header><h2>模拟设置</h2><span class="en">Simulation</span></header><div id="ww-settings"></div></section>
+  </div>
+  <div class="ww-col">
+    <div id="ww-summary"></div>
+    <section class="ww-panel"><header><h2>能量</h2><span class="en">Energy</span></header><div id="ww-gauges"></div></section>
+    <section class="ww-panel"><header><h2>动作序列</h2><span class="en">Sequence</span></header><div id="ww-seq"></div></section>
+    <section class="ww-panel"><header><h2>排轴</h2><span class="en">Rotation</span></header><div id="ww-timeline"></div></section>
+    <section class="ww-panel"><header><h2>增益与状态</h2><span class="en">Buffs</span></header><div id="ww-buffs"></div></section>
+    <section class="ww-panel"><header><h2>自动搜索</h2><span class="en">Search</span></header><div id="ww-search"></div></section>
+    <section class="ww-panel"><header><h2>伤害占比</h2><span class="en">Share</span></header><div id="ww-share"></div></section>
+    <section class="ww-panel"><header><h2>乘区拆解</h2><span class="en">Breakdown</span></header><div id="ww-breakdown"></div></section>
+    <section class="ww-panel"><header><h2>提示与警告</h2><span class="en">Notice</span></header><div id="ww-warnings"></div></section>
+  </div>
+</main>
+<div id="ww-modal-root"></div>
+
+<script src="../assets/theme/bg-webgl.js"></script>
+<!-- ===== 以下为样式演示用的示例数据（MOCK），引擎接入后整段删除 ===== -->
+<script id="ww-mock">
+(function(){
+var $=function(id){return document.getElementById(id)};
+var T=[{n:"示例共鸣者 A",el:"spectro",role:"主C",lv:90,ch:2,w:"示例武器 · 5★"},{n:"示例共鸣者 B",el:"havoc",role:"副C",lv:90,ch:0,w:"示例武器 · 4★"},{n:"示例共鸣者 C",el:"aero",role:"辅助",lv:80,ch:6,w:"示例武器 · 4★"}];
+$("ww-ver").textContent="· 示例数据";
+$("ww-top-actions").innerHTML='<select style="width:160px"><option>载入预设…</option></select><button class="ww-btn sm">导入</button><button class="ww-btn sm">导出</button><button class="ww-btn pri">开始模拟</button>';
+$("ww-team").innerHTML='<div class="ww-team">'+T.map(function(c,i){return '<div class="ww-slot'+(i==0?' sel':'')+'" data-el="'+c.el+'"><span class="role">'+c.role+'</span><div class="ava"><i class="ww-el"></i></div><div class="nm">'+c.n+'</div><div class="meta">Lv'+c.lv+' · '+c.w+'</div><div class="ww-chain">'+[1,2,3,4,5,6].map(function(k){return '<i'+(k<=c.ch?' class="on"':'')+'></i>'}).join('')+'</div></div>'}).join('')+'</div>';
+$("ww-build").innerHTML='<div class="ww-sub">技能等级</div><div class="ww-grid4">'+["常态攻击","共鸣技能","共鸣解放","共鸣回路"].map(function(s){return '<label class="ww-field"><span>'+s+'</span><input type="number" value="10"></label>'}).join('')+'</div>'+
+ '<div class="ww-sub">声骸 <span class="ww-tag gold">4-3-3-1-1</span></div><div class="ww-echoes">'+[4,3,3,1,1].map(function(c,i){return '<div class="ww-echo"><span class="cost">COST '+c+'</span><div class="main">'+["暴击","属性伤害","属性伤害","攻击%","攻击%"][i]+'</div><div class="set">示例套装</div></div>'}).join('')+'</div>'+
+ '<div class="ww-sub">标签样式</div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="ww-tag gold">5★</span><span class="ww-tag cyan">协奏</span><span class="ww-tag el" data-el="fusion"><i class="ww-el"></i>热熔</span><span class="ww-tag el" data-el="glacio"><i class="ww-el"></i>冷凝</span><span class="ww-tag el" data-el="electro"><i class="ww-el"></i>导电</span><span class="ww-tag low" title="示例：倍率从描述文本自动解析">低置信</span></div>';
+$("ww-enemy").innerHTML='<div class="ww-grid3"><label class="ww-field"><span>等级</span><input type="number" value="100"></label><label class="ww-field"><span>属性抗性%</span><input type="number" value="10"></label><label class="ww-field"><span>目标数</span><input type="number" value="1"></label></div>';
+$("ww-settings").innerHTML='<div class="ww-grid2"><label class="ww-field"><span>时长（秒）</span><input type="number" value="25"></label><label class="ww-field"><span>排轴模式</span><select><option>自动搜索</option><option>手写</option></select></label></div><div style="margin-top:10px" class="ww-seg"><button class="on">期望</button><button>暴击</button><button>不暴</button></div>';
+$("ww-summary").innerHTML='<div class="ww-cards"><div class="ww-card hero"><div class="k">总伤害 · 期望</div><div class="v">1,234,567</div><div class="s">示例数据 · 25 秒 · 单目标</div></div><div class="ww-card"><div class="k">DPS</div><div class="v">49,383</div></div><div class="ww-card"><div class="k">切人次数</div><div class="v">7</div></div><div class="ww-card"><div class="k">解放次数</div><div class="v">3</div></div></div>';
+$("ww-gauges").innerHTML='<div class="ww-gauges">'+T.map(function(c,i){var p=[100,62,85][i],q=[40,100,70][i];return '<div class="ww-gauge" style="--p:'+p+';--c:var(--'+c.el+')"><div class="ring" data-val="'+p+'%"></div><div class="lbl">'+c.n.slice(-1)+'<br>共鸣能量</div></div><div class="ww-gauge concerto" style="--p:'+q+'"><div class="ring" data-val="'+q+'"></div><div class="lbl">'+c.n.slice(-1)+'<br>协奏能量</div></div>'}).join('')+'</div>';
+var acts=[[2,"A",0,8,"I"],[2,"E",9,6],[1,"E",16,5,"I"],[1,"R",22,10],[1,"Q",33,4,"O"],[0,"A",38,10,"I"],[0,"H",49,5],[0,"E",55,7],[0,"R",63,14],[0,"Q",78,4],[2,"E",83,6,"I"],[1,"A",90,9,"I"]];
+var who=T.map(function(c,i){return '<div class="ww-lane" data-el="'+c.el+'"><div class="who"><i class="ww-el"></i>'+c.n.slice(-1)+'</div><div class="track">'+acts.filter(function(a){return a[0]==i}).map(function(a){var lb={A:"普攻",E:"技能",R:"解放",Q:"声骸",H:"重击"}[a[1]];return '<div class="ww-act '+a[1]+(a[4]?' '+a[4]:'')+'" style="left:'+a[2]+'%;width:'+a[3]+'%">'+lb+'</div>'}).join('')+'</div></div>'}).join('');
+$("ww-timeline").innerHTML='<div class="ww-tl"><div class="ruler">'+[0,5,10,15,20].map(function(s){return '<span>'+s+'s</span>'}).join('')+'</div>'+who+'</div><div class="ww-tl-legend"><span>◆ 变奏入场</span><span>▶ 延奏离场</span><span>发光块 = 共鸣解放</span><span>金色块 = 声骸技能</span></div>';
+$("ww-share").innerHTML='<div class="ww-bars">'+T.map(function(c,i){var p=[61.2,28.4,10.4][i];return '<div class="row" data-el="'+c.el+'"><div class="nm"><i class="ww-el"></i>'+c.n.slice(-1)+'</div><div class="ww-bar"><i style="width:'+p+'%"></i></div><div class="num">'+p+'%</div></div>'}).join('')+'</div>'+
+ '<div class="ww-sub">按技能类型</div><div class="ww-stack"><i style="width:38%;background:var(--gold)"></i><i style="width:24%;background:var(--cyan)"></i><i style="width:18%;background:#9b8cff"></i><i style="width:12%;background:#e98a6b"></i><i style="width:8%;background:#666"></i></div><div class="ww-legend"><span><i style="--c:var(--gold)"></i>共鸣解放 38%</span><span><i style="--c:var(--cyan)"></i>共鸣技能 24%</span><span><i style="--c:#9b8cff"></i>变奏 18%</span><span><i style="--c:#e98a6b"></i>重击 12%</span><span><i style="--c:#666"></i>其他 8%</span></div>';
+$("ww-breakdown").innerHTML='<div class="ww-mult"><span class="z"><b>基础区</b>12,480</span><span class="x">×</span><span class="z"><b>倍率</b>486%</span><span class="x">×</span><span class="z"><b>伤害加成</b>1.92</span><span class="x">×</span><span class="z"><b>加深</b>1.25</span><span class="x">×</span><span class="z"><b>暴击期望</b>1.84</span><span class="x">×</span><span class="z"><b>防御</b>0.52</span><span class="x">×</span><span class="z"><b>抗性</b>0.90</span></div><table class="ww-tbl" style="margin-top:12px"><thead><tr><th>动作</th><th>属性</th><th class="num">次数</th><th class="num">伤害</th></tr></thead><tbody><tr><td>共鸣解放</td><td><span class="ww-tag el" data-el="spectro"><i class="ww-el"></i>衍射</span></td><td class="num">1</td><td class="num">412,300</td></tr><tr><td>变奏技能</td><td><span class="ww-tag el" data-el="havoc"><i class="ww-el"></i>湮灭</span></td><td class="num">2</td><td class="num">158,900</td></tr></tbody></table>';
+$("ww-warnings").innerHTML='<div class="ww-warn">示例：协奏能量未满时切人，不会触发变奏。</div>';
+
+var S=[[2,"A","普攻×3","I"],[2,"E","共鸣技能"],[1,"E","共鸣技能","I"],[1,"R","共鸣解放"],[1,"Q","声骸技能","O"],[0,"A","普攻×4","I"],[0,"H","重击"],[0,"E","共鸣技能"],[0,"R","共鸣解放"],[0,"Q","声骸技能"]];
+$("ww-seq").innerHTML='<div class="ww-seq">'+S.map(function(a,i){return '<span class="ww-step '+(a[3]||'')+(i==6?' drop-before':'')+'" draggable="true" data-el="'+T[a[0]].el+'"><span class="k">'+T[a[0]].n.slice(-1)+'</span>'+a[2]+'<button class="del" title="删除">×</button></span>'}).join('')+'</div><div class="ww-palette">'+T.map(function(c){return ["普攻","重击","共鸣技能","共鸣解放","声骸技能"].map(function(x){return '<button data-el="'+c.el+'">'+c.n.slice(-1)+' · '+x+'</button>'}).join('')}).join('')+'</div>';
+var B=[["示例增益 · 攻击提升","示例共鸣者 C · 延奏",1,92,"aero"],["示例增益 · 衍射伤害加深","示例共鸣者 B · 变奏",3,64,"havoc"],["示例套装 · 4 件效果","声骸套装",1,100,"spectro"],["示例武器 · 被动","武器",2,48,"spectro"]];
+$("ww-buffs").innerHTML='<div class="ww-buffs">'+B.map(function(b){return '<div class="ww-buff" data-el="'+b[4]+'"><div class="nm"><i class="ww-el"></i>'+b[0]+'</div><div class="src">'+b[1]+'</div><div class="stk">×'+b[2]+'</div><div class="cov"><div class="ww-bar"><i style="width:'+b[3]+'%"></i></div>'+b[3]+'%</div></div>'}).join('')+'</div>';
+document.querySelectorAll('.ww-lane .track').forEach(function(tr,i){tr.insertAdjacentHTML('beforeend','<div class="ww-buffbar" style="--c:var(--'+T[i].el+')"><i style="left:'+[30,10,0][i]+'%;width:'+[60,40,90][i]+'%"></i></div>')});
+var C=[["主轴 A · 双变奏起手","延奏 C → 变奏 B → 变奏 A",49383,1234567,0],["主轴 A · 解放前置","延奏 C → 变奏 A",47120,1178000,-4.6],["双主 A+B","延奏 C → 变奏 A → 变奏 B",45010,1125250,-8.9],["速切循环","每轮 3 次切人",41870,1046750,-15.2]];
+$("ww-search").innerHTML='<div class="ww-cands"><div class="hd"><span>#</span><span>方案</span><span>DPS</span><span class="total">总伤</span><span>差距</span></div>'+C.map(function(c,i){return '<div class="ww-cand'+(i==0?' best cur':'')+'"><div class="rk">'+(i+1)+'</div><div class="desc"><div class="t">'+c[0]+'</div><div class="s">'+c[1]+'</div></div><div class="num">'+c[2].toLocaleString()+'</div><div class="num total">'+c[3].toLocaleString()+'</div><div class="gap">'+(i==0?'最优':c[4]+'%')+'</div></div>'}).join('')+'</div>';
+setTimeout(function(){window.__uiReady&&__uiReady()},400);
+})();
+</script>
+</body>
+</html>

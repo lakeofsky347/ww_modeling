@@ -1,0 +1,189 @@
+{
+ "name": "长离 + 布兰特 + 守岸人 自动搜索（Prydwen 布兰特：长离最吃其延奏）",
+ "duration": 25,
+ "mode": "expected",
+ "team": [
+  {
+   "id": 1205,
+   "level": 90,
+   "chain": 0,
+   "skillLevels": {
+    "basic": 10,
+    "skill": 10,
+    "liberation": 10,
+    "intro": 10,
+    "forte": 10
+   },
+   "weapon": {
+    "id": 21020016,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "echoId": 390080007,
+     "cost": 4,
+     "main": "Crit",
+     "set": 2,
+     "subs": [
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 2
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 2
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 2
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 2
+    }
+   ]
+  },
+  {
+   "id": 1206,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21020036,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 14,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "energyRegen",
+       "value": 0.124
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 14
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 14
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 14
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 14
+    }
+   ]
+  },
+  {
+   "id": 1505,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050036,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "HealChange",
+     "set": 7,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "LifeMax%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "LifeMax%",
+     "set": 7
+    }
+   ]
+  }
+ ],
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": [
+   0,
+   100,
+   100
+  ]
+ },
+ "rotation": {
+  "mode": "search",
+  "start": 1
+ },
+ "search": {
+  "beamWidth": 48,
+  "maxExpansions": 60000,
+  "topN": 3
+ },
+ "sources": [
+  "https://www.prydwen.gg/wuthering-waves/characters/brant"
+ ]
+}

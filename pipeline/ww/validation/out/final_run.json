@@ -1,0 +1,1332 @@
+[
+ {
+  "name": "C1 基线：今汐 R 两段，Lv90 对 Lv90，抗 10%",
+  "probe": {
+   "member": 0,
+   "action": "R"
+  },
+  "panel": {
+   "atk": 1465.775,
+   "hp": 15385,
+   "critRate": 0.431,
+   "critDmg": 1.662
+  },
+  "sum": {
+   "expected": 25491.270074944994,
+   "crit": 32961.77211979456,
+   "noncrit": 19832.594536579156
+  },
+  "hits": [
+   {
+    "label": "技能伤害",
+    "total": {
+     "expected": 7647.396323090375,
+     "crit": 9888.551420559364,
+     "noncrit": 5949.790265077837
+    },
+    "zones": [
+     {
+      "key": "base",
+      "name": "基础区",
+      "value": 1465.775,
+      "display": "攻击 1,466",
+      "mech": "table",
+      "basis": "基础区：damage.RelatedProperty 选 ATK/HP/DEF，×倍率，+FormulaParam10/CureBaseValue 固定值；encore.moe 385/385 行一致",
+      "confidence": "high",
+      "stat": "atk",
+      "flat": 0
+     },
+     {
+      "key": "multiplier",
+      "name": "倍率",
+      "value": 4.9981,
+      "display": "499.81%",
+      "mech": "table",
+      "basis": "倍率：damage.RateLv[技能等级]/10000，与 skilldescription 显示串逐级匹配",
+      "confidence": "high"
+     },
+     {
+      "key": "bonus",
+      "name": "伤害加成",
+      "value": 1.8,
+      "display": "1.8",
+      "mech": "community",
+      "basis": "加成区：1+属性伤害加成+技能类型加成+通用加成，同区相加（fandom Damage）；字段来自 baseproperty",
+      "confidence": "medium"
+     },
+     {
+      "key": "deepen",
+      "name": "加深",
+      "value": 1,
+      "display": "1",
+      "mech": "community",
+      "basis": "加深区：独立乘区 1+Σ加深（fandom DMG Deepen；9game/gamersky 实测）",
+      "confidence": "medium"
+     },
+     {
+      "key": "crit",
+      "name": "暴击期望",
+      "value": 1.2853219999999999,
+      "display": "1.2853",
+      "mech": "table",
+      "basis": "暴击区：基础暴击 5% / 暴伤 150%（baseproperty.Crit/CritDamage）；期望=1+min(CR,1)×(CD−1)",
+      "confidence": "high",
+      "critRate": 0.431,
+      "critDmg": 1.662
+     },
+     {
+      "key": "defense",
+      "name": "防御",
+      "value": 0.5013192612137203,
+      "display": "0.5013",
+      "mech": "community",
+      "basis": "防御区：(800+8·Lv攻)/(800+8·Lv攻+DEF敌×(1−无视防御)×(1−减防))；敌防 792+8·Lv 由表推导（已断言）",
+      "confidence": "medium",
+      "enemyDef": 1512,
+      "effectiveDef": 1512
+     },
+     {
+      "key": "resistance",
+      "name": "抗性",
+      "value": 0.9,
+      "display": "0.9（有效抗性 10%）",
+      "mech": "community",
+      "basis": "抗性区：有效抗性<0 → 1−res/2；<0.8 → 1−res；≥0.8 → 1/(1+5res)；基础抗性 10%/40%/免疫 来自 baseproperty",
+      "confidence": "medium",
+      "baseRes": 0.1,
+      "shred": 0,
+      "effectiveRes": 0.1,
+      "neg": false
+     },
+     {
+      "key": "dmgReduce",
+      "name": "减伤",
+      "value": 1,
+      "display": "1",
+      "mech": "unsolved",
+      "basis": "减伤区：目标 DamageReduce* 字段存在，乘区形式 (1−Σ) 未证实；默认 0",
+      "confidence": "low"
+     }
+    ]
+   },
+   {
+    "label": "技能伤害",
+    "total": {
+     "expected": 17843.87375185462,
+     "crit": 23073.220699235193,
+     "noncrit": 13882.80427150132
+    },
+    "zones": [
+     {
+      "key": "base",
+      "name": "基础区",
+      "value": 1465.775,
+      "display": "攻击 1,466",
+      "mech": "table",
+      "basis": "基础区：damage.RelatedProperty 选 ATK/HP/DEF，×倍率，+FormulaParam10/CureBaseValue 固定值；encore.moe 385/385 行一致",
+      "confidence": "high",
+      "stat": "atk",
+      "flat": 0
+     },
+     {
+      "key": "multiplier",
+      "name": "倍率",
+      "value": 11.6622,
+      "display": "1166.22%",
+      "mech": "table",
+      "basis": "倍率：damage.RateLv[技能等级]/10000，与 skilldescription 显示串逐级匹配",
+      "confidence": "high"
+     },
+     {
+      "key": "bonus",
+      "name": "伤害加成",
+      "value": 1.8,
+      "display": "1.8",
+      "mech": "community",
+      "basis": "加成区：1+属性伤害加成+技能类型加成+通用加成，同区相加（fandom Damage）；字段来自 baseproperty",
+      "confidence": "medium"
+     },
+     {
+      "key": "deepen",
+      "name": "加深",
+      "value": 1,
+      "display": "1",
+      "mech": "community",
+      "basis": "加深区：独立乘区 1+Σ加深（fandom DMG Deepen；9game/gamersky 实测）",
+      "confidence": "medium"
+     },
+     {
+      "key": "crit",
+      "name": "暴击期望",
+      "value": 1.2853219999999999,
+      "display": "1.2853",
+      "mech": "table",
+      "basis": "暴击区：基础暴击 5% / 暴伤 150%（baseproperty.Crit/CritDamage）；期望=1+min(CR,1)×(CD−1)",
+      "confidence": "high",
+      "critRate": 0.431,
+      "critDmg": 1.662
+     },
+     {
+      "key": "defense",
+      "name": "防御",
+      "value": 0.5013192612137203,
+      "display": "0.5013",
+      "mech": "community",
+      "basis": "防御区：(800+8·Lv攻)/(800+8·Lv攻+DEF敌×(1−无视防御)×(1−减防))；敌防 792+8·Lv 由表推导（已断言）",
+      "confidence": "medium",
+      "enemyDef": 1512,
+      "effectiveDef": 1512
+     },
+     {
+      "key": "resistance",
+      "name": "抗性",
+      "value": 0.9,
+      "display": "0.9（有效抗性 10%）",
+      "mech": "community",
+      "basis": "抗性区：有效抗性<0 → 1−res/2；<0.8 → 1−res；≥0.8 → 1/(1+5res)；基础抗性 10%/40%/免疫 来自 baseproperty",
+      "confidence": "medium",
+      "baseRes": 0.1,
+      "shred": 0,
+      "effectiveRes": 0.1,
+      "neg": false
+     },
+     {
+      "key": "dmgReduce",
+      "name": "减伤",
+      "value": 1,
+      "display": "1",
+      "mech": "unsolved",
+      "basis": "减伤区：目标 DamageReduce* 字段存在，乘区形式 (1−Σ) 未证实；默认 0",
+      "confidence": "low"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "C2 无视防御+减防：长离 R，无视 15%、减防 10%",
+  "probe": {
+   "member": 0,
+   "action": "R"
+  },
+  "panel": {
+   "atk": 1774.5874999999999,
+   "hp": 14947.5,
+   "critRate": 0.431,
+   "critDmg": 1.662
+  },
+  "sum": {
+   "expected": 22619.878541433238,
+   "crit": 29248.887155018,
+   "noncrit": 17598.60839652106
+  },
+  "hits": [
+   {
+    "label": "技能伤害",
+    "total": {
+     "expected": 22619.878541433238,
+     "crit": 29248.887155018,
+     "noncrit": 17598.60839652106
+    },
+    "zones": [
+     {
+      "key": "base",
+      "name": "基础区",
+      "value": 1774.5874999999999,
+      "display": "攻击 1,775",
+      "mech": "table",
+      "basis": "基础区：damage.RelatedProperty 选 ATK/HP/DEF，×倍率，+FormulaParam10/CureBaseValue 固定值；encore.moe 385/385 行一致",
+      "confidence": "high",
+      "stat": "atk",
+      "flat": 0
+     },
+     {
+      "key": "multiplier",
+      "name": "倍率",
+      "value": 12.1275,
+      "display": "1212.75%",
+      "mech": "table",
+      "basis": "倍率：damage.RateLv[技能等级]/10000，与 skilldescription 显示串逐级匹配",
+      "confidence": "high"
+     },
+     {
+      "key": "bonus",
+      "name": "伤害加成",
+      "value": 1.6,
+      "display": "1.6",
+      "mech": "community",
+      "basis": "加成区：1+属性伤害加成+技能类型加成+通用加成，同区相加（fandom Damage）；字段来自 baseproperty",
+      "confidence": "medium"
+     },
+     {
+      "key": "deepen",
+      "name": "加深",
+      "value": 1,
+      "display": "1",
+      "mech": "community",
+      "basis": "加深区：独立乘区 1+Σ加深（fandom DMG Deepen；9game/gamersky 实测）",
+      "confidence": "medium"
+     },
+     {
+      "key": "crit",
+      "name": "暴击期望",
+      "value": 1.2853219999999999,
+      "display": "1.2853",
+      "mech": "table",
+      "basis": "暴击区：基础暴击 5% / 暴伤 150%（baseproperty.Crit/CritDamage）；期望=1+min(CR,1)×(CD−1)",
+      "confidence": "high",
+      "critRate": 0.431,
+      "critDmg": 1.662
+     },
+     {
+      "key": "defense",
+      "name": "防御",
+      "value": 0.5678676569481595,
+      "display": "0.5679",
+      "mech": "community",
+      "basis": "防御区：(800+8·Lv攻)/(800+8·Lv攻+DEF敌×(1−无视防御)×(1−减防))；敌防 792+8·Lv 由表推导（已断言）",
+      "confidence": "medium",
+      "enemyDef": 1512,
+      "effectiveDef": 1156.68
+     },
+     {
+      "key": "resistance",
+      "name": "抗性",
+      "value": 0.9,
+      "display": "0.9（有效抗性 10%）",
+      "mech": "community",
+      "basis": "抗性区：有效抗性<0 → 1−res/2；<0.8 → 1−res；≥0.8 → 1/(1+5res)；基础抗性 10%/40%/免疫 来自 baseproperty",
+      "confidence": "medium",
+      "baseRes": 0.1,
+      "shred": 0,
+      "effectiveRes": 0.1,
+      "neg": false
+     },
+     {
+      "key": "dmgReduce",
+      "name": "减伤",
+      "value": 1,
+      "display": "1",
+      "mech": "unsolved",
+      "basis": "减伤区：目标 DamageReduce* 字段存在，乘区形式 (1−Σ) 未证实；默认 0",
+      "confidence": "low"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "C3 负抗：卡卡罗 R，敌 Lv100，减抗 30% → 有效 −20%",
+  "probe": {
+   "member": 0,
+   "action": "R"
+  },
+  "panel": {
+   "atk": 1504.925,
+   "hp": 15060,
+   "critRate": 0.35100000000000003,
+   "critDmg": 1.8219999999999998
+  },
+  "sum": {
+   "expected": 9942.207944290782,
+   "crit": 14058.512679254063,
+   "noncrit": 7715.978418910025
+  },
+  "hits": [
+   {
+    "label": "技能伤害",
+    "total": {
+     "expected": 9942.207944290782,
+     "crit": 14058.512679254063,
+     "noncrit": 7715.978418910025
+    },
+    "zones": [
+     {
+      "key": "base",
+      "name": "基础区",
+      "value": 1504.925,
+      "display": "攻击 1,505",
+      "mech": "table",
+      "basis": "基础区：damage.RelatedProperty 选 ATK/HP/DEF，×倍率，+FormulaParam10/CureBaseValue 固定值；encore.moe 385/385 行一致",
+      "confidence": "high",
+      "stat": "atk",
+      "flat": 0
+     },
+     {
+      "key": "multiplier",
+      "name": "倍率",
+      "value": 5.9643,
+      "display": "596.43%",
+      "mech": "table",
+      "basis": "倍率：damage.RateLv[技能等级]/10000，与 skilldescription 显示串逐级匹配",
+      "confidence": "high"
+     },
+     {
+      "key": "bonus",
+      "name": "伤害加成",
+      "value": 1.6,
+      "display": "1.6",
+      "mech": "community",
+      "basis": "加成区：1+属性伤害加成+技能类型加成+通用加成，同区相加（fandom Damage）；字段来自 baseproperty",
+      "confidence": "medium"
+     },
+     {
+      "key": "deepen",
+      "name": "加深",
+      "value": 1,
+      "display": "1",
+      "mech": "community",
+      "basis": "加深区：独立乘区 1+Σ加深（fandom DMG Deepen；9game/gamersky 实测）",
+      "confidence": "medium"
+     },
+     {
+      "key": "crit",
+      "name": "暴击期望",
+      "value": 1.288522,
+      "display": "1.2885",
+      "mech": "table",
+      "basis": "暴击区：基础暴击 5% / 暴伤 150%（baseproperty.Crit/CritDamage）；期望=1+min(CR,1)×(CD−1)",
+      "confidence": "high",
+      "critRate": 0.35100000000000003,
+      "critDmg": 1.8219999999999998
+     },
+     {
+      "key": "defense",
+      "name": "防御",
+      "value": 0.4884318766066838,
+      "display": "0.4884",
+      "mech": "community",
+      "basis": "防御区：(800+8·Lv攻)/(800+8·Lv攻+DEF敌×(1−无视防御)×(1−减防))；敌防 792+8·Lv 由表推导（已断言）",
+      "confidence": "medium",
+      "enemyDef": 1592,
+      "effectiveDef": 1592
+     },
+     {
+      "key": "resistance",
+      "name": "抗性",
+      "value": 1.1,
+      "display": "1.1（有效抗性 -20%）",
+      "mech": "community",
+      "basis": "抗性区：有效抗性<0 → 1−res/2；<0.8 → 1−res；≥0.8 → 1/(1+5res)；基础抗性 10%/40%/免疫 来自 baseproperty",
+      "confidence": "medium",
+      "baseRes": 0.1,
+      "shred": 0.3,
+      "effectiveRes": -0.19999999999999998,
+      "neg": true
+     },
+     {
+      "key": "dmgReduce",
+      "name": "减伤",
+      "value": 1,
+      "display": "1",
+      "mech": "unsolved",
+      "basis": "减伤区：目标 DamageReduce* 字段存在，乘区形式 (1−Σ) 未证实；默认 0",
+      "confidence": "low"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "C4 高抗：散华 E，免疫档 100% 减抗 10% → 有效 90%",
+  "probe": {
+   "member": 0,
+   "action": "E"
+  },
+  "panel": {
+   "atk": 1435.3999999999999,
+   "hp": 14622.5,
+   "critRate": 0.35100000000000003,
+   "critDmg": 1.662
+  },
+  "sum": {
+   "expected": 997.9594515203494,
+   "crit": 1345.8777602902562,
+   "noncrit": 809.7940795970254
+  },
+  "hits": [
+   {
+    "label": "技能伤害",
+    "total": {
+     "expected": 997.9594515203494,
+     "crit": 1345.8777602902562,
+     "noncrit": 809.7940795970254
+    },
+    "zones": [
+     {
+      "key": "base",
+      "name": "基础区",
+      "value": 1435.3999999999999,
+      "display": "攻击 1,435",
+      "mech": "table",
+      "basis": "基础区：damage.RelatedProperty 选 ATK/HP/DEF，×倍率，+FormulaParam10/CureBaseValue 固定值；encore.moe 385/385 行一致",
+      "confidence": "high",
+      "stat": "atk",
+      "flat": 0
+     },
+     {
+      "key": "multiplier",
+      "name": "倍率",
+      "value": 3.5985,
+      "display": "359.85%",
+      "mech": "table",
+      "basis": "倍率：damage.RateLv[技能等级]/10000，与 skilldescription 显示串逐级匹配",
+      "confidence": "high"
+     },
+     {
+      "key": "bonus",
+      "name": "伤害加成",
+      "value": 1.72,
+      "display": "1.72",
+      "mech": "community",
+      "basis": "加成区：1+属性伤害加成+技能类型加成+通用加成，同区相加（fandom Damage）；字段来自 baseproperty",
+      "confidence": "medium"
+     },
+     {
+      "key": "deepen",
+      "name": "加深",
+      "value": 1,
+      "display": "1",
+      "mech": "community",
+      "basis": "加深区：独立乘区 1+Σ加深（fandom DMG Deepen；9game/gamersky 实测）",
+      "confidence": "medium"
+     },
+     {
+      "key": "crit",
+      "name": "暴击期望",
+      "value": 1.232362,
+      "display": "1.2324",
+      "mech": "table",
+      "basis": "暴击区：基础暴击 5% / 暴伤 150%（baseproperty.Crit/CritDamage）；期望=1+min(CR,1)×(CD−1)",
+      "confidence": "high",
+      "critRate": 0.35100000000000003,
+      "critDmg": 1.662
+     },
+     {
+      "key": "defense",
+      "name": "防御",
+      "value": 0.5013192612137203,
+      "display": "0.5013",
+      "mech": "community",
+      "basis": "防御区：(800+8·Lv攻)/(800+8·Lv攻+DEF敌×(1−无视防御)×(1−减防))；敌防 792+8·Lv 由表推导（已断言）",
+      "confidence": "medium",
+      "enemyDef": 1512,
+      "effectiveDef": 1512
+     },
+     {
+      "key": "resistance",
+      "name": "抗性",
+      "value": 0.18181818181818182,
+      "display": "0.1818（有效抗性 90%）",
+      "mech": "community",
+      "basis": "抗性区：有效抗性<0 → 1−res/2；<0.8 → 1−res；≥0.8 → 1/(1+5res)；基础抗性 10%/40%/免疫 来自 baseproperty",
+      "confidence": "medium",
+      "baseRes": 1,
+      "shred": 0.1,
+      "effectiveRes": 0.9,
+      "neg": false
+     },
+     {
+      "key": "dmgReduce",
+      "name": "减伤",
+      "value": 1,
+      "display": "1",
+      "mech": "unsolved",
+      "basis": "减伤区：目标 DamageReduce* 字段存在，乘区形式 (1−Σ) 未证实；默认 0",
+      "confidence": "low"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "C5 加深（攻击方同区）：折枝 E，全伤加深 15% + 技能加深 25%",
+  "probe": {
+   "member": 0,
+   "action": "E",
+   "extraStats": [
+    {
+     "key": "deep:all",
+     "value": 0.15
+    },
+    {
+     "key": "deep:skill",
+     "value": 0.25
+    }
+   ]
+  },
+  "panel": {
+   "atk": 1407.05,
+   "hp": 20530.9375,
+   "critRate": 0.431,
+   "critDmg": 1.662
+  },
+  "sum": {
+   "expected": 5396.73391549444,
+   "crit": 6978.307200492765,
+   "noncrit": 4198.740794520316
+  },
+  "hits": [
+   {
+    "label": "短按技能伤害",
+    "total": {
+     "expected": 5396.73391549444,
+     "crit": 6978.307200492765,
+     "noncrit": 4198.740794520316
+    },
+    "zones": [
+     {
+      "key": "base",
+      "name": "基础区",
+      "value": 1407.05,
+      "display": "攻击 1,407",
+      "mech": "table",
+      "basis": "基础区：damage.RelatedProperty 选 ATK/HP/DEF，×倍率，+FormulaParam10/CureBaseValue 固定值；encore.moe 385/385 行一致",
+      "confidence": "high",
+      "stat": "atk",
+      "flat": 0
+     },
+     {
+      "key": "multiplier",
+      "name": "倍率",
+      "value": 2.9526,
+      "display": "98.42%×3",
+      "mech": "table",
+      "basis": "倍率：damage.RateLv[技能等级]/10000，与 skilldescription 显示串逐级匹配",
+      "confidence": "high"
+     },
+     {
+      "key": "bonus",
+      "name": "伤害加成",
+      "value": 1.6,
+      "display": "1.6",
+      "mech": "community",
+      "basis": "加成区：1+属性伤害加成+技能类型加成+通用加成，同区相加（fandom Damage）；字段来自 baseproperty",
+      "confidence": "medium"
+     },
+     {
+      "key": "deepen",
+      "name": "加深",
+      "value": 1.4,
+      "display": "1.4",
+      "mech": "community",
+      "basis": "加深区：独立乘区 1+Σ加深（fandom DMG Deepen；9game/gamersky 实测）",
+      "confidence": "medium"
+     },
+     {
+      "key": "crit",
+      "name": "暴击期望",
+      "value": 1.2853219999999999,
+      "display": "1.2853",
+      "mech": "table",
+      "basis": "暴击区：基础暴击 5% / 暴伤 150%（baseproperty.Crit/CritDamage）；期望=1+min(CR,1)×(CD−1)",
+      "confidence": "high",
+      "critRate": 0.431,
+      "critDmg": 1.662
+     },
+     {
+      "key": "defense",
+      "name": "防御",
+      "value": 0.5013192612137203,
+      "display": "0.5013",
+      "mech": "community",
+      "basis": "防御区：(800+8·Lv攻)/(800+8·Lv攻+DEF敌×(1−无视防御)×(1−减防))；敌防 792+8·Lv 由表推导（已断言）",
+      "confidence": "medium",
+      "enemyDef": 1512,
+      "effectiveDef": 1512
+     },
+     {
+      "key": "resistance",
+      "name": "抗性",
+      "value": 0.9,
+      "display": "0.9（有效抗性 10%）",
+      "mech": "community",
+      "basis": "抗性区：有效抗性<0 → 1−res/2；<0.8 → 1−res；≥0.8 → 1/(1+5res)；基础抗性 10%/40%/免疫 来自 baseproperty",
+      "confidence": "medium",
+      "baseRes": 0.1,
+      "shred": 0,
+      "effectiveRes": 0.1,
+      "neg": false
+     },
+     {
+      "key": "dmgReduce",
+      "name": "减伤",
+      "value": 1,
+      "display": "1",
+      "mech": "unsolved",
+      "basis": "减伤区：目标 DamageReduce* 字段存在，乘区形式 (1−Σ) 未证实；默认 0",
+      "confidence": "low"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "C6 加深（攻击方+目标易伤）：今汐 R，加深 15% + 目标受伤加深 10%",
+  "probe": {
+   "member": 0,
+   "action": "R",
+   "extraStats": [
+    {
+     "key": "deep:all",
+     "value": 0.15
+    },
+    {
+     "key": "deep:all",
+     "value": 0.1
+    }
+   ]
+  },
+  "panel": {
+   "atk": 1465.775,
+   "hp": 15385,
+   "critRate": 0.431,
+   "critDmg": 1.662
+  },
+  "sum": {
+   "expected": 31864.087593681237,
+   "crit": 41202.2151497432,
+   "noncrit": 24790.743170723945
+  },
+  "hits": [
+   {
+    "label": "技能伤害",
+    "total": {
+     "expected": 9559.245403862968,
+     "crit": 12360.689275699204,
+     "noncrit": 7437.2378313472955
+    },
+    "zones": [
+     {
+      "key": "base",
+      "name": "基础区",
+      "value": 1465.775,
+      "display": "攻击 1,466",
+      "mech": "table",
+      "basis": "基础区：damage.RelatedProperty 选 ATK/HP/DEF，×倍率，+FormulaParam10/CureBaseValue 固定值；encore.moe 385/385 行一致",
+      "confidence": "high",
+      "stat": "atk",
+      "flat": 0
+     },
+     {
+      "key": "multiplier",
+      "name": "倍率",
+      "value": 4.9981,
+      "display": "499.81%",
+      "mech": "table",
+      "basis": "倍率：damage.RateLv[技能等级]/10000，与 skilldescription 显示串逐级匹配",
+      "confidence": "high"
+     },
+     {
+      "key": "bonus",
+      "name": "伤害加成",
+      "value": 1.8,
+      "display": "1.8",
+      "mech": "community",
+      "basis": "加成区：1+属性伤害加成+技能类型加成+通用加成，同区相加（fandom Damage）；字段来自 baseproperty",
+      "confidence": "medium"
+     },
+     {
+      "key": "deepen",
+      "name": "加深",
+      "value": 1.25,
+      "display": "1.25",
+      "mech": "community",
+      "basis": "加深区：独立乘区 1+Σ加深（fandom DMG Deepen；9game/gamersky 实测）",
+      "confidence": "medium"
+     },
+     {
+      "key": "crit",
+      "name": "暴击期望",
+      "value": 1.2853219999999999,
+      "display": "1.2853",
+      "mech": "table",
+      "basis": "暴击区：基础暴击 5% / 暴伤 150%（baseproperty.Crit/CritDamage）；期望=1+min(CR,1)×(CD−1)",
+      "confidence": "high",
+      "critRate": 0.431,
+      "critDmg": 1.662
+     },
+     {
+      "key": "defense",
+      "name": "防御",
+      "value": 0.5013192612137203,
+      "display": "0.5013",
+      "mech": "community",
+      "basis": "防御区：(800+8·Lv攻)/(800+8·Lv攻+DEF敌×(1−无视防御)×(1−减防))；敌防 792+8·Lv 由表推导（已断言）",
+      "confidence": "medium",
+      "enemyDef": 1512,
+      "effectiveDef": 1512
+     },
+     {
+      "key": "resistance",
+      "name": "抗性",
+      "value": 0.9,
+      "display": "0.9（有效抗性 10%）",
+      "mech": "community",
+      "basis": "抗性区：有效抗性<0 → 1−res/2；<0.8 → 1−res；≥0.8 → 1/(1+5res)；基础抗性 10%/40%/免疫 来自 baseproperty",
+      "confidence": "medium",
+      "baseRes": 0.1,
+      "shred": 0,
+      "effectiveRes": 0.1,
+      "neg": false
+     },
+     {
+      "key": "dmgReduce",
+      "name": "减伤",
+      "value": 1,
+      "display": "1",
+      "mech": "unsolved",
+      "basis": "减伤区：目标 DamageReduce* 字段存在，乘区形式 (1−Σ) 未证实；默认 0",
+      "confidence": "low"
+     }
+    ]
+   },
+   {
+    "label": "技能伤害",
+    "total": {
+     "expected": 22304.84218981827,
+     "crit": 28841.525874043993,
+     "noncrit": 17353.50533937665
+    },
+    "zones": [
+     {
+      "key": "base",
+      "name": "基础区",
+      "value": 1465.775,
+      "display": "攻击 1,466",
+      "mech": "table",
+      "basis": "基础区：damage.RelatedProperty 选 ATK/HP/DEF，×倍率，+FormulaParam10/CureBaseValue 固定值；encore.moe 385/385 行一致",
+      "confidence": "high",
+      "stat": "atk",
+      "flat": 0
+     },
+     {
+      "key": "multiplier",
+      "name": "倍率",
+      "value": 11.6622,
+      "display": "1166.22%",
+      "mech": "table",
+      "basis": "倍率：damage.RateLv[技能等级]/10000，与 skilldescription 显示串逐级匹配",
+      "confidence": "high"
+     },
+     {
+      "key": "bonus",
+      "name": "伤害加成",
+      "value": 1.8,
+      "display": "1.8",
+      "mech": "community",
+      "basis": "加成区：1+属性伤害加成+技能类型加成+通用加成，同区相加（fandom Damage）；字段来自 baseproperty",
+      "confidence": "medium"
+     },
+     {
+      "key": "deepen",
+      "name": "加深",
+      "value": 1.25,
+      "display": "1.25",
+      "mech": "community",
+      "basis": "加深区：独立乘区 1+Σ加深（fandom DMG Deepen；9game/gamersky 实测）",
+      "confidence": "medium"
+     },
+     {
+      "key": "crit",
+      "name": "暴击期望",
+      "value": 1.2853219999999999,
+      "display": "1.2853",
+      "mech": "table",
+      "basis": "暴击区：基础暴击 5% / 暴伤 150%（baseproperty.Crit/CritDamage）；期望=1+min(CR,1)×(CD−1)",
+      "confidence": "high",
+      "critRate": 0.431,
+      "critDmg": 1.662
+     },
+     {
+      "key": "defense",
+      "name": "防御",
+      "value": 0.5013192612137203,
+      "display": "0.5013",
+      "mech": "community",
+      "basis": "防御区：(800+8·Lv攻)/(800+8·Lv攻+DEF敌×(1−无视防御)×(1−减防))；敌防 792+8·Lv 由表推导（已断言）",
+      "confidence": "medium",
+      "enemyDef": 1512,
+      "effectiveDef": 1512
+     },
+     {
+      "key": "resistance",
+      "name": "抗性",
+      "value": 0.9,
+      "display": "0.9（有效抗性 10%）",
+      "mech": "community",
+      "basis": "抗性区：有效抗性<0 → 1−res/2；<0.8 → 1−res；≥0.8 → 1/(1+5res)；基础抗性 10%/40%/免疫 来自 baseproperty",
+      "confidence": "medium",
+      "baseRes": 0.1,
+      "shred": 0,
+      "effectiveRes": 0.1,
+      "neg": false
+     },
+     {
+      "key": "dmgReduce",
+      "name": "减伤",
+      "value": 1,
+      "display": "1",
+      "mech": "unsolved",
+      "basis": "减伤区：目标 DamageReduce* 字段存在，乘区形式 (1−Σ) 未证实；默认 0",
+      "confidence": "low"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "C7 类型加成同区相加：相里要 R，解放伤害加成 +30%（叠在元素加成上）",
+  "probe": {
+   "member": 0,
+   "action": "R",
+   "extraStats": [
+    {
+     "key": "dmg:liberation",
+     "value": 0.3
+    }
+   ]
+  },
+  "panel": {
+   "atk": 1485.3500000000001,
+   "hp": 15185,
+   "critRate": 0.35100000000000003,
+   "critDmg": 2.227
+  },
+  "sum": {
+   "expected": 26707.463400177443,
+   "crit": 41572.99026418623,
+   "noncrit": 18667.710042292874
+  },
+  "hits": [
+   {
+    "label": "思维矩阵伤害",
+    "total": {
+     "expected": 26707.463400177443,
+     "crit": 41572.99026418623,
+     "noncrit": 18667.710042292874
+    },
+    "zones": [
+     {
+      "key": "base",
+      "name": "基础区",
+      "value": 1485.3500000000001,
+      "display": "攻击 1,485",
+      "mech": "table",
+      "basis": "基础区：damage.RelatedProperty 选 ATK/HP/DEF，×倍率，+FormulaParam10/CureBaseValue 固定值；encore.moe 385/385 行一致",
+      "confidence": "high",
+      "stat": "atk",
+      "flat": 0
+     },
+     {
+      "key": "multiplier",
+      "name": "倍率",
+      "value": 14.6606,
+      "display": "1466.06%",
+      "mech": "table",
+      "basis": "倍率：damage.RateLv[技能等级]/10000，与 skilldescription 显示串逐级匹配",
+      "confidence": "high"
+     },
+     {
+      "key": "bonus",
+      "name": "伤害加成",
+      "value": 1.9,
+      "display": "1.9",
+      "mech": "community",
+      "basis": "加成区：1+属性伤害加成+技能类型加成+通用加成，同区相加（fandom Damage）；字段来自 baseproperty",
+      "confidence": "medium"
+     },
+     {
+      "key": "deepen",
+      "name": "加深",
+      "value": 1,
+      "display": "1",
+      "mech": "community",
+      "basis": "加深区：独立乘区 1+Σ加深（fandom DMG Deepen；9game/gamersky 实测）",
+      "confidence": "medium"
+     },
+     {
+      "key": "crit",
+      "name": "暴击期望",
+      "value": 1.430677,
+      "display": "1.4307",
+      "mech": "table",
+      "basis": "暴击区：基础暴击 5% / 暴伤 150%（baseproperty.Crit/CritDamage）；期望=1+min(CR,1)×(CD−1)",
+      "confidence": "high",
+      "critRate": 0.35100000000000003,
+      "critDmg": 2.227
+     },
+     {
+      "key": "defense",
+      "name": "防御",
+      "value": 0.5013192612137203,
+      "display": "0.5013",
+      "mech": "community",
+      "basis": "防御区：(800+8·Lv攻)/(800+8·Lv攻+DEF敌×(1−无视防御)×(1−减防))；敌防 792+8·Lv 由表推导（已断言）",
+      "confidence": "medium",
+      "enemyDef": 1512,
+      "effectiveDef": 1512
+     },
+     {
+      "key": "resistance",
+      "name": "抗性",
+      "value": 0.9,
+      "display": "0.9（有效抗性 10%）",
+      "mech": "community",
+      "basis": "抗性区：有效抗性<0 → 1−res/2；<0.8 → 1−res；≥0.8 → 1/(1+5res)；基础抗性 10%/40%/免疫 来自 baseproperty",
+      "confidence": "medium",
+      "baseRes": 0.1,
+      "shred": 0,
+      "effectiveRes": 0.1,
+      "neg": false
+     },
+     {
+      "key": "dmgReduce",
+      "name": "减伤",
+      "value": 1,
+      "display": "1",
+      "mech": "unsolved",
+      "basis": "减伤区：目标 DamageReduce* 字段存在，乘区形式 (1−Σ) 未证实；默认 0",
+      "confidence": "low"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "C8 生命缩放：守岸人 洞悉伤害（X3，HP×19.64%×3）",
+  "probe": {
+   "member": 0,
+   "action": "X3"
+  },
+  "panel": {
+   "atk": 988.0250000000001,
+   "hp": 46002.821875,
+   "critRate": 0.35100000000000003,
+   "critDmg": 1.662
+  },
+  "sum": {
+   "expected": 15071.011791939687,
+   "crit": 20325.214180738905,
+   "noncrit": 12229.37074653364
+  },
+  "hits": [
+   {
+    "label": "洞悉伤害",
+    "total": {
+     "expected": 15071.011791939687,
+     "crit": 20325.214180738905,
+     "noncrit": 12229.37074653364
+    },
+    "zones": [
+     {
+      "key": "base",
+      "name": "基础区",
+      "value": 46002.821875,
+      "display": "生命 46,003",
+      "mech": "table",
+      "basis": "基础区：damage.RelatedProperty 选 ATK/HP/DEF，×倍率，+FormulaParam10/CureBaseValue 固定值；encore.moe 385/385 行一致",
+      "confidence": "high",
+      "stat": "hp",
+      "flat": 0
+     },
+     {
+      "key": "multiplier",
+      "name": "倍率",
+      "value": 0.5892,
+      "display": "19.64%×3",
+      "mech": "table",
+      "basis": "倍率：damage.RateLv[技能等级]/10000，与 skilldescription 显示串逐级匹配",
+      "confidence": "high"
+     },
+     {
+      "key": "bonus",
+      "name": "伤害加成",
+      "value": 1,
+      "display": "1",
+      "mech": "community",
+      "basis": "加成区：1+属性伤害加成+技能类型加成+通用加成，同区相加（fandom Damage）；字段来自 baseproperty",
+      "confidence": "medium"
+     },
+     {
+      "key": "deepen",
+      "name": "加深",
+      "value": 1,
+      "display": "1",
+      "mech": "community",
+      "basis": "加深区：独立乘区 1+Σ加深（fandom DMG Deepen；9game/gamersky 实测）",
+      "confidence": "medium"
+     },
+     {
+      "key": "crit",
+      "name": "暴击期望",
+      "value": 1.232362,
+      "display": "1.2324",
+      "mech": "table",
+      "basis": "暴击区：基础暴击 5% / 暴伤 150%（baseproperty.Crit/CritDamage）；期望=1+min(CR,1)×(CD−1)",
+      "confidence": "high",
+      "critRate": 0.35100000000000003,
+      "critDmg": 1.662
+     },
+     {
+      "key": "defense",
+      "name": "防御",
+      "value": 0.5013192612137203,
+      "display": "0.5013",
+      "mech": "community",
+      "basis": "防御区：(800+8·Lv攻)/(800+8·Lv攻+DEF敌×(1−无视防御)×(1−减防))；敌防 792+8·Lv 由表推导（已断言）",
+      "confidence": "medium",
+      "enemyDef": 1512,
+      "effectiveDef": 1512
+     },
+     {
+      "key": "resistance",
+      "name": "抗性",
+      "value": 0.9,
+      "display": "0.9（有效抗性 10%）",
+      "mech": "community",
+      "basis": "抗性区：有效抗性<0 → 1−res/2；<0.8 → 1−res；≥0.8 → 1/(1+5res)；基础抗性 10%/40%/免疫 来自 baseproperty",
+      "confidence": "medium",
+      "baseRes": 0.1,
+      "shred": 0,
+      "effectiveRes": 0.1,
+      "neg": false
+     },
+     {
+      "key": "dmgReduce",
+      "name": "减伤",
+      "value": 1,
+      "display": "1",
+      "mech": "unsolved",
+      "basis": "减伤区：目标 DamageReduce* 字段存在，乘区形式 (1−Σ) 未证实；默认 0",
+      "confidence": "low"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "C9 防御缩放：桃祈 R（DEF×449.71%）",
+  "probe": {
+   "member": 0,
+   "action": "R"
+  },
+  "panel": {
+   "atk": 920.1500000000001,
+   "hp": 13510,
+   "critRate": 0.35100000000000003,
+   "critDmg": 1.662
+  },
+  "sum": {
+   "expected": 11640.075876906174,
+   "crit": 15698.152091202148,
+   "noncrit": 9445.33820168601
+  },
+  "hits": [
+   {
+    "label": "技能伤害",
+    "total": {
+     "expected": 11640.075876906174,
+     "crit": 15698.152091202148,
+     "noncrit": 9445.33820168601
+    },
+    "zones": [
+     {
+      "key": "base",
+      "name": "基础区",
+      "value": 4156.3302208,
+      "display": "防御 4,156",
+      "mech": "table",
+      "basis": "基础区：damage.RelatedProperty 选 ATK/HP/DEF，×倍率，+FormulaParam10/CureBaseValue 固定值；encore.moe 385/385 行一致",
+      "confidence": "high",
+      "stat": "def",
+      "flat": 0
+     },
+     {
+      "key": "multiplier",
+      "name": "倍率",
+      "value": 4.4971,
+      "display": "449.71%",
+      "mech": "table",
+      "basis": "倍率：damage.RateLv[技能等级]/10000，与 skilldescription 显示串逐级匹配",
+      "confidence": "high"
+     },
+     {
+      "key": "bonus",
+      "name": "伤害加成",
+      "value": 1.12,
+      "display": "1.12",
+      "mech": "community",
+      "basis": "加成区：1+属性伤害加成+技能类型加成+通用加成，同区相加（fandom Damage）；字段来自 baseproperty",
+      "confidence": "medium"
+     },
+     {
+      "key": "deepen",
+      "name": "加深",
+      "value": 1,
+      "display": "1",
+      "mech": "community",
+      "basis": "加深区：独立乘区 1+Σ加深（fandom DMG Deepen；9game/gamersky 实测）",
+      "confidence": "medium"
+     },
+     {
+      "key": "crit",
+      "name": "暴击期望",
+      "value": 1.232362,
+      "display": "1.2324",
+      "mech": "table",
+      "basis": "暴击区：基础暴击 5% / 暴伤 150%（baseproperty.Crit/CritDamage）；期望=1+min(CR,1)×(CD−1)",
+      "confidence": "high",
+      "critRate": 0.35100000000000003,
+      "critDmg": 1.662
+     },
+     {
+      "key": "defense",
+      "name": "防御",
+      "value": 0.5013192612137203,
+      "display": "0.5013",
+      "mech": "community",
+      "basis": "防御区：(800+8·Lv攻)/(800+8·Lv攻+DEF敌×(1−无视防御)×(1−减防))；敌防 792+8·Lv 由表推导（已断言）",
+      "confidence": "medium",
+      "enemyDef": 1512,
+      "effectiveDef": 1512
+     },
+     {
+      "key": "resistance",
+      "name": "抗性",
+      "value": 0.9,
+      "display": "0.9（有效抗性 10%）",
+      "mech": "community",
+      "basis": "抗性区：有效抗性<0 → 1−res/2；<0.8 → 1−res；≥0.8 → 1/(1+5res)；基础抗性 10%/40%/免疫 来自 baseproperty",
+      "confidence": "medium",
+      "baseRes": 0.1,
+      "shred": 0,
+      "effectiveRes": 0.1,
+      "neg": false
+     },
+     {
+      "key": "dmgReduce",
+      "name": "减伤",
+      "value": 1,
+      "display": "1",
+      "mech": "unsolved",
+      "basis": "减伤区：目标 DamageReduce* 字段存在，乘区形式 (1−Σ) 未证实；默认 0",
+      "confidence": "low"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "C10 攻击方等级：散华 R，角色 Lv80 对敌 Lv90",
+  "probe": {
+   "member": 0,
+   "action": "R"
+  },
+  "panel": {
+   "atk": 1401.8622254,
+   "hp": 13944.1265,
+   "critRate": 0.35100000000000003,
+   "critDmg": 1.662
+  },
+  "sum": {
+   "expected": 10560.071288852216,
+   "crit": 14241.625822666052,
+   "noncrit": 8568.96860569558
+  },
+  "hits": [
+   {
+    "label": "技能伤害",
+    "total": {
+     "expected": 10560.071288852216,
+     "crit": 14241.625822666052,
+     "noncrit": 8568.96860569558
+    },
+    "zones": [
+     {
+      "key": "base",
+      "name": "基础区",
+      "value": 1401.8622254,
+      "display": "攻击 1,402",
+      "mech": "table",
+      "basis": "基础区：damage.RelatedProperty 选 ATK/HP/DEF，×倍率，+FormulaParam10/CureBaseValue 固定值；encore.moe 385/385 行一致",
+      "confidence": "high",
+      "stat": "atk",
+      "flat": 0
+     },
+     {
+      "key": "multiplier",
+      "name": "倍率",
+      "value": 8.0948,
+      "display": "809.48%",
+      "mech": "table",
+      "basis": "倍率：damage.RateLv[技能等级]/10000，与 skilldescription 显示串逐级匹配",
+      "confidence": "high"
+     },
+     {
+      "key": "bonus",
+      "name": "伤害加成",
+      "value": 1.72,
+      "display": "1.72",
+      "mech": "community",
+      "basis": "加成区：1+属性伤害加成+技能类型加成+通用加成，同区相加（fandom Damage）；字段来自 baseproperty",
+      "confidence": "medium"
+     },
+     {
+      "key": "deepen",
+      "name": "加深",
+      "value": 1,
+      "display": "1",
+      "mech": "community",
+      "basis": "加深区：独立乘区 1+Σ加深（fandom DMG Deepen；9game/gamersky 实测）",
+      "confidence": "medium"
+     },
+     {
+      "key": "crit",
+      "name": "暴击期望",
+      "value": 1.232362,
+      "display": "1.2324",
+      "mech": "table",
+      "basis": "暴击区：基础暴击 5% / 暴伤 150%（baseproperty.Crit/CritDamage）；期望=1+min(CR,1)×(CD−1)",
+      "confidence": "high",
+      "critRate": 0.35100000000000003,
+      "critDmg": 1.662
+     },
+     {
+      "key": "defense",
+      "name": "防御",
+      "value": 0.4878048780487805,
+      "display": "0.4878",
+      "mech": "community",
+      "basis": "防御区：(800+8·Lv攻)/(800+8·Lv攻+DEF敌×(1−无视防御)×(1−减防))；敌防 792+8·Lv 由表推导（已断言）",
+      "confidence": "medium",
+      "enemyDef": 1512,
+      "effectiveDef": 1512
+     },
+     {
+      "key": "resistance",
+      "name": "抗性",
+      "value": 0.9,
+      "display": "0.9（有效抗性 10%）",
+      "mech": "community",
+      "basis": "抗性区：有效抗性<0 → 1−res/2；<0.8 → 1−res；≥0.8 → 1/(1+5res)；基础抗性 10%/40%/免疫 来自 baseproperty",
+      "confidence": "medium",
+      "baseRes": 0.1,
+      "shred": 0,
+      "effectiveRes": 0.1,
+      "neg": false
+     },
+     {
+      "key": "dmgReduce",
+      "name": "减伤",
+      "value": 1,
+      "display": "1",
+      "mech": "unsolved",
+      "basis": "减伤区：目标 DamageReduce* 字段存在，乘区形式 (1−Σ) 未证实；默认 0",
+      "confidence": "low"
+     }
+    ]
+   }
+  ]
+ }
+]

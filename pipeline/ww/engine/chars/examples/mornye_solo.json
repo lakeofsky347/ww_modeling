@@ -1,0 +1,62 @@
+{
+ "name": "莫宁 单人 自动搜索",
+ "duration": 25,
+ "team": [
+  {
+   "id": 1209,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21010066,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "HealChange",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 7
+    }
+   ]
+  }
+ ],
+ "start": {
+  "energy": "full",
+  "concerto": 0
+ },
+ "rotation": {
+  "mode": "search",
+  "start": 0
+ },
+ "mode": "expected",
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "search": {
+  "beamWidth": 48,
+  "maxExpansions": 60000,
+  "topN": 3
+ }
+}

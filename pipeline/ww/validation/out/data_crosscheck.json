@@ -1,0 +1,5428 @@
+{
+ "base": [
+  {
+   "id": 1403,
+   "name": "秋水",
+   "en": "Aalto",
+   "ours_vs_wuwatools": {
+    "atk": [
+     262.5,
+     262.5
+    ],
+    "hp": [
+     9850.0,
+     9850
+    ],
+    "def": [
+     1075.55,
+     1075.55
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1210,
+   "name": "爱弥斯",
+   "en": "Aemeath",
+   "ours_vs_wuwatools": {
+    "atk": [
+     425.0,
+     425
+    ],
+    "hp": [
+     11025.0,
+     11025
+    ],
+    "def": [
+     1148.89,
+     1148.89
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1306,
+   "name": "奥古斯塔",
+   "en": "Augusta",
+   "ours_vs_wuwatools": {
+    "atk": [
+     462.5,
+     462.5
+    ],
+    "hp": [
+     10300.0,
+     10300
+    ],
+    "def": [
+     1112.22,
+     1112.22
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1103,
+   "name": "白芷",
+   "en": "Baizhi",
+   "ours_vs_wuwatools": {
+    "atk": [
+     212.5,
+     212.5
+    ],
+    "hp": [
+     12812.5,
+     12812.5
+    ],
+    "def": [
+     1002.22,
+     1002.22
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1206,
+   "name": "布兰特",
+   "en": "Brant",
+   "ours_vs_wuwatools": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     11675.0,
+     11675
+    ],
+    "def": [
+     1307.78,
+     1307.78
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1307,
+   "name": "卜灵",
+   "en": "Buling",
+   "ours_vs_wuwatools": {
+    "atk": [
+     225.0,
+     225
+    ],
+    "hp": [
+     10625.0,
+     10625
+    ],
+    "def": [
+     1258.89,
+     1258.89
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1301,
+   "name": "卡卡罗",
+   "en": "Calcharo",
+   "ours_vs_wuwatools": {
+    "atk": [
+     437.5,
+     437.5
+    ],
+    "hp": [
+     10500.0,
+     10500
+    ],
+    "def": [
+     1185.55,
+     1185.55
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1603,
+   "name": "椿",
+   "en": "Camellya",
+   "ours_vs_wuwatools": {
+    "atk": [
+     450.0,
+     450
+    ],
+    "hp": [
+     10325.0,
+     10325
+    ],
+    "def": [
+     1161.11,
+     1161.11
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1607,
+   "name": "坎特蕾拉",
+   "en": "Cantarella",
+   "ours_vs_wuwatools": {
+    "atk": [
+     400.0,
+     400
+    ],
+    "hp": [
+     11600.0,
+     11600
+    ],
+    "def": [
+     1100.0,
+     1100
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1107,
+   "name": "珂莱塔",
+   "en": "Carlotta",
+   "ours_vs_wuwatools": {
+    "atk": [
+     462.5,
+     462.5
+    ],
+    "hp": [
+     12450.0,
+     12450
+    ],
+    "def": [
+     1197.78,
+     1197.78
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1409,
+   "name": "卡提希娅",
+   "en": "Cartethyia",
+   "ours_vs_wuwatools": {
+    "atk": [
+     312.5,
+     312.5
+    ],
+    "hp": [
+     14800.0,
+     14800
+    ],
+    "def": [
+     611.11,
+     611.11
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1205,
+   "name": "长离",
+   "en": "Changli",
+   "ours_vs_wuwatools": {
+    "atk": [
+     462.5,
+     462.5
+    ],
+    "hp": [
+     10387.5,
+     10387.5
+    ],
+    "def": [
+     1100.0,
+     1100
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1508,
+   "name": "千咲",
+   "en": "Chisa",
+   "ours_vs_wuwatools": {
+    "atk": [
+     437.5,
+     437.5
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136.66
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1202,
+   "name": "炽霞",
+   "en": "Chixia",
+   "ours_vs_wuwatools": {
+    "atk": [
+     300.0,
+     300
+    ],
+    "hp": [
+     9087.5,
+     9087.5
+    ],
+    "def": [
+     953.33,
+     953.33
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1407,
+   "name": "夏空",
+   "en": "Ciaccona",
+   "ours_vs_wuwatools": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     12237.5,
+     12237.5
+    ],
+    "def": [
+     1197.78,
+     1197.78
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1602,
+   "name": "丹瑾",
+   "en": "Danjin",
+   "ours_vs_wuwatools": {
+    "atk": [
+     262.5,
+     262.5
+    ],
+    "hp": [
+     9437.5,
+     9437.5
+    ],
+    "def": [
+     1148.89,
+     1148.89
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1211,
+   "name": "达妮娅",
+   "en": "Denia",
+   "ours_vs_wuwatools": {
+    "atk": [
+     425.0,
+     425
+    ],
+    "hp": [
+     11025.0,
+     11025
+    ],
+    "def": [
+     1148.89,
+     1148.89
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1203,
+   "name": "安可",
+   "en": "Encore",
+   "ours_vs_wuwatools": {
+    "atk": [
+     425.0,
+     425
+    ],
+    "hp": [
+     10512.5,
+     10512.5
+    ],
+    "def": [
+     1246.66,
+     1246.66
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1208,
+   "name": "嘉贝莉娜",
+   "en": "Galbrena",
+   "ours_vs_wuwatools": {
+    "atk": [
+     462.5,
+     462.5
+    ],
+    "hp": [
+     10300.0,
+     10300
+    ],
+    "def": [
+     1112.22,
+     1112.22
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1108,
+   "name": "绯雪",
+   "en": "Hiyuki",
+   "ours_vs_wuwatools": {
+    "atk": [
+     462.5,
+     462.5
+    ],
+    "hp": [
+     10300.0,
+     10300
+    ],
+    "def": [
+     1112.22,
+     1112.22
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1311,
+   "name": "心",
+   "en": "Hsin",
+   "ours_vs_wuwatools": {
+    "atk": [
+     462.5,
+     462.5
+    ],
+    "hp": [
+     10300.0,
+     10300
+    ],
+    "def": [
+     1112.22,
+     1112.22
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1410,
+   "name": "尤诺",
+   "en": "Iuno",
+   "ours_vs_wuwatools": {
+    "atk": [
+     450.0,
+     450
+    ],
+    "hp": [
+     10525.0,
+     10525
+    ],
+    "def": [
+     1124.44,
+     1124.44
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1405,
+   "name": "鉴心",
+   "en": "Jianxin",
+   "ours_vs_wuwatools": {
+    "atk": [
+     337.5,
+     337.5
+    ],
+    "hp": [
+     14112.5,
+     14112.5
+    ],
+    "def": [
+     1124.44,
+     1124.44
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1212,
+   "name": "景燃",
+   "en": "Jingran",
+   "ours_vs_wuwatools": {
+    "atk": [
+     312.5,
+     312.5
+    ],
+    "hp": [
+     15375.0,
+     15375
+    ],
+    "def": [
+     0.0,
+     0
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1304,
+   "name": "今汐",
+   "en": "Jinhsi",
+   "ours_vs_wuwatools": {
+    "atk": [
+     412.5,
+     412.5
+    ],
+    "hp": [
+     10825.0,
+     10825
+    ],
+    "def": [
+     1258.89,
+     1258.89
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1404,
+   "name": "忌炎",
+   "en": "Jiyan",
+   "ours_vs_wuwatools": {
+    "atk": [
+     437.5,
+     437.5
+    ],
+    "hp": [
+     10487.5,
+     10487.5
+    ],
+    "def": [
+     1185.55,
+     1185.55
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1104,
+   "name": "凌阳",
+   "en": "Lingyang",
+   "ours_vs_wuwatools": {
+    "atk": [
+     437.5,
+     437.5
+    ],
+    "hp": [
+     10387.5,
+     10387.5
+    ],
+    "def": [
+     1210.0,
+     1210
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1109,
+   "name": "洛瑟菈",
+   "en": "Lucilla",
+   "ours_vs_wuwatools": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     12237.5,
+     12237.5
+    ],
+    "def": [
+     1197.78,
+     1197.78
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1511,
+   "name": "露西",
+   "en": "Lucy",
+   "ours_vs_wuwatools": {
+    "atk": [
+     425.0,
+     425
+    ],
+    "hp": [
+     11025.0,
+     11025
+    ],
+    "def": [
+     1148.89,
+     1148.89
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1504,
+   "name": "灯灯",
+   "en": "Lumi",
+   "ours_vs_wuwatools": {
+    "atk": [
+     337.5,
+     337.5
+    ],
+    "hp": [
+     8500.0,
+     8500
+    ],
+    "def": [
+     880.0,
+     880
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1207,
+   "name": "露帕",
+   "en": "Lupa",
+   "ours_vs_wuwatools": {
+    "atk": [
+     387.5,
+     387.5
+    ],
+    "hp": [
+     11912.5,
+     11912.5
+    ],
+    "def": [
+     1185.55,
+     1185.55
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1510,
+   "name": "陆·赫斯",
+   "en": "Luuk Herssen",
+   "ours_vs_wuwatools": {
+    "atk": [
+     462.5,
+     462.5
+    ],
+    "hp": [
+     10300.0,
+     10300
+    ],
+    "def": [
+     1112.22,
+     1112.22
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1509,
+   "name": "琳奈",
+   "en": "Lynae",
+   "ours_vs_wuwatools": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     12237.5,
+     12237.5
+    ],
+    "def": [
+     1197.78,
+     1197.78
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1209,
+   "name": "莫宁",
+   "en": "Mornye",
+   "ours_vs_wuwatools": {
+    "atk": [
+     287.5,
+     287.5
+    ],
+    "hp": [
+     15375.0,
+     15375
+    ],
+    "def": [
+     1356.66,
+     1356.66
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1204,
+   "name": "莫特斐",
+   "en": "Mortefi",
+   "ours_vs_wuwatools": {
+    "atk": [
+     250.0,
+     250
+    ],
+    "hp": [
+     10025.0,
+     10025
+    ],
+    "def": [
+     1136.66,
+     1136.66
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1506,
+   "name": "菲比",
+   "en": "Phoebe",
+   "ours_vs_wuwatools": {
+    "atk": [
+     412.5,
+     412.5
+    ],
+    "hp": [
+     10825.0,
+     10825
+    ],
+    "def": [
+     1258.89,
+     1258.89
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1608,
+   "name": "弗洛洛",
+   "en": "Phrolova",
+   "ours_vs_wuwatools": {
+    "atk": [
+     437.5,
+     437.5
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136.66
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1413,
+   "name": "清宵",
+   "en": "Qingxiao",
+   "ours_vs_wuwatools": {
+    "atk": [
+     462.5,
+     462.5
+    ],
+    "hp": [
+     10300.0,
+     10300
+    ],
+    "def": [
+     1112.22,
+     1112.22
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1411,
+   "name": "仇远",
+   "en": "Qiuyuan",
+   "ours_vs_wuwatools": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     12237.5,
+     12237.5
+    ],
+    "def": [
+     1197.78,
+     1197.78
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1308,
+   "name": "丽贝卡",
+   "en": "Rebecca",
+   "ours_vs_wuwatools": {
+    "atk": [
+     400.0,
+     400
+    ],
+    "hp": [
+     11600.0,
+     11600
+    ],
+    "def": [
+     1173.33,
+     1173.33
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1606,
+   "name": "洛可可",
+   "en": "Roccia",
+   "ours_vs_wuwatools": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     12250.0,
+     12250
+    ],
+    "def": [
+     1197.78,
+     1197.78
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1406,
+   "name": "漂泊者·气动",
+   "en": "Rover: Aero",
+   "ours_vs_wuwatools": {
+    "atk": [
+     437.5,
+     437.5
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136.66
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1408,
+   "name": "漂泊者·气动",
+   "en": "Rover: Aero",
+   "ours_vs_wuwatools": {
+    "atk": [
+     437.5,
+     437.5
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136.66
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1309,
+   "name": "漂泊者·导电",
+   "en": "Rover: Electro",
+   "ours_vs_wuwatools": {
+    "atk": [
+     437.5,
+     437.5
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136.66
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1310,
+   "name": "漂泊者·导电",
+   "en": "Rover: Electro",
+   "ours_vs_wuwatools": {
+    "atk": [
+     437.5,
+     437.5
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136.66
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1604,
+   "name": "漂泊者·湮灭",
+   "en": "Rover: Havoc",
+   "ours_vs_wuwatools": {
+    "atk": [
+     412.5,
+     412.5
+    ],
+    "hp": [
+     10825.0,
+     10825
+    ],
+    "def": [
+     1258.89,
+     1258.89
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1605,
+   "name": "漂泊者·湮灭",
+   "en": "Rover: Havoc",
+   "ours_vs_wuwatools": {
+    "atk": [
+     412.5,
+     412.5
+    ],
+    "hp": [
+     10825.0,
+     10825
+    ],
+    "def": [
+     1258.89,
+     1258.89
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1501,
+   "name": "漂泊者·衍射",
+   "en": "Rover: Spectro",
+   "ours_vs_wuwatools": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     11400.0,
+     11400
+    ],
+    "def": [
+     1368.89,
+     1368.89
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1502,
+   "name": "漂泊者·衍射",
+   "en": "Rover: Spectro",
+   "ours_vs_wuwatools": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     11400.0,
+     11400
+    ],
+    "def": [
+     1368.89,
+     1368.89
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1102,
+   "name": "散华",
+   "en": "Sanhua",
+   "ours_vs_wuwatools": {
+    "atk": [
+     275.0,
+     275
+    ],
+    "hp": [
+     10062.5,
+     10062.5
+    ],
+    "def": [
+     941.11,
+     941.11
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1505,
+   "name": "守岸人",
+   "en": "Shorekeeper",
+   "ours_vs_wuwatools": {
+    "atk": [
+     287.5,
+     287.5
+    ],
+    "hp": [
+     16712.5,
+     16712.5
+    ],
+    "def": [
+     1100.0,
+     1100
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1412,
+   "name": "西格莉卡",
+   "en": "Sigrika",
+   "ours_vs_wuwatools": {
+    "atk": [
+     437.5,
+     437.5
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136.66
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1110,
+   "name": "穗穗",
+   "en": "Suisui",
+   "ours_vs_wuwatools": {
+    "atk": [
+     287.5,
+     287.5
+    ],
+    "hp": [
+     16712.5,
+     16712.5
+    ],
+    "def": [
+     1100.0,
+     1100
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1312,
+   "name": "锁暝",
+   "en": "Suoming",
+   "ours_vs_wuwatools": {
+    "atk": [
+     462.5,
+     462.5
+    ],
+    "hp": [
+     10300.0,
+     10300
+    ],
+    "def": [
+     1112.22,
+     1112.22
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1601,
+   "name": "桃祈",
+   "en": "Taoqi",
+   "ours_vs_wuwatools": {
+    "atk": [
+     225.0,
+     225
+    ],
+    "hp": [
+     8950.0,
+     8950
+    ],
+    "def": [
+     1564.44,
+     1564.44
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1503,
+   "name": "维里奈",
+   "en": "Verina",
+   "ours_vs_wuwatools": {
+    "atk": [
+     337.5,
+     337.5
+    ],
+    "hp": [
+     14237.5,
+     14237.5
+    ],
+    "def": [
+     1100.0,
+     1100
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1305,
+   "name": "相里要",
+   "en": "Xiangli Yao",
+   "ours_vs_wuwatools": {
+    "atk": [
+     425.0,
+     425
+    ],
+    "hp": [
+     10625.0,
+     10625
+    ],
+    "def": [
+     1222.22,
+     1222.22
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1402,
+   "name": "秧秧",
+   "en": "Yangyang",
+   "ours_vs_wuwatools": {
+    "atk": [
+     250.0,
+     250
+    ],
+    "hp": [
+     10200.0,
+     10200
+    ],
+    "def": [
+     1100.0,
+     1100
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1610,
+   "name": "秧秧·玄翎",
+   "en": "Yangyang: Xuanling",
+   "ours_vs_wuwatools": {
+    "atk": [
+     425.0,
+     425
+    ],
+    "hp": [
+     11025.0,
+     11025
+    ],
+    "def": [
+     1148.89,
+     1148.89
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1302,
+   "name": "吟霖",
+   "en": "Yinlin",
+   "ours_vs_wuwatools": {
+    "atk": [
+     400.0,
+     400
+    ],
+    "hp": [
+     11000.0,
+     11000
+    ],
+    "def": [
+     1283.33,
+     1283.33
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1106,
+   "name": "釉瑚",
+   "en": "Youhu",
+   "ours_vs_wuwatools": {
+    "atk": [
+     262.5,
+     262.5
+    ],
+    "hp": [
+     9975.0,
+     9975
+    ],
+    "def": [
+     1051.11,
+     1051.11
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1303,
+   "name": "渊武",
+   "en": "Yuanwu",
+   "ours_vs_wuwatools": {
+    "atk": [
+     225.0,
+     225
+    ],
+    "hp": [
+     8525.0,
+     8525
+    ],
+    "def": [
+     1637.77,
+     1637.77
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1507,
+   "name": "赞妮",
+   "en": "Zani",
+   "ours_vs_wuwatools": {
+    "atk": [
+     437.5,
+     437.5
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136.66
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "id": 1105,
+   "name": "折枝",
+   "en": "Zhezhi",
+   "ours_vs_wuwatools": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     12250.0,
+     12250
+    ],
+    "def": [
+     1197.78,
+     1197.78
+    ]
+   },
+   "mismatch": {}
+  }
+ ],
+ "weapons": [
+  {
+   "id": 21040015,
+   "name": "擎渊怒涛",
+   "en": "Abyss Surges",
+   "ours": [
+    587.5,
+    36.45,
+    "攻击%"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "ATK%",
+     "value90": 36.45
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Gauntlets",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "ATK %",
+    "subStatValue": 36.45
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21040104,
+   "name": "凌空",
+   "en": "Aether Strike",
+   "ours": [
+    412.5,
+    40.5,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "Crit. DMG",
+     "value90": 40.5
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21010026,
+   "name": "时和岁稔",
+   "en": "Ages of Harvest",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Broadblade",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 24.3
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21040044,
+   "name": "袍泽之固",
+   "en": "Amity Accord",
+   "ours": [
+    337.5,
+    61.56,
+    "防御%"
+   ],
+   "wuwatools": [
+    337.5,
+    {
+     "name": "DEF%",
+     "value90": 61.56
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050074,
+   "name": "清音",
+   "en": "Augment",
+   "ours": [
+    412.5,
+    20.25,
+    "暴击"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 20.25
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21010104,
+   "name": "金穹",
+   "en": "Aureate Zenith",
+   "ours": [
+    412.5,
+    40.5,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "Crit. DMG",
+     "value90": 40.5
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21010074,
+   "name": "纹秋",
+   "en": "Autumntrace",
+   "ours": [
+    412.5,
+    20.25,
+    "暴击"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 20.25
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21020096,
+   "name": "天之苍苍",
+   "en": "Azure Oath",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Sword",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 24.3
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21010063,
+   "name": "钧天正音",
+   "en": "Beguiling Melody",
+   "ours": [
+    300.0,
+    30.38,
+    "攻击%"
+   ],
+   "wuwatools": [
+    300,
+    {
+     "name": "ATK%",
+     "value90": 30.38
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21020016,
+   "name": "赫奕流明",
+   "en": "Blazing Brilliance",
+   "ours": [
+    587.5,
+    48.6,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. DMG",
+     "value90": 48.6
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Sword",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR DMG",
+    "subStatValue": 48.6
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21040036,
+   "name": "焰光裁定",
+   "en": "Blazing Justice",
+   "ours": [
+    587.5,
+    48.6,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. DMG",
+     "value90": 48.6
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Gauntlets",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR DMG",
+    "subStatValue": 48.6
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21020046,
+   "name": "血誓盟约",
+   "en": "Bloodpact's Pledge",
+   "ours": [
+    587.5,
+    38.88,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Energy Regen",
+     "value90": 38.88
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050116,
+   "name": "玉阙玄华",
+   "en": "Blooming Jadehaven",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050045,
+   "name": "玻色星仪",
+   "en": "Boson Astrolabe",
+   "ours": [
+    525.0,
+    38.88,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    525,
+    {
+     "name": "Energy Regen",
+     "value90": 38.88
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Rectifier",
+    "rarity": 5,
+    "baseAtk": 525,
+    "subStatType": "ER %",
+    "subStatValue": 38.88
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21010013,
+   "name": "暗夜长刃·玄明",
+   "en": "Broadblade of Night",
+   "ours": [
+    325.0,
+    24.3,
+    "攻击%"
+   ],
+   "wuwatools": [
+    325,
+    {
+     "name": "ATK%",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21010043,
+   "name": "远行者长刃·辟路",
+   "en": "Broadblade of Voyager",
+   "ours": [
+    300.0,
+    32.4,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    300,
+    {
+     "name": "Energy Regen",
+     "value90": 32.4
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21010034,
+   "name": "重破刃-41型",
+   "en": "Broadblade#41",
+   "ours": [
+    412.5,
+    32.4,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "Energy Regen",
+     "value90": 32.4
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21030024,
+   "name": "华彩乐段",
+   "en": "Cadenza",
+   "ours": [
+    337.5,
+    51.84,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    337.5,
+    {
+     "name": "Energy Regen",
+     "value90": 51.84
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Pistols",
+    "rarity": 4,
+    "baseAtk": 337.0,
+    "subStatType": "ER %",
+    "subStatValue": 51.84
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21050017,
+   "name": "渊海回声",
+   "en": "Call of the Abyss",
+   "ours": [
+    337.5,
+    51.84,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    337.5,
+    {
+     "name": "Energy Regen",
+     "value90": 51.84
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21040084,
+   "name": "尘云旋臂",
+   "en": "Celestial Spiral",
+   "ours": [
+    462.5,
+    18.22,
+    "攻击%"
+   ],
+   "wuwatools": [
+    462.5,
+    {
+     "name": "ATK%",
+     "value90": 18.23
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Gauntlets",
+    "rarity": 4,
+    "baseAtk": 462.0,
+    "subStatType": "ATK %",
+    "subStatValue": 18.23
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21050064,
+   "name": "异度",
+   "en": "Comet Flare",
+   "ours": [
+    412.5,
+    30.38,
+    "生命%"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "HP%",
+     "value90": 30.38
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21020044,
+   "name": "不归孤军",
+   "en": "Commando of Conviction",
+   "ours": [
+    412.5,
+    30.38,
+    "攻击%"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "ATK%",
+     "value90": 30.38
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050015,
+   "name": "漪澜浮录",
+   "en": "Cosmic Ripples",
+   "ours": [
+    500.0,
+    54.0,
+    "攻击%"
+   ],
+   "wuwatools": [
+    500,
+    {
+     "name": "ATK%",
+     "value90": 54
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Rectifier",
+    "rarity": 5,
+    "baseAtk": 500,
+    "subStatType": "ATK %",
+    "subStatValue": 54.0
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21010044,
+   "name": "永夜长明",
+   "en": "Dauntless Evernight",
+   "ours": [
+    337.5,
+    61.56,
+    "防御%"
+   ],
+   "wuwatools": [
+    337.5,
+    {
+     "name": "DEF%",
+     "value90": 61.56
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21040056,
+   "name": "白昼之脊",
+   "en": "Daybreaker's Spine",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21020056,
+   "name": "不屈命定之冠",
+   "en": "Defier's Thorn",
+   "ours": [
+    412.5,
+    72.22,
+    "生命%"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "HP%",
+     "value90": 72.23
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21010024,
+   "name": "异响空灵",
+   "en": "Discord",
+   "ours": [
+    337.5,
+    51.84,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    337.5,
+    {
+     "name": "Energy Regen",
+     "value90": 51.84
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Broadblade",
+    "rarity": 4,
+    "baseAtk": 337.0,
+    "subStatType": "ER %",
+    "subStatValue": 51.84
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21020015,
+   "name": "千古洑流",
+   "en": "Emerald of Genesis",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Sword",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 24.3
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21020066,
+   "name": "裁竹",
+   "en": "Emerald Sentence",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Sword",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 24.3
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21020084,
+   "name": "永续坍缩",
+   "en": "Endless Collapse",
+   "ours": [
+    462.5,
+    18.22,
+    "攻击%"
+   ],
+   "wuwatools": [
+    462.5,
+    {
+     "name": "ATK%",
+     "value90": 18.23
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Sword",
+    "rarity": 4,
+    "baseAtk": 462.0,
+    "subStatType": "ATK %",
+    "subStatValue": 18.23
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21020076,
+   "name": "永远的启明星",
+   "en": "Everbright Polestar",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Sword",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 24.3
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21020094,
+   "name": "风流的寓言诗",
+   "en": "Fables of Wisdom",
+   "ours": [
+    462.5,
+    18.22,
+    "攻击%"
+   ],
+   "wuwatools": [
+    462.5,
+    {
+     "name": "ATK%",
+     "value90": 18.23
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21020104,
+   "name": "翼锋",
+   "en": "Feather Edge",
+   "ours": [
+    412.5,
+    20.25,
+    "暴击"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 20.25
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050096,
+   "name": "栖霞饮露",
+   "en": "Firstlight's Herald",
+   "ours": [
+    412.5,
+    77.04,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "Energy Regen",
+     "value90": 77.04
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050076,
+   "name": "赝作的矮星",
+   "en": "Forged Dwarf Star",
+   "ours": [
+    500.0,
+    36.0,
+    "暴击"
+   ],
+   "wuwatools": [
+    500,
+    {
+     "name": "Crit. Rate",
+     "value90": 36
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Rectifier",
+    "rarity": 5,
+    "baseAtk": 500.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 36.0
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21050086,
+   "name": "存帧",
+   "en": "Freeze Frame",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Rectifier",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 24.3
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21020086,
+   "name": "灼霜",
+   "en": "Frostburn",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Sword",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 24.3
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21050084,
+   "name": "核熔星盘",
+   "en": "Fusion Accretion",
+   "ours": [
+    462.5,
+    18.22,
+    "攻击%"
+   ],
+   "wuwatools": [
+    462.5,
+    {
+     "name": "ATK%",
+     "value90": 18.23
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Rectifier",
+    "rarity": 4,
+    "baseAtk": 462.0,
+    "subStatType": "ATK %",
+    "subStatValue": 18.23
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21040013,
+   "name": "暗夜臂铠·夜芒",
+   "en": "Gauntlets of Night",
+   "ours": [
+    325.0,
+    24.3,
+    "攻击%"
+   ],
+   "wuwatools": [
+    325,
+    {
+     "name": "ATK%",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21040043,
+   "name": "远行者臂铠·破障",
+   "en": "Gauntlets of Voyager",
+   "ours": [
+    325.0,
+    30.78,
+    "防御%"
+   ],
+   "wuwatools": [
+    325,
+    {
+     "name": "DEF%",
+     "value90": 30.78
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21040034,
+   "name": "钢影拳-21丁型",
+   "en": "Gauntlets#21D",
+   "ours": [
+    387.5,
+    38.88,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    387.5,
+    {
+     "name": "Energy Regen",
+     "value90": 38.88
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21020106,
+   "name": "云琅",
+   "en": "Glint of Clouds",
+   "ours": [
+    500.0,
+    36.0,
+    "暴击"
+   ],
+   "wuwatools": [
+    500,
+    {
+     "name": "Crit. Rate",
+     "value90": 36
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Sword",
+    "rarity": 5,
+    "baseAtk": 500.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 36
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21010053,
+   "name": "戍关长刃·定军",
+   "en": "Guardian Broadblade",
+   "ours": [
+    325.0,
+    24.3,
+    "攻击%"
+   ],
+   "wuwatools": [
+    325,
+    {
+     "name": "ATK%",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21040053,
+   "name": "戍关臂铠·拔山",
+   "en": "Guardian Gauntlets",
+   "ours": [
+    300.0,
+    38.48,
+    "防御%"
+   ],
+   "wuwatools": [
+    300,
+    {
+     "name": "DEF%",
+     "value90": 38.48
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21030053,
+   "name": "戍关佩枪·平云",
+   "en": "Guardian Pistols",
+   "ours": [
+    300.0,
+    30.38,
+    "攻击%"
+   ],
+   "wuwatools": [
+    300,
+    {
+     "name": "ATK%",
+     "value90": 30.38
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050053,
+   "name": "戍关音感仪·留光",
+   "en": "Guardian Rectifier",
+   "ours": [
+    325.0,
+    24.3,
+    "攻击%"
+   ],
+   "wuwatools": [
+    325,
+    {
+     "name": "ATK%",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21020053,
+   "name": "戍关迅刀·镇海",
+   "en": "Guardian Sword",
+   "ours": [
+    300.0,
+    30.38,
+    "生命%"
+   ],
+   "wuwatools": [
+    300,
+    {
+     "name": "HP%",
+     "value90": 30.38
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21010064,
+   "name": "东落",
+   "en": "Helios Cleaver",
+   "ours": [
+    412.5,
+    30.38,
+    "攻击%"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "ATK%",
+     "value90": 30.38
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Broadblade",
+    "rarity": 4,
+    "baseAtk": 412.0,
+    "subStatType": "ATK %",
+    "subStatValue": 30.38
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21040064,
+   "name": "骇行",
+   "en": "Hollow Mirage",
+   "ours": [
+    412.5,
+    30.38,
+    "攻击%"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "ATK%",
+     "value90": 30.38
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050044,
+   "name": "今州守望",
+   "en": "Jinzhou Keeper",
+   "ours": [
+    387.5,
+    36.45,
+    "攻击%"
+   ],
+   "wuwatools": [
+    387.5,
+    {
+     "name": "ATK%",
+     "value90": 36.45
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21010056,
+   "name": "昙切",
+   "en": "Kumokiri",
+   "ours": [
+    500.0,
+    36.0,
+    "暴击"
+   ],
+   "wuwatools": [
+    500,
+    {
+     "name": "Crit. Rate",
+     "value90": 36
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Broadblade",
+    "rarity": 5,
+    "baseAtk": 500,
+    "subStatType": "CR Rate",
+    "subStatValue": 36.0
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21020045,
+   "name": "镭射切变",
+   "en": "Laser Shearer",
+   "ours": [
+    587.5,
+    38.88,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Energy Regen",
+     "value90": 38.88
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Sword",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "ER %",
+    "subStatValue": 38.88
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21040094,
+   "name": "酩酊的英雄志",
+   "en": "Legend of Drunken Hero",
+   "ours": [
+    462.5,
+    18.22,
+    "攻击%"
+   ],
+   "wuwatools": [
+    462.5,
+    {
+     "name": "ATK%",
+     "value90": 18.23
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050066,
+   "name": "幽冥的忘忧章",
+   "en": "Lethean Elegy",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Rectifier",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 24.3
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21020074,
+   "name": "飞景",
+   "en": "Lumingloss",
+   "ours": [
+    387.5,
+    36.45,
+    "攻击%"
+   ],
+   "wuwatools": [
+    387.5,
+    {
+     "name": "ATK%",
+     "value90": 36.45
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Sword",
+    "rarity": 4,
+    "baseAtk": 387.0,
+    "subStatType": "ATK %",
+    "subStatValue": 36.45
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21050046,
+   "name": "和光回唱",
+   "en": "Luminous Hymn",
+   "ours": [
+    500.0,
+    36.0,
+    "暴击"
+   ],
+   "wuwatools": [
+    500,
+    {
+     "name": "Crit. Rate",
+     "value90": 36
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Rectifier",
+    "rarity": 5,
+    "baseAtk": 500,
+    "subStatType": "CR Rate",
+    "subStatValue": 36.0
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21020064,
+   "name": "西升",
+   "en": "Lunar Cutter",
+   "ours": [
+    412.5,
+    30.38,
+    "攻击%"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "ATK%",
+     "value90": 30.38
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21010015,
+   "name": "浩境粼光",
+   "en": "Lustrous Razor",
+   "ours": [
+    587.5,
+    36.45,
+    "攻击%"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "ATK%",
+     "value90": 36.45
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Broadblade",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "ATK %",
+    "subStatValue": 36.45
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21030036,
+   "name": "光影双生",
+   "en": "Lux & Umbra",
+   "ours": [
+    587.5,
+    48.6,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. DMG",
+     "value90": 48.6
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21040024,
+   "name": "呼啸重音",
+   "en": "Marcato",
+   "ours": [
+    337.5,
+    51.84,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    337.5,
+    {
+     "name": "Energy Regen",
+     "value90": 51.84
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Gauntlets",
+    "rarity": 4,
+    "baseAtk": 337.0,
+    "subStatType": "ER %",
+    "subStatValue": 51.84
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21010094,
+   "name": "容赦的沉思录",
+   "en": "Meditations on Mercy",
+   "ours": [
+    462.5,
+    18.22,
+    "攻击%"
+   ],
+   "wuwatools": [
+    462.5,
+    {
+     "name": "ATK%",
+     "value90": 18.23
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21040046,
+   "name": "万物持存的注释",
+   "en": "Moongazer's Sigil",
+   "ours": [
+    500.0,
+    36.0,
+    "暴击"
+   ],
+   "wuwatools": [
+    500,
+    {
+     "name": "Crit. Rate",
+     "value90": 36
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21030064,
+   "name": "飞逝",
+   "en": "Novaburst",
+   "ours": [
+    412.5,
+    30.38,
+    "攻击%"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "ATK%",
+     "value90": 30.38
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050027,
+   "name": "大海的馈赠",
+   "en": "Ocean's Gift",
+   "ours": [
+    462.5,
+    18.22,
+    "攻击%"
+   ],
+   "wuwatools": [
+    462.5,
+    {
+     "name": "ATK%",
+     "value90": 18.23
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21010023,
+   "name": "源能长刃·测壹",
+   "en": "Originite: Type I",
+   "ours": [
+    300.0,
+    38.48,
+    "防御%"
+   ],
+   "wuwatools": [
+    300,
+    {
+     "name": "DEF%",
+     "value90": 38.48
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21020023,
+   "name": "源能迅刀·测贰",
+   "en": "Originite: Type II",
+   "ours": [
+    325.0,
+    24.3,
+    "攻击%"
+   ],
+   "wuwatools": [
+    325,
+    {
+     "name": "ATK%",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21030023,
+   "name": "源能佩枪·测叁",
+   "en": "Originite: Type III",
+   "ours": [
+    325.0,
+    24.3,
+    "攻击%"
+   ],
+   "wuwatools": [
+    325,
+    {
+     "name": "ATK%",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21040023,
+   "name": "源能臂铠·测肆",
+   "en": "Originite: Type IV",
+   "ours": [
+    300.0,
+    40.5,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    300,
+    {
+     "name": "Crit. DMG",
+     "value90": 40.5
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050023,
+   "name": "源能音感仪·测五",
+   "en": "Originite: Type V",
+   "ours": [
+    300.0,
+    30.38,
+    "生命%"
+   ],
+   "wuwatools": [
+    300,
+    {
+     "name": "HP%",
+     "value90": 30.38
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21020024,
+   "name": "行进序曲",
+   "en": "Overture",
+   "ours": [
+    337.5,
+    51.84,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    337.5,
+    {
+     "name": "Energy Regen",
+     "value90": 51.84
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Sword",
+    "rarity": 4,
+    "baseAtk": 337.0,
+    "subStatType": "ER %",
+    "subStatValue": 51.84
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21030045,
+   "name": "相位涟漪",
+   "en": "Phasic Homogenizer",
+   "ours": [
+    587.5,
+    48.6,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. DMG",
+     "value90": 48.6
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Pistols",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR DMG",
+    "subStatValue": 48.6
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21030013,
+   "name": "暗夜佩枪·暗星",
+   "en": "Pistols of Night",
+   "ours": [
+    325.0,
+    24.3,
+    "攻击%"
+   ],
+   "wuwatools": [
+    325,
+    {
+     "name": "ATK%",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21030043,
+   "name": "远行者佩枪·洞察",
+   "en": "Pistols of Voyager",
+   "ours": [
+    300.0,
+    30.38,
+    "攻击%"
+   ],
+   "wuwatools": [
+    300,
+    {
+     "name": "ATK%",
+     "value90": 30.38
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21030034,
+   "name": "穿击枪-26型",
+   "en": "Pistols#26",
+   "ours": [
+    387.5,
+    36.45,
+    "攻击%"
+   ],
+   "wuwatools": [
+    387.5,
+    {
+     "name": "ATK%",
+     "value90": 36.45
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21040045,
+   "name": "脉冲协臂",
+   "en": "Pulsation Bracer",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Gauntlets",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 24.3
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21010045,
+   "name": "源能机锋",
+   "en": "Radiance Cleaver",
+   "ours": [
+    587.5,
+    48.6,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. DMG",
+     "value90": 48.6
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Broadblade",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR DMG",
+    "subStatValue": 48.6
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21050104,
+   "name": "曜光",
+   "en": "Radiant Dawn",
+   "ours": [
+    412.5,
+    40.5,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "Crit. DMG",
+     "value90": 40.5
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050013,
+   "name": "暗夜矩阵·暝光",
+   "en": "Rectifier of Night",
+   "ours": [
+    325.0,
+    24.3,
+    "攻击%"
+   ],
+   "wuwatools": [
+    325,
+    {
+     "name": "ATK%",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050043,
+   "name": "远行者矩阵·探幽",
+   "en": "Rectifier of Voyager",
+   "ours": [
+    300.0,
+    32.4,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    300,
+    {
+     "name": "Energy Regen",
+     "value90": 32.4
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050034,
+   "name": "鸣动仪-25型",
+   "en": "Rectifier#25",
+   "ours": [
+    337.5,
+    51.84,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    337.5,
+    {
+     "name": "Energy Regen",
+     "value90": 51.84
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21020026,
+   "name": "裁春",
+   "en": "Red Spring",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Sword",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 24.3
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21030084,
+   "name": "悖论喷流",
+   "en": "Relativistic Jet",
+   "ours": [
+    462.5,
+    18.22,
+    "攻击%"
+   ],
+   "wuwatools": [
+    462.5,
+    {
+     "name": "ATK%",
+     "value90": 18.23
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Pistols",
+    "rarity": 4,
+    "baseAtk": 462.0,
+    "subStatType": "ATK %",
+    "subStatValue": 18.23
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21050026,
+   "name": "琼枝冰绡",
+   "en": "Rime-Draped Sprouts",
+   "ours": [
+    500.0,
+    72.0,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    500,
+    {
+     "name": "Crit. DMG",
+     "value90": 72
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Rectifier",
+    "rarity": 5,
+    "baseAtk": 500,
+    "subStatType": "CR DMG",
+    "subStatValue": 72.0
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21030094,
+   "name": "叙别的罗曼史",
+   "en": "Romance in Farewell",
+   "ours": [
+    462.5,
+    18.22,
+    "攻击%"
+   ],
+   "wuwatools": [
+    462.5,
+    {
+     "name": "ATK%",
+     "value90": 18.23
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21030066,
+   "name": "碎骨",
+   "en": "Skull Thrasher",
+   "ours": [
+    500.0,
+    72.0,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    500,
+    {
+     "name": "Crit. DMG",
+     "value90": 72
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Pistols",
+    "rarity": 5,
+    "baseAtk": 500.0,
+    "subStatType": "CR DMG",
+    "subStatValue": 72.0
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21030104,
+   "name": "阳焰",
+   "en": "Solar Flame",
+   "ours": [
+    412.5,
+    20.25,
+    "暴击"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 20.25
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21040066,
+   "name": "昭日译注",
+   "en": "Solsworn Ciphers",
+   "ours": [
+    587.5,
+    48.6,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. DMG",
+     "value90": 48.6
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Gauntlets",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR DMG",
+    "subStatValue": 48.6
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21020017,
+   "name": "心之锚",
+   "en": "Somnoire Anchor",
+   "ours": [
+    462.5,
+    18.22,
+    "攻击%"
+   ],
+   "wuwatools": [
+    462.5,
+    {
+     "name": "ATK%",
+     "value90": 18.23
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21030056,
+   "name": "蜃影",
+   "en": "Spectral Trigger",
+   "ours": [
+    587.5,
+    48.6,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. DMG",
+     "value90": 48.6
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Pistols",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR DMG",
+    "subStatValue": 48.6
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21030046,
+   "name": "溢彩荧辉",
+   "en": "Spectrum Blaster",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Pistols",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 24.3
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21010066,
+   "name": "宙算仪轨",
+   "en": "Starfield Calibrator",
+   "ours": [
+    412.5,
+    77.04,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "Energy Regen",
+     "value90": 77.04
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Broadblade",
+    "rarity": 5,
+    "baseAtk": 412.0,
+    "subStatType": "ER %",
+    "subStatValue": 77.04
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21030015,
+   "name": "停驻之烟",
+   "en": "Static Mist",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Pistols",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 24.3
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21050036,
+   "name": "星序协响",
+   "en": "Stellar Symphony",
+   "ours": [
+    412.5,
+    77.04,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "Energy Regen",
+     "value90": 77.04
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Rectifier",
+    "rarity": 5,
+    "baseAtk": 412.0,
+    "subStatType": "ER %",
+    "subStatValue": 77.04
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21040074,
+   "name": "金掌",
+   "en": "Stonard",
+   "ours": [
+    412.5,
+    20.25,
+    "暴击"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 20.25
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050016,
+   "name": "掣傀之手",
+   "en": "Stringmaster",
+   "ours": [
+    500.0,
+    36.0,
+    "暴击"
+   ],
+   "wuwatools": [
+    500,
+    {
+     "name": "Crit. Rate",
+     "value90": 36
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Rectifier",
+    "rarity": 5,
+    "baseAtk": 500,
+    "subStatType": "CR Rate",
+    "subStatValue": 36.0
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21020013,
+   "name": "暗夜迅刀·黑闪",
+   "en": "Sword of Night",
+   "ours": [
+    325.0,
+    24.3,
+    "攻击%"
+   ],
+   "wuwatools": [
+    325,
+    {
+     "name": "ATK%",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21020043,
+   "name": "远行者迅刀·旅迹",
+   "en": "Sword of Voyager",
+   "ours": [
+    300.0,
+    32.4,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    300,
+    {
+     "name": "Energy Regen",
+     "value90": 32.4
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21020034,
+   "name": "瞬斩刀-18型",
+   "en": "Sword#18",
+   "ours": [
+    387.5,
+    36.45,
+    "攻击%"
+   ],
+   "wuwatools": [
+    387.5,
+    {
+     "name": "ATK%",
+     "value90": 36.45
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21030016,
+   "name": "死与舞",
+   "en": "The Last Dance",
+   "ours": [
+    500.0,
+    72.0,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    500,
+    {
+     "name": "Crit. DMG",
+     "value90": 72
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Pistols",
+    "rarity": 5,
+    "baseAtk": 500,
+    "subStatType": "CR DMG",
+    "subStatValue": 72.0
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21010076,
+   "name": "千般渡",
+   "en": "Thousandfold Deliverance",
+   "ours": [
+    412.5,
+    72.22,
+    "生命%"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "HP%",
+     "value90": 72.23
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Broadblade",
+    "rarity": 5,
+    "baseAtk": 412.0,
+    "subStatType": "HP %",
+    "subStatValue": 72.23
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21030074,
+   "name": "奔雷",
+   "en": "Thunderbolt",
+   "ours": [
+    387.5,
+    36.45,
+    "攻击%"
+   ],
+   "wuwatools": [
+    387.5,
+    {
+     "name": "ATK%",
+     "value90": 36.45
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21010046,
+   "name": "驭冕铸雷之权",
+   "en": "Thunderflare Dominion",
+   "ours": [
+    675.0,
+    12.15,
+    "暴击"
+   ],
+   "wuwatools": [
+    675,
+    {
+     "name": "Crit. Rate",
+     "value90": 12.15
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Broadblade",
+    "rarity": 5,
+    "baseAtk": 675,
+    "subStatType": "CR Rate",
+    "subStatValue": 12.15
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21040026,
+   "name": "悲喜剧",
+   "en": "Tragicomedy",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Gauntlets",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR Rate",
+    "subStatValue": 24.3
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21010011,
+   "note": "本武器无 90 级"
+  },
+  {
+   "id": 21040011,
+   "note": "本武器无 90 级"
+  },
+  {
+   "id": 21030011,
+   "note": "本武器无 90 级"
+  },
+  {
+   "id": 21050011,
+   "note": "本武器无 90 级"
+  },
+  {
+   "id": 21020011,
+   "note": "本武器无 90 级"
+  },
+  {
+   "id": 21010012,
+   "note": "本武器无 90 级"
+  },
+  {
+   "id": 21040012,
+   "note": "本武器无 90 级"
+  },
+  {
+   "id": 21030012,
+   "note": "本武器无 90 级"
+  },
+  {
+   "id": 21050012,
+   "note": "本武器无 90 级"
+  },
+  {
+   "id": 21020012,
+   "note": "本武器无 90 级"
+  },
+  {
+   "id": 21030044,
+   "name": "无眠烈火",
+   "en": "Undying Flame",
+   "ours": [
+    412.5,
+    30.38,
+    "攻击%"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "ATK%",
+     "value90": 30.38
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21020036,
+   "name": "不灭航路",
+   "en": "Unflickering Valor",
+   "ours": [
+    412.5,
+    77.04,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    412.5,
+    {
+     "name": "Energy Regen",
+     "value90": 77.04
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Sword",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "ER %",
+    "subStatValue": 77.02
+   },
+   "mismatchA": false,
+   "mismatchB": true
+  },
+  {
+   "id": 21020107,
+   "name": "沉冥",
+   "en": "Unspoken Rue",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050024,
+   "name": "奇幻变奏",
+   "en": "Variation",
+   "ours": [
+    337.5,
+    51.84,
+    "共鸣效率"
+   ],
+   "wuwatools": [
+    337.5,
+    {
+     "name": "Energy Regen",
+     "value90": 51.84
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Rectifier",
+    "rarity": 4,
+    "baseAtk": 387,
+    "subStatType": "ER %",
+    "subStatValue": 51.8
+   },
+   "mismatchA": false,
+   "mismatchB": true
+  },
+  {
+   "id": 21010016,
+   "name": "苍鳞千嶂",
+   "en": "Verdant Summit",
+   "ours": [
+    587.5,
+    48.6,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. DMG",
+     "value90": 48.6
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Broadblade",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR DMG",
+    "subStatValue": 48.6
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21040016,
+   "name": "诸方玄枢",
+   "en": "Verity's Handle",
+   "ours": [
+    587.5,
+    24.3,
+    "暴击"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. Rate",
+     "value90": 24.3
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21050094,
+   "name": "虚饰的华尔兹",
+   "en": "Waltz in Masquerade",
+   "ours": [
+    462.5,
+    18.22,
+    "攻击%"
+   ],
+   "wuwatools": [
+    462.5,
+    {
+     "name": "ATK%",
+     "value90": 18.23
+    }
+   ],
+   "calcdata": null,
+   "mismatchA": false,
+   "mismatchB": null
+  },
+  {
+   "id": 21010084,
+   "name": "凋亡频移",
+   "en": "Waning Redshift",
+   "ours": [
+    462.5,
+    18.22,
+    "攻击%"
+   ],
+   "wuwatools": [
+    462.5,
+    {
+     "name": "ATK%",
+     "value90": 18.23
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Broadblade",
+    "rarity": 4,
+    "baseAtk": 462.0,
+    "subStatType": "ATK %",
+    "subStatValue": 18.23
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21050056,
+   "name": "海的呢喃",
+   "en": "Whispers of Sirens",
+   "ours": [
+    500.0,
+    72.0,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    500,
+    {
+     "name": "Crit. DMG",
+     "value90": 72
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Rectifier",
+    "rarity": 5,
+    "baseAtk": 500,
+    "subStatType": "CR DMG",
+    "subStatValue": 72.0
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21010036,
+   "name": "焰痕",
+   "en": "Wildfire Mark",
+   "ours": [
+    587.5,
+    48.6,
+    "暴击伤害"
+   ],
+   "wuwatools": [
+    587.5,
+    {
+     "name": "Crit. DMG",
+     "value90": 48.6
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Broadblade",
+    "rarity": 5,
+    "baseAtk": 587.0,
+    "subStatType": "CR DMG",
+    "subStatValue": 48.6
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  },
+  {
+   "id": 21030026,
+   "name": "林间的咏叹调",
+   "en": "Woodland Aria",
+   "ours": [
+    500.0,
+    36.0,
+    "暴击"
+   ],
+   "wuwatools": [
+    500,
+    {
+     "name": "Crit. Rate",
+     "value90": 36
+    }
+   ],
+   "calcdata": {
+    "weaponType": "Pistols",
+    "rarity": 5,
+    "baseAtk": 500,
+    "subStatType": "CR Rate",
+    "subStatValue": 36.0
+   },
+   "mismatchA": false,
+   "mismatchB": false
+  }
+ ],
+ "mv": {
+  "compared": 2333,
+  "mvMismatch": [],
+  "scalingMismatch": [],
+  "typeMismatch": [],
+  "onlyOurs": 0,
+  "onlyRef": 0,
+  "perChar": {
+   "aalto": {
+    "compared": 36,
+    "mvMismatch": 0
+   },
+   "aemeath": {
+    "compared": 74,
+    "mvMismatch": 0
+   },
+   "augusta": {
+    "compared": 46,
+    "mvMismatch": 0
+   },
+   "baizhi": {
+    "compared": 10,
+    "mvMismatch": 0
+   },
+   "brant": {
+    "compared": 38,
+    "mvMismatch": 0
+   },
+   "buling": {
+    "compared": 14,
+    "mvMismatch": 0
+   },
+   "calcharo": {
+    "compared": 71,
+    "mvMismatch": 0
+   },
+   "camellya": {
+    "compared": 48,
+    "mvMismatch": 0
+   },
+   "cantarella": {
+    "compared": 47,
+    "mvMismatch": 0
+   },
+   "carlotta": {
+    "compared": 45,
+    "mvMismatch": 0
+   },
+   "cartethyia": {
+    "compared": 69,
+    "mvMismatch": 0
+   },
+   "changli": {
+    "compared": 38,
+    "mvMismatch": 0
+   },
+   "chisa": {
+    "compared": 52,
+    "mvMismatch": 0
+   },
+   "chixia": {
+    "compared": 15,
+    "mvMismatch": 0
+   },
+   "ciaccona": {
+    "compared": 29,
+    "mvMismatch": 0
+   },
+   "danjin": {
+    "compared": 31,
+    "mvMismatch": 0
+   },
+   "denia": {
+    "compared": 30,
+    "mvMismatch": 0
+   },
+   "encore": {
+    "compared": 36,
+    "mvMismatch": 0
+   },
+   "galbrena": {
+    "compared": 48,
+    "mvMismatch": 0
+   },
+   "hiyuki": {
+    "compared": 47,
+    "mvMismatch": 0
+   },
+   "hsin": {
+    "compared": 90,
+    "mvMismatch": 0
+   },
+   "iuno": {
+    "compared": 40,
+    "mvMismatch": 0
+   },
+   "jianxin": {
+    "compared": 22,
+    "mvMismatch": 0
+   },
+   "jingran": {
+    "compared": 46,
+    "mvMismatch": 0
+   },
+   "jinhsi": {
+    "compared": 50,
+    "mvMismatch": 0
+   },
+   "jiyan": {
+    "compared": 37,
+    "mvMismatch": 0
+   },
+   "lingyang": {
+    "compared": 28,
+    "mvMismatch": 0
+   },
+   "lucilla": {
+    "compared": 32,
+    "mvMismatch": 0
+   },
+   "lucy": {
+    "compared": 80,
+    "mvMismatch": 0
+   },
+   "lumi": {
+    "compared": 29,
+    "mvMismatch": 0
+   },
+   "lupa": {
+    "compared": 48,
+    "mvMismatch": 0
+   },
+   "luuk-herssen": {
+    "compared": 33,
+    "mvMismatch": 0
+   },
+   "lynae": {
+    "compared": 39,
+    "mvMismatch": 0
+   },
+   "mornye": {
+    "compared": 30,
+    "mvMismatch": 0
+   },
+   "mortefi": {
+    "compared": 19,
+    "mvMismatch": 0
+   },
+   "phoebe": {
+    "compared": 18,
+    "mvMismatch": 0
+   },
+   "phrolova": {
+    "compared": 42,
+    "mvMismatch": 0
+   },
+   "qingxiao": {
+    "compared": 71,
+    "mvMismatch": 0
+   },
+   "qiuyuan": {
+    "compared": 37,
+    "mvMismatch": 0
+   },
+   "rebecca": {
+    "compared": 63,
+    "mvMismatch": 0
+   },
+   "roccia": {
+    "compared": 15,
+    "mvMismatch": 0
+   },
+   "rover-aero": {
+    "compared": 23,
+    "mvMismatch": 0
+   },
+   "rover-electro": {
+    "compared": 54,
+    "mvMismatch": 0
+   },
+   "rover-havoc": {
+    "compared": 35,
+    "mvMismatch": 0
+   },
+   "rover-spectro": {
+    "compared": 17,
+    "mvMismatch": 0
+   },
+   "sanhua": {
+    "compared": 16,
+    "mvMismatch": 0
+   },
+   "shorekeeper": {
+    "compared": 16,
+    "mvMismatch": 0
+   },
+   "sigrika": {
+    "compared": 40,
+    "mvMismatch": 0
+   },
+   "suisui": {
+    "compared": 37,
+    "mvMismatch": 0
+   },
+   "suoming": {
+    "compared": 99,
+    "mvMismatch": 0
+   },
+   "taoqi": {
+    "compared": 13,
+    "mvMismatch": 0
+   },
+   "verina": {
+    "compared": 21,
+    "mvMismatch": 0
+   },
+   "xiangli-yao": {
+    "compared": 37,
+    "mvMismatch": 0
+   },
+   "yangyang": {
+    "compared": 20,
+    "mvMismatch": 0
+   },
+   "yangyang-xuanling": {
+    "compared": 53,
+    "mvMismatch": 0
+   },
+   "yinlin": {
+    "compared": 31,
+    "mvMismatch": 0
+   },
+   "youhu": {
+    "compared": 30,
+    "mvMismatch": 0
+   },
+   "yuanwu": {
+    "compared": 43,
+    "mvMismatch": 0
+   },
+   "zani": {
+    "compared": 30,
+    "mvMismatch": 0
+   },
+   "zhezhi": {
+    "compared": 25,
+    "mvMismatch": 0
+   }
+  }
+ },
+ "calcData": [
+  {
+   "name": "Jingran",
+   "id": 1212,
+   "cmp": {
+    "atk": [
+     312.5,
+     312
+    ],
+    "hp": [
+     15375.0,
+     15375
+    ],
+    "def": [
+     0.0,
+     0
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Qingxiao",
+   "id": 1413,
+   "cmp": {
+    "atk": [
+     462.5,
+     462
+    ],
+    "hp": [
+     10300.0,
+     10300
+    ],
+    "def": [
+     1112.22,
+     1112
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Suisui",
+   "id": 1110,
+   "cmp": {
+    "atk": [
+     287.5,
+     287
+    ],
+    "hp": [
+     16712.5,
+     16712
+    ],
+    "def": [
+     1100.0,
+     1099
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1100.0,
+     1099
+    ]
+   }
+  },
+  {
+   "name": "Yangyang Xuanling",
+   "note": "ww.json 中找不到同名角色"
+  },
+  {
+   "name": "Hiyuki",
+   "id": 1108,
+   "cmp": {
+    "atk": [
+     462.5,
+     462
+    ],
+    "hp": [
+     10300.0,
+     10300
+    ],
+    "def": [
+     1112.22,
+     1112
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Rebecca",
+   "id": 1308,
+   "cmp": {
+    "atk": [
+     400.0,
+     400
+    ],
+    "hp": [
+     11600.0,
+     11600
+    ],
+    "def": [
+     1173.33,
+     1173
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Lucy",
+   "id": 1511,
+   "cmp": {
+    "atk": [
+     425.0,
+     425
+    ],
+    "hp": [
+     11025.0,
+     11025
+    ],
+    "def": [
+     1148.89,
+     1148
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1148.89,
+     1148
+    ]
+   }
+  },
+  {
+   "name": "Lucilla",
+   "id": 1109,
+   "cmp": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     12237.5,
+     12237
+    ],
+    "def": [
+     1197.78,
+     1197
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1197.78,
+     1197
+    ]
+   }
+  },
+  {
+   "name": "Denia",
+   "id": 1211,
+   "cmp": {
+    "atk": [
+     425.0,
+     425
+    ],
+    "hp": [
+     11025.0,
+     11025
+    ],
+    "def": [
+     1148.89,
+     1148
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1148.89,
+     1148
+    ]
+   }
+  },
+  {
+   "name": "Sigrika",
+   "id": 1412,
+   "cmp": {
+    "atk": [
+     437.5,
+     437
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1136.66,
+     1136
+    ]
+   }
+  },
+  {
+   "name": "Luuk",
+   "note": "ww.json 中找不到同名角色"
+  },
+  {
+   "name": "Aemeath",
+   "id": 1210,
+   "cmp": {
+    "atk": [
+     425.0,
+     425
+    ],
+    "hp": [
+     11025.0,
+     11025
+    ],
+    "def": [
+     1148.89,
+     1148
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1148.89,
+     1148
+    ]
+   }
+  },
+  {
+   "name": "Mornye",
+   "id": 1209,
+   "cmp": {
+    "atk": [
+     287.5,
+     287
+    ],
+    "hp": [
+     15375.0,
+     15375
+    ],
+    "def": [
+     1356.66,
+     1356
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1356.66,
+     1356
+    ]
+   }
+  },
+  {
+   "name": "Lynae",
+   "id": 1509,
+   "cmp": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     12237.5,
+     12237
+    ],
+    "def": [
+     1197.78,
+     1197
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1197.78,
+     1197
+    ]
+   }
+  },
+  {
+   "name": "Buling",
+   "id": 1307,
+   "cmp": {
+    "atk": [
+     225.0,
+     225
+    ],
+    "hp": [
+     10625.0,
+     10625
+    ],
+    "def": [
+     1258.89,
+     1258
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1258.89,
+     1258
+    ]
+   }
+  },
+  {
+   "name": "Chisa",
+   "id": 1508,
+   "cmp": {
+    "atk": [
+     437.5,
+     437
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1136.66,
+     1136
+    ]
+   }
+  },
+  {
+   "name": "Qiuyuan",
+   "id": 1411,
+   "cmp": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     12237.5,
+     12237
+    ],
+    "def": [
+     1197.78,
+     1197
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1197.78,
+     1197
+    ]
+   }
+  },
+  {
+   "name": "Galbrena",
+   "id": 1208,
+   "cmp": {
+    "atk": [
+     462.5,
+     462
+    ],
+    "hp": [
+     10300.0,
+     10300
+    ],
+    "def": [
+     1112.22,
+     1112
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Iuno",
+   "id": 1410,
+   "cmp": {
+    "atk": [
+     450.0,
+     450
+    ],
+    "hp": [
+     10525.0,
+     10525
+    ],
+    "def": [
+     1124.44,
+     1124
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Augusta",
+   "id": 1306,
+   "cmp": {
+    "atk": [
+     462.5,
+     462
+    ],
+    "hp": [
+     10300.0,
+     10300
+    ],
+    "def": [
+     1112.22,
+     1112
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Phrolova",
+   "id": 1608,
+   "cmp": {
+    "atk": [
+     437.5,
+     437
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1136.66,
+     1136
+    ]
+   }
+  },
+  {
+   "name": "Lupa",
+   "id": 1207,
+   "cmp": {
+    "atk": [
+     387.5,
+     387
+    ],
+    "hp": [
+     11912.5,
+     11912
+    ],
+    "def": [
+     1185.55,
+     1185
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Cartethyia",
+   "id": 1409,
+   "cmp": {
+    "atk": [
+     312.5,
+     312
+    ],
+    "hp": [
+     14800.0,
+     14800
+    ],
+    "def": [
+     611.11,
+     611
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Ciaccona",
+   "id": 1407,
+   "cmp": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     12237.5,
+     12237
+    ],
+    "def": [
+     1197.78,
+     1197
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1197.78,
+     1197
+    ]
+   }
+  },
+  {
+   "name": "Zani",
+   "id": 1507,
+   "cmp": {
+    "atk": [
+     437.5,
+     437
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1136.66,
+     1136
+    ]
+   }
+  },
+  {
+   "name": "Cantarella",
+   "id": 1607,
+   "cmp": {
+    "atk": [
+     400.0,
+     400
+    ],
+    "hp": [
+     11600.0,
+     11600
+    ],
+    "def": [
+     1100.0,
+     1099
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1100.0,
+     1099
+    ]
+   }
+  },
+  {
+   "name": "Brant",
+   "id": 1206,
+   "cmp": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     11675.0,
+     11675
+    ],
+    "def": [
+     1307.78,
+     1307
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1307.78,
+     1307
+    ]
+   }
+  },
+  {
+   "name": "Phoebe",
+   "id": 1506,
+   "cmp": {
+    "atk": [
+     412.5,
+     412
+    ],
+    "hp": [
+     10825.0,
+     10825
+    ],
+    "def": [
+     1258.89,
+     1258
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1258.89,
+     1258
+    ]
+   }
+  },
+  {
+   "name": "Roccia",
+   "id": 1606,
+   "cmp": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     12250.0,
+     12250
+    ],
+    "def": [
+     1197.78,
+     1197
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1197.78,
+     1197
+    ]
+   }
+  },
+  {
+   "name": "Carlotta",
+   "id": 1107,
+   "cmp": {
+    "atk": [
+     462.5,
+     462
+    ],
+    "hp": [
+     12450.0,
+     12450
+    ],
+    "def": [
+     1197.78,
+     1197
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1197.78,
+     1197
+    ]
+   }
+  },
+  {
+   "name": "Lumi",
+   "id": 1504,
+   "cmp": {
+    "atk": [
+     337.5,
+     337
+    ],
+    "hp": [
+     8500.0,
+     8500
+    ],
+    "def": [
+     880.0,
+     879
+    ]
+   },
+   "mismatch": {
+    "def": [
+     880.0,
+     879
+    ]
+   }
+  },
+  {
+   "name": "Youhu",
+   "id": 1106,
+   "cmp": {
+    "atk": [
+     262.5,
+     262
+    ],
+    "hp": [
+     9975.0,
+     9975
+    ],
+    "def": [
+     1051.11,
+     1051
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Camellya",
+   "id": 1603,
+   "cmp": {
+    "atk": [
+     450.0,
+     450
+    ],
+    "hp": [
+     10325.0,
+     10325
+    ],
+    "def": [
+     1161.11,
+     1161
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Shorekeeper",
+   "id": 1505,
+   "cmp": {
+    "atk": [
+     287.5,
+     287
+    ],
+    "hp": [
+     16712.5,
+     16712
+    ],
+    "def": [
+     1100.0,
+     1099
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1100.0,
+     1099
+    ]
+   }
+  },
+  {
+   "name": "Xiangli Yao",
+   "id": 1305,
+   "cmp": {
+    "atk": [
+     425.0,
+     425
+    ],
+    "hp": [
+     10625.0,
+     10625
+    ],
+    "def": [
+     1222.22,
+     1222
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Zhezhi",
+   "id": 1105,
+   "cmp": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     12250.0,
+     12250
+    ],
+    "def": [
+     1197.78,
+     1197
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1197.78,
+     1197
+    ]
+   }
+  },
+  {
+   "name": "Changli",
+   "id": 1205,
+   "cmp": {
+    "atk": [
+     462.5,
+     462
+    ],
+    "hp": [
+     10387.5,
+     10387
+    ],
+    "def": [
+     1100.0,
+     1099
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1100.0,
+     1099
+    ]
+   }
+  },
+  {
+   "name": "Jinhsi",
+   "id": 1304,
+   "cmp": {
+    "atk": [
+     412.5,
+     412
+    ],
+    "hp": [
+     10825.0,
+     10825
+    ],
+    "def": [
+     1258.89,
+     1258
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1258.89,
+     1258
+    ]
+   }
+  },
+  {
+   "name": "Yinlin",
+   "id": 1302,
+   "cmp": {
+    "atk": [
+     400.0,
+     400
+    ],
+    "hp": [
+     11000.0,
+     11000
+    ],
+    "def": [
+     1283.33,
+     1283
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Jiyan",
+   "id": 1404,
+   "cmp": {
+    "atk": [
+     437.5,
+     437
+    ],
+    "hp": [
+     10487.5,
+     10487
+    ],
+    "def": [
+     1185.55,
+     1185
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Verina",
+   "id": 1503,
+   "cmp": {
+    "atk": [
+     337.5,
+     337
+    ],
+    "hp": [
+     14237.5,
+     14237
+    ],
+    "def": [
+     1100.0,
+     1099
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1100.0,
+     1099
+    ]
+   }
+  },
+  {
+   "name": "Calcharo",
+   "id": 1301,
+   "cmp": {
+    "atk": [
+     437.5,
+     437
+    ],
+    "hp": [
+     10500.0,
+     10500
+    ],
+    "def": [
+     1185.55,
+     1185
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Encore",
+   "id": 1203,
+   "cmp": {
+    "atk": [
+     425.0,
+     425
+    ],
+    "hp": [
+     10512.5,
+     10512
+    ],
+    "def": [
+     1246.66,
+     1246
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1246.66,
+     1246
+    ]
+   }
+  },
+  {
+   "name": "Jianxin",
+   "id": 1405,
+   "cmp": {
+    "atk": [
+     337.5,
+     337
+    ],
+    "hp": [
+     14112.5,
+     14112
+    ],
+    "def": [
+     1124.44,
+     1124
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Lingyang",
+   "id": 1104,
+   "cmp": {
+    "atk": [
+     437.5,
+     437
+    ],
+    "hp": [
+     10387.5,
+     10387
+    ],
+    "def": [
+     1210.0,
+     1209
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1210.0,
+     1209
+    ]
+   }
+  },
+  {
+   "name": "Rover (Spectro)",
+   "id": 1501,
+   "cmp": {
+    "atk": [
+     375.0,
+     375
+    ],
+    "hp": [
+     11400.0,
+     11400
+    ],
+    "def": [
+     1368.89,
+     1368
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1368.89,
+     1368
+    ]
+   }
+  },
+  {
+   "name": "Rover (Havoc)",
+   "id": 1604,
+   "cmp": {
+    "atk": [
+     412.5,
+     412
+    ],
+    "hp": [
+     10825.0,
+     10825
+    ],
+    "def": [
+     1258.89,
+     1258
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1258.89,
+     1258
+    ]
+   }
+  },
+  {
+   "name": "Rover (Aero)",
+   "id": 1406,
+   "cmp": {
+    "atk": [
+     437.5,
+     437
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1136.66,
+     1136
+    ]
+   }
+  },
+  {
+   "name": "Rover (Electro)",
+   "id": 1309,
+   "cmp": {
+    "atk": [
+     437.5,
+     437
+    ],
+    "hp": [
+     10775.0,
+     10775
+    ],
+    "def": [
+     1136.66,
+     1136
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1136.66,
+     1136
+    ]
+   }
+  },
+  {
+   "name": "Sanhua",
+   "id": 1102,
+   "cmp": {
+    "atk": [
+     275.0,
+     275
+    ],
+    "hp": [
+     10062.5,
+     10062
+    ],
+    "def": [
+     941.11,
+     941
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Danjin",
+   "id": 1602,
+   "cmp": {
+    "atk": [
+     262.5,
+     262
+    ],
+    "hp": [
+     9437.5,
+     9437
+    ],
+    "def": [
+     1148.89,
+     1148
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1148.89,
+     1148
+    ]
+   }
+  },
+  {
+   "name": "Mortefi",
+   "id": 1204,
+   "cmp": {
+    "atk": [
+     250.0,
+     250
+    ],
+    "hp": [
+     10025.0,
+     10025
+    ],
+    "def": [
+     1136.66,
+     1136
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1136.66,
+     1136
+    ]
+   }
+  },
+  {
+   "name": "Chixia",
+   "id": 1202,
+   "cmp": {
+    "atk": [
+     300.0,
+     300
+    ],
+    "hp": [
+     9087.5,
+     9087
+    ],
+    "def": [
+     953.33,
+     953
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Yangyang",
+   "id": 1402,
+   "cmp": {
+    "atk": [
+     250.0,
+     250
+    ],
+    "hp": [
+     10200.0,
+     10200
+    ],
+    "def": [
+     1100.0,
+     1099
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1100.0,
+     1099
+    ]
+   }
+  },
+  {
+   "name": "Baizhi",
+   "id": 1103,
+   "cmp": {
+    "atk": [
+     212.5,
+     212
+    ],
+    "hp": [
+     12812.5,
+     12812
+    ],
+    "def": [
+     1002.22,
+     1002
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Taoqi",
+   "id": 1601,
+   "cmp": {
+    "atk": [
+     225.0,
+     225
+    ],
+    "hp": [
+     8950.0,
+     8950
+    ],
+    "def": [
+     1564.44,
+     1564
+    ]
+   },
+   "mismatch": {}
+  },
+  {
+   "name": "Yuanwu",
+   "id": 1303,
+   "cmp": {
+    "atk": [
+     225.0,
+     225
+    ],
+    "hp": [
+     8525.0,
+     8525
+    ],
+    "def": [
+     1637.77,
+     1637
+    ]
+   },
+   "mismatch": {
+    "def": [
+     1637.77,
+     1637
+    ]
+   }
+  },
+  {
+   "name": "Aalto",
+   "id": 1403,
+   "cmp": {
+    "atk": [
+     262.5,
+     262
+    ],
+    "hp": [
+     9850.0,
+     9850
+    ],
+    "def": [
+     1075.55,
+     1075
+    ]
+   },
+   "mismatch": {}
+  }
+ ],
+ "enemies": {
+  "compared": 159,
+  "mismatch": [],
+  "missing": 0
+ }
+}

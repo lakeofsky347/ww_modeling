@@ -1,0 +1,79 @@
+{
+ "name": "吟霖 单人 自动搜索",
+ "duration": 25,
+ "mode": "expected",
+ "team": [
+  {
+   "id": 1302,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050016,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 8,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "energyRegen",
+       "value": 0.124
+      }
+     ],
+     "echoId": 6000052
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 8
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 8
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 8
+    }
+   ]
+  }
+ ],
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": 0
+ },
+ "rotation": {
+  "mode": "search"
+ },
+ "search": {
+  "beamWidth": 48,
+  "maxExpansions": 60000,
+  "topN": 3
+ },
+ "sources": [
+  "https://www.prydwen.gg/wuthering-waves/characters/yinlin"
+ ]
+}

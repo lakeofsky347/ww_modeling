@@ -1,0 +1,224 @@
+action frames: /workspace/gamedata/pipeline/ww/validation/action_frames.json
+
+=== [0] C1 基线：今汐 R 两段，Lv90 对 Lv90，抗 10% ===
+probe: 今汐 R 移岁诛邪 Lv10 | ATK 1,465.8 HP 15,385.0 CR 43.10% CD 166.20%
+  技能伤害: expected 7,647.4 | crit 9,888.6 | noncrit 5,949.8
+    base=1,465.8[T]  multiplier=499.81%[T]  bonus=1.8000[K]  deepen=1.0000[K]  crit=1.2853[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]  effRes=10.00%
+  技能伤害: expected 17,843.9 | crit 23,073.2 | noncrit 13,882.8
+    base=1,465.8[T]  multiplier=1,166.22%[T]  bonus=1.8000[K]  deepen=1.0000[K]  crit=1.2853[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 25,491.3 | crit 32,961.8 | noncrit 19,832.6
+  expect expected: 25,491.27 vs 25,491.30 (±0.5%) OK
+  expect crit: 32,961.77 vs 32,961.80 (±0.5%) OK
+  expect noncrit: 19,832.59 vs 19,832.60 (±0.5%) OK
+
+=== [1] C2 无视防御+减防：长离 R，无视 15%、减防 10% ===
+probe: 长离 R 离火照丹心 Lv10 | ATK 1,774.6 HP 14,947.5 CR 43.10% CD 166.20%
+  技能伤害: expected 22,619.9 | crit 29,248.9 | noncrit 17,598.6
+    base=1,774.6[T]  multiplier=1,212.75%[T]  bonus=1.6000[K]  deepen=1.0000[K]  crit=1.2853[T]  defense=0.5679[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 22,619.9 | crit 29,248.9 | noncrit 17,598.6
+  expect expected: 22,619.88 vs 22,619.90 (±0.5%) OK
+  expect crit: 29,248.89 vs 29,248.90 (±0.5%) OK
+  expect noncrit: 17,598.61 vs 17,598.60 (±0.5%) OK
+
+=== [2] C3 负抗：卡卡罗 R，敌 Lv100，减抗 30% → 有效 −20% ===
+probe: 卡卡罗 R 幻影蚀刻 Lv10 | ATK 1,504.9 HP 15,060.0 CR 35.10% CD 182.20%
+  技能伤害: expected 9,942.2 | crit 14,058.5 | noncrit 7,716.0
+    base=1,504.9[T]  multiplier=596.43%[T]  bonus=1.6000[K]  deepen=1.0000[K]  crit=1.2885[T]  defense=0.4884[K]  resistance=1.1000[K]  dmgReduce=1.0000[U]  effRes=-20.00%
+  SUM expected 9,942.2 | crit 14,058.5 | noncrit 7,716.0
+  expect expected: 9,942.21 vs 9,942.20 (±0.5%) OK
+  expect crit: 14,058.51 vs 14,058.50 (±0.5%) OK
+  expect noncrit: 7,715.98 vs 7,716.00 (±0.5%) OK
+
+=== [3] C4 高抗：散华 E，免疫档 100% 减抗 10% → 有效 90% ===
+probe: 散华 E 朔雪永冻 Lv10 | ATK 1,435.4 HP 14,622.5 CR 35.10% CD 166.20%
+  技能伤害: expected 998.0 | crit 1,345.9 | noncrit 809.8
+    base=1,435.4[T]  multiplier=359.85%[T]  bonus=1.7200[K]  deepen=1.0000[K]  crit=1.2324[T]  defense=0.5013[K]  resistance=0.1818[C]  dmgReduce=1.0000[U]  effRes=90.00%
+  SUM expected 998.0 | crit 1,345.9 | noncrit 809.8
+  expect expected: 997.96 vs 998.00 (±0.5%) OK
+  expect crit: 1,345.88 vs 1,345.90 (±0.5%) OK
+  expect noncrit: 809.79 vs 809.80 (±0.5%) OK
+
+=== [4] C5 加深（攻击方同区）：折枝 E，全伤加深 15% + 技能加深 25% ===
+probe: 折枝 E 以形写神·短按技能伤害 Lv10 | ATK 1,407.1 HP 20,530.9 CR 43.10% CD 166.20%
+  短按技能伤害: expected 5,396.7 | crit 6,978.3 | noncrit 4,198.7
+    base=1,407.1[T]  multiplier=295.26%[T]  bonus=1.6000[K]  deepen=1.4000[K]  crit=1.2853[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 5,396.7 | crit 6,978.3 | noncrit 4,198.7
+  expect expected: 5,396.73 vs 5,396.70 (±0.5%) OK
+  expect crit: 6,978.31 vs 6,978.30 (±0.5%) OK
+  expect noncrit: 4,198.74 vs 4,198.70 (±0.5%) OK
+
+=== [5] C6 加深（攻击方+目标易伤）：今汐 R，加深 15% + 目标受伤加深 10% ===
+probe: 今汐 R 移岁诛邪 Lv10 | ATK 1,465.8 HP 15,385.0 CR 43.10% CD 166.20%
+  技能伤害: expected 9,559.2 | crit 12,360.7 | noncrit 7,437.2
+    base=1,465.8[T]  multiplier=499.81%[T]  bonus=1.8000[K]  deepen=1.2500[K]  crit=1.2853[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]  effRes=10.00%
+  技能伤害: expected 22,304.8 | crit 28,841.5 | noncrit 17,353.5
+    base=1,465.8[T]  multiplier=1,166.22%[T]  bonus=1.8000[K]  deepen=1.2500[K]  crit=1.2853[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 31,864.1 | crit 41,202.2 | noncrit 24,790.7
+  expect expected: 31,864.09 vs 31,864.10 (±0.5%) OK
+  expect crit: 41,202.22 vs 41,202.20 (±0.5%) OK
+  expect noncrit: 24,790.74 vs 24,790.70 (±0.5%) OK
+
+=== [6] C7 类型加成同区相加：相里要 R，解放伤害加成 +30%（叠在元素加成上） ===
+probe: 相里要 R 思维矩阵·思维矩阵伤害 Lv10 | ATK 1,485.4 HP 15,185.0 CR 35.10% CD 222.70%
+  思维矩阵伤害: expected 26,707.5 | crit 41,573.0 | noncrit 18,667.7
+    base=1,485.4[T]  multiplier=1,466.06%[T]  bonus=1.9000[K]  deepen=1.0000[K]  crit=1.4307[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 26,707.5 | crit 41,573.0 | noncrit 18,667.7
+  expect expected: 26,707.46 vs 26,707.50 (±0.5%) OK
+  expect crit: 41,572.99 vs 41,573.00 (±0.5%) OK
+  expect noncrit: 18,667.71 vs 18,667.70 (±0.5%) OK
+
+=== [7] C8 生命缩放：守岸人 洞悉伤害（X3，HP×19.64%×3） ===
+probe: 守岸人 I 故此证明·洞悉伤害 Lv10 | ATK 988.0 HP 46,002.8 CR 35.10% CD 166.20%
+  洞悉伤害: expected 15,071.0 | crit 20,325.2 | noncrit 12,229.4
+    base=46,002.8[T]  multiplier=58.92%[T]  bonus=1.0000[K]  deepen=1.0000[K]  crit=1.2324[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 15,071.0 | crit 20,325.2 | noncrit 12,229.4
+  expect expected: 15,071.01 vs 15,071.00 (±0.5%) OK
+  expect crit: 20,325.21 vs 20,325.20 (±0.5%) OK
+  expect noncrit: 12,229.37 vs 12,229.40 (±0.5%) OK
+
+=== [8] C9 防御缩放：桃祈 R（DEF×449.71%） ===
+probe: 桃祈 R 不动如山 Lv10 | ATK 920.2 HP 13,510.0 CR 35.10% CD 166.20%
+  技能伤害: expected 11,640.1 | crit 15,698.2 | noncrit 9,445.3
+    base=4,156.3[T]  multiplier=449.71%[T]  bonus=1.1200[K]  deepen=1.0000[K]  crit=1.2324[T]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 11,640.1 | crit 15,698.2 | noncrit 9,445.3
+  expect expected: 11,640.08 vs 11,640.10 (±0.5%) OK
+  expect crit: 15,698.15 vs 15,698.20 (±0.5%) OK
+  expect noncrit: 9,445.34 vs 9,445.30 (±0.5%) OK
+
+=== [9] C10 攻击方等级：散华 R，角色 Lv80 对敌 Lv90 ===
+probe: 散华 R 焦瞑冻土 Lv10 | ATK 1,401.9 HP 13,944.1 CR 35.10% CD 166.20%
+  技能伤害: expected 10,560.1 | crit 14,241.6 | noncrit 8,569.0
+    base=1,401.9[T]  multiplier=809.48%[T]  bonus=1.7200[K]  deepen=1.0000[K]  crit=1.2324[T]  defense=0.4878[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]  effRes=10.00%
+  SUM expected 10,560.1 | crit 14,241.6 | noncrit 8,569.0
+  expect expected: 10,560.07 vs 10,560.10 (±0.5%) OK
+  expect crit: 14,241.63 vs 14,241.60 (±0.5%) OK
+  expect noncrit: 8,568.97 vs 8,569.00 (±0.5%) OK
+
+=== [10] N1 风蚀 1 层 卡提希娅（逐跳） ===
+anomaly probe: 卡提希娅 Lv90 → 风蚀效应(erosion) 1 层 | cap 3 dur 14.8s period 3s
+  #1 t=0.00s tick 1 层: 745.9
+    base=3,674.0[T]  multiplier=45.00%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  #2 t=3.00s tick 1 层: 745.9
+    base=3,674.0[T]  multiplier=45.00%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  #3 t=6.00s tick 1 层: 745.9
+    base=3,674.0[T]  multiplier=45.00%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  SUM 2,237.8 over 3 settlement(s)
+  expect first: 745.95 vs 745.90 (±0.5%) OK
+  expect tick[0]: 745.95 vs 745.90 (±0.5%) OK
+  expect tick[1]: 745.95 vs 745.90 (±0.5%) OK
+  expect tick[2]: 745.95 vs 745.90 (±0.5%) OK
+
+=== [11] N2 风蚀 3 层 卡提希娅（逐跳） ===
+anomaly probe: 卡提希娅 Lv90 → 风蚀效应(erosion) 3 层 | cap 3 dur 14.8s period 3s
+  #1 t=0.00s tick 3 层: 3,729.7
+    base=3,674.0[T]  multiplier=225.00%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  #2 t=3.00s tick 3 层: 3,729.7
+    base=3,674.0[T]  multiplier=225.00%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  #3 t=6.00s tick 3 层: 3,729.7
+    base=3,674.0[T]  multiplier=225.00%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  #4 t=9.00s tick 3 层: 3,729.7
+    base=3,674.0[T]  multiplier=225.00%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  #5 t=12.00s tick 3 层: 3,729.7
+    base=3,674.0[T]  multiplier=225.00%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  SUM 18,648.7 over 5 settlement(s)
+  expect first: 3,729.74 vs 3,729.70 (±0.5%) OK
+  expect tick[0]: 3,729.74 vs 3,729.70 (±0.5%) OK
+  expect tick[1]: 3,729.74 vs 3,729.70 (±0.5%) OK
+  expect tick[2]: 3,729.74 vs 3,729.70 (±0.5%) OK
+  expect tick[3]: 3,729.74 vs 3,729.70 (±0.5%) OK
+  expect tick[4]: 3,729.74 vs 3,729.70 (±0.5%) OK
+
+=== [12] N3 光噪 10 层 菲比（逐跳衰减） ===
+anomaly probe: 菲比 Lv90 → 光噪效应(frazzle) 10 层 | cap 10 dur 3s period 3s −1层/周期
+  #1 t=3.00s tick 10 层: 4,136.0
+    base=3,674.0[T]  multiplier=249.51%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  #2 t=6.00s tick 9 层: 3,731.7
+    base=3,674.0[T]  multiplier=225.12%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  #3 t=9.00s tick 8 层: 3,327.4
+    base=3,674.0[T]  multiplier=200.73%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  #4 t=12.00s tick 7 层: 2,923.1
+    base=3,674.0[T]  multiplier=176.34%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  #5 t=15.00s tick 6 层: 2,518.8
+    base=3,674.0[T]  multiplier=151.95%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  #6 t=18.00s tick 5 层: 2,114.5
+    base=3,674.0[T]  multiplier=127.56%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  SUM 18,751.6 over 6 settlement(s)
+  expect first: 4,136.03 vs 4,136.00 (±0.5%) OK
+  expect tick[0]: 4,136.03 vs 4,136.00 (±0.5%) OK
+  expect tick[1]: 3,731.73 vs 3,731.70 (±0.5%) OK
+  expect tick[2]: 3,327.43 vs 3,327.40 (±0.5%) OK
+  expect tick[3]: 2,923.12 vs 2,923.10 (±0.5%) OK
+  expect tick[4]: 2,518.82 vs 2,518.80 (±0.5%) OK
+  expect tick[5]: 2,114.51 vs 2,114.50 (±0.5%) OK
+
+=== [13] N4 电磁 10 层 心（逐跳减半） ===
+anomaly probe: 心 Lv90 → 电磁效应(flare) 10 层 | cap 10 dur 15s period 5s decay×0.5
+  #1 t=5.00s tick 10 层: 6,893.4
+    base=3,674.0[T]  multiplier=415.85%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  #2 t=10.00s tick 5 层: 3,524.2
+    base=3,674.0[T]  multiplier=212.60%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  #3 t=15.00s tick 2 层: 1,502.7
+    base=3,674.0[T]  multiplier=90.65%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  SUM 11,920.2 over 3 settlement(s)
+  expect first: 6,893.39 vs 6,893.40 (±0.5%) OK
+  expect tick[0]: 6,893.39 vs 6,893.40 (±0.5%) OK
+  expect tick[1]: 3,524.19 vs 3,524.20 (±0.5%) OK
+  expect tick[2]: 1,502.67 vs 1,502.70 (±0.5%) OK
+
+=== [14] N5 聚爆 10 层引爆 爱弥斯 ===
+anomaly probe: 爱弥斯 Lv90 → 聚爆效应(burst) 10 层 | cap 10 dur 15s period 0s
+  #1 t=0.00s burst 10 层: 11,580.9
+    base=3,674.0[T]  multiplier=698.63%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  SUM 11,580.9 over 1 settlement(s)
+  expect first: 11,580.93 vs 11,580.90 (±0.5%) OK
+  expect tick[0]: 11,580.93 vs 11,580.90 (±0.5%) OK
+
+=== [15] N6 霜渐 5 层 绯雪（施加即结算） ===
+anomaly probe: 绯雪 Lv90 → 霜渐效应(chafe) 5 层 | cap 10 dur 15s period 0s
+  #1 t=0.00s tick 5 层: 1,726.8
+    base=3,674.0[T]  multiplier=104.17%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  SUM 1,726.8 over 1 settlement(s)
+  expect first: 1,726.79 vs 1,726.80 (±0.5%) OK
+  expect tick[0]: 1,726.79 vs 1,726.80 (±0.5%) OK
+
+=== [16] N7 光噪 10 层 + 光噪伤害加成 30%（加成区） ===
+anomaly probe: 菲比 Lv90 → 光噪效应(frazzle) 10 层 | cap 10 dur 3s period 3s −1层/周期
+  #1 t=3.00s tick 10 层: 5,376.8
+    base=3,674.0[T]  multiplier=249.51%[T]  bonus=1.3000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  SUM 5,376.8 over 1 settlement(s)
+  expect first: 5,376.84 vs 5,376.80 (±0.5%) OK
+  expect tick[0]: 5,376.84 vs 5,376.80 (±0.5%) OK
+
+=== [17] N8 风蚀 3 层 + 风蚀加深 50% + 目标受伤 +10%（加深区） ===
+anomaly probe: 卡提希娅 Lv90 → 风蚀效应(erosion) 3 层 | cap 3 dur 14.8s period 3s
+  #1 t=0.00s tick 3 层: 5,967.6
+    base=3,674.0[T]  multiplier=225.00%[T]  bonus=1.0000[C]  deepen=1.6000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  SUM 5,967.6 over 1 settlement(s)
+  expect first: 5,967.58 vs 6,154.10 (±0.5%) FAIL (-3.03%)
+  expect tick[0]: 5,967.58 vs 6,154.10 (±0.5%) FAIL (-3.03%)
+
+=== [18] N9 电磁 10 层 + 减抗 20%（抗性 −10%） ===
+anomaly probe: 心 Lv90 → 电磁效应(flare) 10 层 | cap 10 dur 15s period 5s decay×0.5
+  #1 t=5.00s tick 10 层: 8,042.3
+    base=3,674.0[T]  multiplier=415.85%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=1.0500[K]  dmgReduce=1.0000[U]
+  SUM 8,042.3 over 1 settlement(s)
+  expect first: 8,042.29 vs 8,042.30 (±0.5%) OK
+  expect tick[0]: 8,042.29 vs 8,042.30 (±0.5%) OK
+
+=== [19] N10 风蚀 3 层 施加者 Lv80（等级基础值） ===
+anomaly probe: 卡提希娅 Lv80 → 风蚀效应(erosion) 3 层 | cap 3 dur 14.8s period 3s
+  #1 t=0.00s tick 3 层: 1,980.5
+    base=2,005.0[T]  multiplier=225.00%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.4878[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  SUM 1,980.5 over 1 settlement(s)
+  expect first: 1,980.55 vs 3,729.70 (±0.5%) FAIL (-46.90%)
+  expect tick[0]: 1,980.55 vs 3,729.70 (±0.5%) FAIL (-46.90%)
+
+=== [20] N11 光噪 10 层 + 队伍全伤害加深 15%（不应计入） ===
+anomaly probe: 菲比 Lv90 → 光噪效应(frazzle) 10 层 | cap 10 dur 3s period 3s −1层/周期
+  #1 t=3.00s tick 10 层: 4,136.0
+    base=3,674.0[T]  multiplier=249.51%[T]  bonus=1.0000[C]  deepen=1.0000[C]  crit=1.0000[C]  defense=0.5013[K]  resistance=0.9000[K]  dmgReduce=1.0000[U]
+  SUM 4,136.0 over 1 settlement(s)
+  expect first: 4,136.03 vs 4,136.00 (±0.5%) OK
+  expect tick[0]: 4,136.03 vs 4,136.00 (±0.5%) OK
+
+zone mech legend: T=table K=corroborated C=community U=unsolved · engine ww-engine-0.2 · data 3.7.8

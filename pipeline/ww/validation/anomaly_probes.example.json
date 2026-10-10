@@ -1,0 +1,129 @@
+{
+ "defaults": {
+  "enemy": {
+   "level": 90,
+   "resTier": 0.1,
+   "resShred": 0
+  },
+  "mode": "expected",
+  "conditionals": "off"
+ },
+ "cases": [
+  {
+   "name": "风蚀 3 层 卡提希娅",
+   "team": [
+    {
+     "id": 1409,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "erosion",
+    "stacks": 3,
+    "ticks": 6
+   }
+  },
+  {
+   "name": "光噪 10 层 菲比",
+   "team": [
+    {
+     "id": 1506,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "frazzle",
+    "stacks": 10,
+    "ticks": 6
+   }
+  },
+  {
+   "name": "电磁 10 层 心",
+   "team": [
+    {
+     "id": 1311,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "flare",
+    "stacks": 10,
+    "ticks": 6
+   }
+  },
+  {
+   "name": "聚爆 10 层引爆 爱弥斯",
+   "team": [
+    {
+     "id": 1210,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "burst",
+    "stacks": 10,
+    "ticks": 6
+   }
+  },
+  {
+   "name": "风蚀 3 层 + 风蚀加深50%",
+   "team": [
+    {
+     "id": 1409,
+     "level": 90,
+     "chain": 0,
+     "weapon": {
+      "id": 21010023,
+      "level": 90,
+      "rank": 1
+     },
+     "echoes": []
+    }
+   ],
+   "probe": {
+    "member": 0,
+    "anomaly": "erosion",
+    "stacks": 3,
+    "ticks": 6,
+    "extraStats": [
+     {
+      "key": "deep:anomaly:erosion",
+      "value": 0.5
+     }
+    ]
+   }
+  }
+ ]
+}

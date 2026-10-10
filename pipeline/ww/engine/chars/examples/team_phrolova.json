@@ -1,0 +1,198 @@
+{
+ "name": "弗洛洛 + 洛可可 + 坎特蕾拉（公开配队：Phrolova+Roccia+Cantarella）",
+ "duration": 30,
+ "mode": "expected",
+ "team": [
+  {
+   "id": 1608,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050066,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 12,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 12
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 12
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 12
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 12
+    }
+   ],
+   "module": {
+    "start": {
+     "notes": [
+      "s",
+      "w",
+      "s",
+      "w",
+      "s",
+      "w"
+     ]
+    }
+   }
+  },
+  {
+   "id": 1606,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21040026,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 6,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 6
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 6
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 6
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 6
+    }
+   ]
+  },
+  {
+   "id": 1607,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050056,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 12,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 12
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 12
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 12
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 12
+    }
+   ]
+  }
+ ],
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": [
+   0,
+   100,
+   100
+  ]
+ },
+ "rotation": {
+  "mode": "search",
+  "start": 0
+ },
+ "search": {
+  "beamWidth": 64,
+  "maxExpansions": 90000,
+  "topN": 3
+ },
+ "sources": [
+  "https://www.destructoid.com/the-best-phrolova-build-in-wuthering-waves-best-weapons-echoes-and-team-compositions/",
+  "https://gamerant.com/wuthering-waves-wuwa-phrolova-team-comp-composition-best-pair/"
+ ]
+}

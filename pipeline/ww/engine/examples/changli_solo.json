@@ -1,0 +1,16 @@
+{
+  "name": "长离 单人 手动循环",
+  "duration": 20,
+  "mode": "expected",
+  "team": [
+    {"id": 1205, "level": 90, "chain": 0, "skillLevels": {"basic": 10, "skill": 10, "liberation": 10, "intro": 10, "forte": 10},
+     "weapon": {"id": 21020016, "level": 90, "rank": 1},
+     "echoes": [
+       {"echoId": 390080007, "cost": 4, "main": "Crit", "set": 2, "subs": [{"stat": "critDmg", "value": 0.162}, {"stat": "atkPct", "value": 0.086}]},
+       {"cost": 3, "main": "elemDmg", "set": 2}, {"cost": 3, "main": "elemDmg", "set": 2},
+       {"cost": 1, "main": "Atk%", "set": 2}, {"cost": 1, "main": "Atk%", "set": 2}]}
+  ],
+  "enemy": {"level": 90, "resTier": 0.1, "resShred": 0},
+  "start": {"energy": "full", "concerto": 0},
+  "rotation": {"mode": "manual", "sequence": "E A E A Q R H A A A A H", "onBlocked": "wait"}
+}

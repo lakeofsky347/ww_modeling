@@ -1,0 +1,189 @@
+{
+ "name": "菲比 + 漂泊者·衍射 + 守岸人（公开配队：Phoebe Spectro Frazzle）",
+ "duration": 30,
+ "mode": "expected",
+ "team": [
+  {
+   "id": 1506,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050046,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 11,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 11
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 11
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 11
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 11
+    }
+   ],
+   "module": {
+    "state": "confession"
+   }
+  },
+  {
+   "id": 1501,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21020015,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "Crit",
+     "set": 11,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 11
+    },
+    {
+     "cost": 3,
+     "main": "elemDmg",
+     "set": 11
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 11
+    },
+    {
+     "cost": 1,
+     "main": "Atk%",
+     "set": 11
+    }
+   ]
+  },
+  {
+   "id": 1505,
+   "level": 90,
+   "chain": 0,
+   "weapon": {
+    "id": 21050036,
+    "level": 90,
+    "rank": 1
+   },
+   "echoes": [
+    {
+     "cost": 4,
+     "main": "HealChange",
+     "set": 7,
+     "subs": [
+      {
+       "stat": "critRate",
+       "value": 0.081
+      },
+      {
+       "stat": "critDmg",
+       "value": 0.162
+      },
+      {
+       "stat": "atkPct",
+       "value": 0.086
+      }
+     ]
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 7
+    },
+    {
+     "cost": 3,
+     "main": "EnergyEfficiency",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "LifeMax%",
+     "set": 7
+    },
+    {
+     "cost": 1,
+     "main": "LifeMax%",
+     "set": 7
+    }
+   ]
+  }
+ ],
+ "enemy": {
+  "level": 90,
+  "resTier": 0.1,
+  "resShred": 0
+ },
+ "start": {
+  "energy": "full",
+  "concerto": [
+   0,
+   100,
+   100
+  ]
+ },
+ "rotation": {
+  "mode": "search",
+  "start": 2
+ },
+ "search": {
+  "beamWidth": 48,
+  "maxExpansions": 60000,
+  "topN": 3
+ },
+ "sources": [
+  "https://hostedgg.com/wiki/wuwa/teams",
+  "https://www.sportskeeda.com/esports/best-teams-zani-wuthering-waves-wuwa"
+ ]
+}

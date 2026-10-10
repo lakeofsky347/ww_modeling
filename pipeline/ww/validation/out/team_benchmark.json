@@ -1,0 +1,1245 @@
+{
+ "duration": "per-config",
+ "scope": "toa",
+ "generated": "2026-10-09T09:58:51.084Z",
+ "rows": [
+  {
+   "key": "default",
+   "label": "今汐/折枝/守岸人（默认预设）",
+   "duration": 25,
+   "team": [
+    "今汐",
+    "折枝",
+    "守岸人"
+   ],
+   "chains": [
+    0,
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 516794,
+    "dpsWindow": 20672,
+    "timeStopSaved": 9.917,
+    "dpsRealtime": 14801,
+    "liberations": 3,
+    "members": [
+     {
+      "name": "今汐",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 465490
+     },
+     {
+      "name": "折枝",
+      "chain": 0,
+      "chainModeled": 2,
+      "dmg": 33700
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 17604
+     }
+    ],
+    "ms": 603
+   },
+   "include": {
+    "total": 380943,
+    "dpsWindow": 15238,
+    "timeStopSaved": 0,
+    "dpsRealtime": 15238,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "今汐",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 367812
+     },
+     {
+      "name": "折枝",
+      "chain": 0,
+      "chainModeled": 2,
+      "dmg": 12295
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 836
+     }
+    ],
+    "ms": 315
+   },
+   "ratio": 1.357
+  },
+  {
+   "key": "carlotta",
+   "label": "珂莱塔/折枝/守岸人",
+   "duration": 25,
+   "team": [
+    "珂莱塔",
+    "折枝",
+    "守岸人"
+   ],
+   "chains": [
+    0,
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 458629,
+    "dpsWindow": 18345,
+    "timeStopSaved": 9.1,
+    "dpsRealtime": 13450,
+    "liberations": 3,
+    "members": [
+     {
+      "name": "珂莱塔",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 396594
+     },
+     {
+      "name": "折枝",
+      "chain": 0,
+      "chainModeled": 2,
+      "dmg": 60974
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 1061
+     }
+    ],
+    "ms": 451
+   },
+   "include": {
+    "total": 370056,
+    "dpsWindow": 14802,
+    "timeStopSaved": 0,
+    "dpsRealtime": 14802,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "珂莱塔",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 363702
+     },
+     {
+      "name": "折枝",
+      "chain": 0,
+      "chainModeled": 2,
+      "dmg": 5518
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 836
+     }
+    ],
+    "ms": 274
+   },
+   "ratio": 1.239
+  },
+  {
+   "key": "iuno",
+   "label": "尤诺队",
+   "duration": 30,
+   "team": [
+    "奥古斯塔",
+    "尤诺",
+    "守岸人"
+   ],
+   "chains": [
+    0,
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 744153,
+    "dpsWindow": 24805,
+    "timeStopSaved": 15.733,
+    "dpsRealtime": 16272,
+    "liberations": 3,
+    "members": [
+     {
+      "name": "奥古斯塔",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 713733
+     },
+     {
+      "name": "尤诺",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 28254
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 2166
+     }
+    ],
+    "ms": 628
+   },
+   "include": {
+    "total": 409750,
+    "dpsWindow": 13658,
+    "timeStopSaved": 0,
+    "dpsRealtime": 13658,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "奥古斯塔",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 371024
+     },
+     {
+      "name": "尤诺",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 37874
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 852
+     }
+    ],
+    "ms": 357
+   },
+   "ratio": 1.816
+  },
+  {
+   "key": "yinlin",
+   "label": "吟霖队",
+   "duration": 25,
+   "team": [
+    "尤诺",
+    "吟霖",
+    "守岸人"
+   ],
+   "chains": [
+    0,
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 317164,
+    "dpsWindow": 12687,
+    "timeStopSaved": 7.4,
+    "dpsRealtime": 9789,
+    "liberations": 3,
+    "members": [
+     {
+      "name": "尤诺",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 296016
+     },
+     {
+      "name": "吟霖",
+      "chain": 0,
+      "chainModeled": 5,
+      "dmg": 20216
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 933
+     }
+    ],
+    "ms": 358
+   },
+   "include": {
+    "total": 278343,
+    "dpsWindow": 11134,
+    "timeStopSaved": 0,
+    "dpsRealtime": 11134,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "尤诺",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 257481
+     },
+     {
+      "name": "吟霖",
+      "chain": 0,
+      "chainModeled": 5,
+      "dmg": 20011
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 852
+     }
+    ],
+    "ms": 303
+   },
+   "ratio": 1.139
+  },
+  {
+   "key": "qingxiao",
+   "label": "清宵/琳奈/守岸人",
+   "duration": 30,
+   "team": [
+    "清宵",
+    "琳奈",
+    "守岸人"
+   ],
+   "chains": [
+    0,
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 621789,
+    "dpsWindow": 20726,
+    "timeStopSaved": 12.3,
+    "dpsRealtime": 14700,
+    "liberations": 3,
+    "members": [
+     {
+      "name": "清宵",
+      "chain": 0,
+      "chainModeled": 5,
+      "dmg": 450133
+     },
+     {
+      "name": "琳奈",
+      "chain": 0,
+      "chainModeled": 5,
+      "dmg": 170500
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 1157
+     }
+    ],
+    "ms": 526
+   },
+   "include": {
+    "total": 367889,
+    "dpsWindow": 12263,
+    "timeStopSaved": 0,
+    "dpsRealtime": 12263,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "清宵",
+      "chain": 0,
+      "chainModeled": 5,
+      "dmg": 305286
+     },
+     {
+      "name": "琳奈",
+      "chain": 0,
+      "chainModeled": 5,
+      "dmg": 61546
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 1057
+     }
+    ],
+    "ms": 298
+   },
+   "ratio": 1.69
+  },
+  {
+   "key": "lucy_solo",
+   "label": "露西 单人",
+   "duration": 25,
+   "team": [
+    "露西"
+   ],
+   "chains": [
+    0
+   ],
+   "exclude": {
+    "total": 308658,
+    "dpsWindow": 12346,
+    "timeStopSaved": 4.317,
+    "dpsRealtime": 10528,
+    "liberations": 1,
+    "members": [
+     {
+      "name": "露西",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 308658
+     }
+    ],
+    "ms": 134
+   },
+   "include": {
+    "total": 280185,
+    "dpsWindow": 11207,
+    "timeStopSaved": 0,
+    "dpsRealtime": 11207,
+    "liberations": 1,
+    "members": [
+     {
+      "name": "露西",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 280185
+     }
+    ],
+    "ms": 105
+   },
+   "ratio": 1.102
+  },
+  {
+   "key": "danjin_solo",
+   "label": "丹瑾 单人",
+   "duration": 25,
+   "team": [
+    "丹瑾"
+   ],
+   "chains": [
+    0
+   ],
+   "exclude": {
+    "total": 215611,
+    "dpsWindow": 8624,
+    "timeStopSaved": 6.3,
+    "dpsRealtime": 6889,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "丹瑾",
+      "chain": 0,
+      "chainModeled": 0,
+      "dmg": 215611
+     }
+    ],
+    "ms": 131
+   },
+   "include": {
+    "total": 167403,
+    "dpsWindow": 6696,
+    "timeStopSaved": 0,
+    "dpsRealtime": 6696,
+    "liberations": 1,
+    "members": [
+     {
+      "name": "丹瑾",
+      "chain": 0,
+      "chainModeled": 0,
+      "dmg": 167403
+     }
+    ],
+    "ms": 107
+   },
+   "ratio": 1.288
+  },
+  {
+   "key": "lucy",
+   "label": "露西队",
+   "duration": 30,
+   "team": [
+    "露西",
+    "尤诺",
+    "守岸人"
+   ],
+   "chains": [
+    0,
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 589517,
+    "dpsWindow": 19651,
+    "timeStopSaved": 11.717,
+    "dpsRealtime": 14131,
+    "liberations": 3,
+    "members": [
+     {
+      "name": "露西",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 377255
+     },
+     {
+      "name": "尤诺",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 211329
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 933
+     }
+    ],
+    "ms": 558
+   },
+   "include": {
+    "total": 303144,
+    "dpsWindow": 10105,
+    "timeStopSaved": 0,
+    "dpsRealtime": 10105,
+    "liberations": 1,
+    "members": [
+     {
+      "name": "露西",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 303144
+     },
+     {
+      "name": "尤诺",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 0
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 0
+     }
+    ],
+    "ms": 476
+   },
+   "ratio": 1.945
+  },
+  {
+   "key": "danjin",
+   "label": "丹瑾队",
+   "duration": 25,
+   "team": [
+    "丹瑾",
+    "桃祈",
+    "鉴心"
+   ],
+   "chains": [
+    0,
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 252509,
+    "dpsWindow": 10100,
+    "timeStopSaved": 8.667,
+    "dpsRealtime": 7500,
+    "liberations": 4,
+    "members": [
+     {
+      "name": "丹瑾",
+      "chain": 0,
+      "chainModeled": 0,
+      "dmg": 217733
+     },
+     {
+      "name": "桃祈",
+      "chain": 0,
+      "chainModeled": 0,
+      "dmg": 16603
+     },
+     {
+      "name": "鉴心",
+      "chain": 0,
+      "chainModeled": 0,
+      "dmg": 18173
+     }
+    ],
+    "ms": 446
+   },
+   "include": {
+    "total": 175469,
+    "dpsWindow": 7019,
+    "timeStopSaved": 0,
+    "dpsRealtime": 7019,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "丹瑾",
+      "chain": 0,
+      "chainModeled": 0,
+      "dmg": 152168
+     },
+     {
+      "name": "桃祈",
+      "chain": 0,
+      "chainModeled": 0,
+      "dmg": 0
+     },
+     {
+      "name": "鉴心",
+      "chain": 0,
+      "chainModeled": 0,
+      "dmg": 23301
+     }
+    ],
+    "ms": 350
+   },
+   "ratio": 1.439
+  },
+  {
+   "key": "changli",
+   "label": "长离/折枝/守岸人",
+   "duration": 25,
+   "team": [
+    "长离",
+    "折枝",
+    "守岸人"
+   ],
+   "chains": [
+    0,
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 385241,
+    "dpsWindow": 15410,
+    "timeStopSaved": 9.25,
+    "dpsRealtime": 11248,
+    "liberations": 3,
+    "members": [
+     {
+      "name": "长离",
+      "chain": 0,
+      "chainModeled": 0,
+      "dmg": 362853
+     },
+     {
+      "name": "折枝",
+      "chain": 0,
+      "chainModeled": 2,
+      "dmg": 21552
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 836
+     }
+    ],
+    "ms": 381
+   },
+   "include": {
+    "total": 266147,
+    "dpsWindow": 10646,
+    "timeStopSaved": 0,
+    "dpsRealtime": 10646,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "长离",
+      "chain": 0,
+      "chainModeled": 0,
+      "dmg": 265310
+     },
+     {
+      "name": "折枝",
+      "chain": 0,
+      "chainModeled": 2,
+      "dmg": 0
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 836
+     }
+    ],
+    "ms": 221
+   },
+   "ratio": 1.447
+  },
+  {
+   "key": "camellya",
+   "label": "椿队（散华）",
+   "duration": 30,
+   "team": [
+    "椿",
+    "散华",
+    "守岸人"
+   ],
+   "chains": [
+    0,
+    6,
+    0
+   ],
+   "exclude": {
+    "total": 469489,
+    "dpsWindow": 15650,
+    "timeStopSaved": 8.9,
+    "dpsRealtime": 12069,
+    "liberations": 3,
+    "members": [
+     {
+      "name": "椿",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 425007
+     },
+     {
+      "name": "散华",
+      "chain": 6,
+      "chainModeled": 6,
+      "dmg": 44482
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 0
+     }
+    ],
+    "ms": 335
+   },
+   "include": {
+    "total": 423071,
+    "dpsWindow": 14102,
+    "timeStopSaved": 0,
+    "dpsRealtime": 14102,
+    "liberations": 1,
+    "members": [
+     {
+      "name": "椿",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 383950
+     },
+     {
+      "name": "散华",
+      "chain": 6,
+      "chainModeled": 6,
+      "dmg": 38154
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 966
+     }
+    ],
+    "ms": 330
+   },
+   "ratio": 1.11
+  },
+  {
+   "key": "cartethyia",
+   "label": "卡提希娅/守岸人",
+   "duration": 25,
+   "team": [
+    "卡提希娅",
+    "守岸人"
+   ],
+   "chains": [
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 460077,
+    "dpsWindow": 18403,
+    "timeStopSaved": 6.65,
+    "dpsRealtime": 14536,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "卡提希娅",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 458600
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 1476
+     }
+    ],
+    "ms": 362
+   },
+   "include": {
+    "total": 347879,
+    "dpsWindow": 13915,
+    "timeStopSaved": 0,
+    "dpsRealtime": 13915,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "卡提希娅",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 347879
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 0
+     }
+    ],
+    "ms": 247
+   },
+   "ratio": 1.323
+  },
+  {
+   "key": "phrolova",
+   "label": "弗洛洛队",
+   "duration": 30,
+   "team": [
+    "弗洛洛",
+    "洛可可",
+    "坎特蕾拉"
+   ],
+   "chains": [
+    0,
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 433911,
+    "dpsWindow": 14464,
+    "timeStopSaved": 6.8,
+    "dpsRealtime": 11791,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "弗洛洛",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 167142
+     },
+     {
+      "name": "洛可可",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 224322
+     },
+     {
+      "name": "坎特蕾拉",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 42447
+     }
+    ],
+    "ms": 823
+   },
+   "include": {
+    "total": 281781,
+    "dpsWindow": 9393,
+    "timeStopSaved": 0,
+    "dpsRealtime": 9393,
+    "liberations": 0,
+    "members": [
+     {
+      "name": "弗洛洛",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 140115
+     },
+     {
+      "name": "洛可可",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 141666
+     },
+     {
+      "name": "坎特蕾拉",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 0
+     }
+    ],
+    "ms": 670
+   },
+   "ratio": 1.54
+  },
+  {
+   "key": "jiyan",
+   "label": "忌炎队",
+   "duration": 30,
+   "team": [
+    "忌炎",
+    "维里奈"
+   ],
+   "chains": [
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 372960,
+    "dpsWindow": 12432,
+    "timeStopSaved": 1.767,
+    "dpsRealtime": 11740,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "忌炎",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 367152
+     },
+     {
+      "name": "维里奈",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 5808
+     }
+    ],
+    "ms": 309
+   },
+   "include": {
+    "total": 361738,
+    "dpsWindow": 12058,
+    "timeStopSaved": 0,
+    "dpsRealtime": 12058,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "忌炎",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 355930
+     },
+     {
+      "name": "维里奈",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 5808
+     }
+    ],
+    "ms": 268
+   },
+   "ratio": 1.031
+  },
+  {
+   "key": "zani",
+   "label": "赞妮队",
+   "duration": 30,
+   "team": [
+    "赞妮",
+    "菲比",
+    "守岸人"
+   ],
+   "chains": [
+    0,
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 510363,
+    "dpsWindow": 17012,
+    "timeStopSaved": 10.3,
+    "dpsRealtime": 12664,
+    "liberations": 3,
+    "members": [
+     {
+      "name": "赞妮",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 393482
+     },
+     {
+      "name": "菲比",
+      "chain": 0,
+      "chainModeled": 3,
+      "dmg": 86236
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 30645
+     }
+    ],
+    "ms": 735
+   },
+   "include": {
+    "total": 251854,
+    "dpsWindow": 8395,
+    "timeStopSaved": 0,
+    "dpsRealtime": 8395,
+    "liberations": 3,
+    "members": [
+     {
+      "name": "赞妮",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 206402
+     },
+     {
+      "name": "菲比",
+      "chain": 0,
+      "chainModeled": 3,
+      "dmg": 44298
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 1154
+     }
+    ],
+    "ms": 496
+   },
+   "ratio": 2.026
+  },
+  {
+   "key": "augusta",
+   "label": "奥古斯塔/守岸人",
+   "duration": 25,
+   "team": [
+    "奥古斯塔",
+    "守岸人"
+   ],
+   "chains": [
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 567878,
+    "dpsWindow": 22715,
+    "timeStopSaved": 11.733,
+    "dpsRealtime": 15460,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "奥古斯塔",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 564289
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 3589
+     }
+    ],
+    "ms": 283
+   },
+   "include": {
+    "total": 377796,
+    "dpsWindow": 15112,
+    "timeStopSaved": 0,
+    "dpsRealtime": 15112,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "奥古斯塔",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 376960
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 836
+     }
+    ],
+    "ms": 146
+   },
+   "ratio": 1.503
+  },
+  {
+   "key": "aemeath",
+   "label": "爱弥斯/长离/守岸人",
+   "duration": 30,
+   "team": [
+    "爱弥斯",
+    "长离",
+    "守岸人"
+   ],
+   "chains": [
+    0,
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 496412,
+    "dpsWindow": 16547,
+    "timeStopSaved": 10.85,
+    "dpsRealtime": 12152,
+    "liberations": 3,
+    "members": [
+     {
+      "name": "爱弥斯",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 166618
+     },
+     {
+      "name": "长离",
+      "chain": 0,
+      "chainModeled": 0,
+      "dmg": 321537
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 8258
+     }
+    ],
+    "ms": 456
+   },
+   "include": {
+    "total": 353919,
+    "dpsWindow": 11797,
+    "timeStopSaved": 0,
+    "dpsRealtime": 11797,
+    "liberations": 3,
+    "members": [
+     {
+      "name": "爱弥斯",
+      "chain": 0,
+      "chainModeled": 6,
+      "dmg": 76422
+     },
+     {
+      "name": "长离",
+      "chain": 0,
+      "chainModeled": 0,
+      "dmg": 276436
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 1061
+     }
+    ],
+    "ms": 283
+   },
+   "ratio": 1.403
+  },
+  {
+   "key": "phoebe",
+   "label": "菲比/守岸人",
+   "duration": 25,
+   "team": [
+    "菲比",
+    "守岸人"
+   ],
+   "chains": [
+    0,
+    0
+   ],
+   "exclude": {
+    "total": 453831,
+    "dpsWindow": 18153,
+    "timeStopSaved": 7.017,
+    "dpsRealtime": 14175,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "菲比",
+      "chain": 0,
+      "chainModeled": 3,
+      "dmg": 443046
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 10785
+     }
+    ],
+    "ms": 325
+   },
+   "include": {
+    "total": 386326,
+    "dpsWindow": 15453,
+    "timeStopSaved": 0,
+    "dpsRealtime": 15453,
+    "liberations": 2,
+    "members": [
+     {
+      "name": "菲比",
+      "chain": 0,
+      "chainModeled": 3,
+      "dmg": 382737
+     },
+     {
+      "name": "守岸人",
+      "chain": 0,
+      "chainModeled": 1,
+      "dmg": 3589
+     }
+    ],
+    "ms": 217
+   },
+   "ratio": 1.175
+  }
+ ],
+ "reference": {
+  "exclude": {
+   "spearman": 0.6,
+   "ratios": {
+    "carlotta": {
+     "ours": 0.885,
+     "ref": 0.583
+    },
+    "iuno": {
+     "ours": 1.197,
+     "ref": 0.758
+    },
+    "qingxiao": {
+     "ours": 1,
+     "ref": 1
+    },
+    "lucy": {
+     "ours": 0.948,
+     "ref": 0.598
+    },
+    "zani": {
+     "ours": 0.821,
+     "ref": 0.601
+    }
+   },
+   "spearmanNoIuno": 0.4
+  },
+  "include": {
+   "spearman": -0.2,
+   "ratios": {
+    "carlotta": {
+     "ours": 1.207,
+     "ref": 0.583
+    },
+    "iuno": {
+     "ours": 1.114,
+     "ref": 0.758
+    },
+    "qingxiao": {
+     "ours": 1,
+     "ref": 1
+    },
+    "lucy": {
+     "ours": 0.824,
+     "ref": 0.598
+    },
+    "zani": {
+     "ours": 0.685,
+     "ref": 0.601
+    }
+   },
+   "spearmanNoIuno": -0.4
+  }
+ }
+}
