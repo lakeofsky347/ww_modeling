@@ -109,7 +109,7 @@
       const o11 = H.skill(11);
       const oh = o11 && o11.hits.length ? o11.hits : [rowHit(H, 5, 1311291301, { label: '身作千灯伤害', mult: 1.0, why: '延奏描述「造成100%的导电伤害」；倍率取描述值' })].filter(Boolean);
       K.O = H.act({ key: 'O', cls: 'O', skill: 11, hits: oh, levelKey: 'outro', label: '身作千灯', inferred: '延奏伤害：描述倍率 100%（低）' });
-      H.patchBuff((b) => /循流引兴替/.test(b.src || '') && b.stats.some((s) => s.key === 'atkPct'), { trigger: { on: 'act', keys: ['yIz', 'zIz'] }, mode: 'auto' }, '模块：仅诸相同奏变奏触发');
+      H.patchBuff((b) => /循流引兴替/.test(b.src || '') && b.stats.some((s) => s.key === 'atkPct'), { trigger: { on: 'intro', keys: ['yIz', 'zIz'] }, mode: 'auto' }, '模块：仅诸相同奏变奏触发（v3.5 判定 A：变奏入场事件）');
       H.patchBuff((b) => /循流引兴替/.test(b.src || '') && b.stats.some((s) => s.key === 'dmg:electro'), { mode: 'module' }, '模块：电磁模态 / 漂泊者·导电（未建模）');
       H.patchBuff((b) => b.kind === 'outro', { mode: 'module' }, '模块：延奏按模态对其他角色施加');
       const outs = H.findBuff((b) => b.kind === 'outro' && b.stats.length);
@@ -167,7 +167,7 @@
       const cs = api.cs, t = api.t, out = [], k = act.key, ch = api.H.chain;
       const skill = SKILL_KEYS.has(k);
       if (skill && api.H.weaponId === SIG && on(cs.wUntil, t)) out.push({ key: 'deep:all', value: 0.36 }, { key: 'resPen:electro', value: 0.1 });
-      if (skill && ch >= 6) out.push({ key: 'deep:all', value: 0.4 }, { key: 'defIgnore', value: 0.2 });
+      if (skill && ch >= 6) out.push({ key: 'taken:all', value: 0.4 }, { key: 'defIgnore', value: 0.2 });
       if (k === 'wqct' && ch >= 3 && cs.mode === 'unison') out.push({ key: 'critDmg', value: 0.2 + 0.15 * Math.min(4, this.tzStacks(api)) });
       const na = Object.keys(cs.appliers).length + cs.others;
       if (cs.mode === 'flare' && na) out.push({ key: 'dmg:electro', value: 0.25 * Math.min(2, na) });
@@ -246,7 +246,7 @@
     swapOut(api) {
       const cs = api.cs;
       cs.lock = false;
-      if (cs.mode === 'unison' && on(cs.tz, api.t)) { cs.tz = null; cs.forcedOut = true; return { force: true, reason: 'tongzou' }; }
+      if (cs.mode === 'unison' && on(cs.tz, api.t)) { cs.tz = null; cs.forcedOut = true; return { force: true, reason: 'tongzou', clearConcerto: true }; } // v3.5 N1（窄修）: 协奏已满时引擎清空协奏，未满只消耗同奏
       return {};
     },
     onOutro(api) {
@@ -261,6 +261,8 @@
       const cs = api.cs;
       // 灯同辉：其他角色获得同奏（今汐模块 cs.tongzou）
       api.ctx.members.forEach((m, j) => { if (j !== api.mi) { const oc = api.member(j).cs; if (oc && on(oc.tongzou, ev.t != null ? ev.t : api.t)) cs.dth[j] = true; } });
+      // v3.5 判定 B: a teammate's 同奏-forced outro proves it held 同奏 (its swapOut already cleared cs.tongzou) → 灯同辉 recorded
+      if (ev.type === 'outro' && ev.mi !== api.mi && ev.forced && ev.reason === 'tongzou') cs.dth[ev.mi] = true;
       if (ev.type === 'outro' && ev.to === api.mi && ev.mi !== api.mi && cs.mode === 'unison' && ev.forced && ev.reason === 'tongzou') cs.respond = true; // 同奏强制延奏 → 响应同奏
       if (ev.type === 'anomaly' && ev.kind === 'flare') cs.appliers[ev.mi] = true;
       if (ev.type === 'intro' && ev.mi !== api.mi && cs.forcedOut) {

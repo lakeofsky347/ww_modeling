@@ -29,7 +29,7 @@
  *   到期全部移除、上限 3（链2 +3，module.erosionCap 覆盖）。芙露德莉斯显化期间：触发间隔 −50%（anomalyPeriodScale）、风蚀伤害加深 50%（anomalyStats）。
  * 武器 不屈命定之冠 (21020056): 「施放变奏技能或普攻后15秒内，自身造成伤害无视目标8%防御，当目标的风蚀效应不少于1层时，对目标造成的伤害加深20%。」 → 模块判定
  * 共鸣链: 1 决意每到 30/60/90/120 暴击伤害 +25%（15 秒，最多 4 层）；2 卡提希娅形态普攻/重击/变奏 ×1.5、空中攻击 ×3，风蚀上限 +3；
- *   3 fA5/强化重击/凭风斩浪 额外附加 2 层，看潮倍率 ×2；4 全队全属性伤害 +20%（附加风蚀后，20 秒）；6 芙露德莉斯受到伤害 +40%（deep），看潮附加风蚀至上限且不清空。
+ *   3 fA5/强化重击/凭风斩浪 额外附加 2 层，看潮倍率 ×2；4 全队全属性伤害 +20%（附加风蚀后，20 秒）；6 芙露德莉斯受到伤害 +40%（v3.4 起 taken:all 易伤独立乘区），看潮附加风蚀至上限且不清空。
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory(require('../ww_engine.js'), require('./_common.js'));
@@ -145,7 +145,7 @@
       if (api.H.weaponId === SIG && on(cs.wUntil, t)) { out.push({ key: 'defIgnore', value: 0.08 }); if (er >= 1) out.push({ key: 'deep:all', value: 0.2 }); }
       if (act.key === 'kanchao') out.push({ key: 'deep:all', value: 0.2 * Math.min(5, ch >= 6 ? cs.erCap : er) });
       const fForm = /^f|^kanchao$|^avF/.test(act.key || '');
-      if (fForm && ch >= 6) out.push({ key: 'deep:all', value: 0.4 });
+      if (fForm && ch >= 6) out.push({ key: 'taken:all', value: 0.4 });
       if (fForm && ch >= 1 && on(cs.c1Until, t) && cs.jyMarks) out.push({ key: 'critDmg', value: 0.25 * cs.jyMarks });
       return out;
     },

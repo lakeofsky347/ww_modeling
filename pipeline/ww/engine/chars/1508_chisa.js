@@ -108,7 +108,7 @@
     actionStats(api, act) {
       const out = [], cs = api.cs, ch = api.H.chain;
       if (ch >= 2) out.push({ key: 'resShred:havoc', value: 0.1 });
-      if (ch >= 6 && on(cs.markUntil, api.t)) out.push({ key: 'deep:all', value: 0.4 });
+      if (ch >= 6 && on(cs.markUntil, api.t)) out.push({ key: 'taken:all', value: 0.4 });
       return out;
     },
     auras(api, target) {

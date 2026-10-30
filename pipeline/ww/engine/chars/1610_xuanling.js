@@ -111,7 +111,7 @@
         if (act.key !== 'hA' && (act.key === 'hF' ? t >= cs.llCd - 1e-9 : on(cs.llUntil, t))) cd += 1.6;
         if (cd) out.push({ key: 'critDmg', value: cd });
       }
-      if (api.H.chain >= 6 && act.cls !== 'I' && /^(hA|hF|hb\d|lib|fl[AF]|sw[AF])$/.test(act.key) && n > 0) out.push({ key: 'deep:all', value: 0.4 });
+      if (api.H.chain >= 6 && act.cls !== 'I' && /^(hA|hF|hb\d|lib|fl[AF]|sw[AF])$/.test(act.key) && n > 0) out.push({ key: 'taken:all', value: 0.4 });
       return out;
     },
     apply(api, act) {

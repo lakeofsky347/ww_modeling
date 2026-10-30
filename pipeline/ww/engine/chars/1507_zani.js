@@ -119,6 +119,8 @@
         default: return B.common(api, btn);
       }
     },
+    // v3.4.1：延奏 来日道标「此次伤害同时视为【光噪效应】伤害」——引擎在延奏命中上调用本模块 actionStats（config.outroModuleStats=false 回到 ≤3.4：延奏不计光噪加成/加深）
+    actionStatsOnOutro: true,
     actionStats(api, act) {
       const cs = api.cs, out = [];
       const k = act.key;

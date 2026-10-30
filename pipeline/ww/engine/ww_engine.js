@@ -36,7 +36,8 @@
     stats:      { mech: 'community', confidence: 'medium', basis: '面板：(角色白值+武器白值)×(1+攻击%)+固定攻击；白值曲线来自 rolepropertygrowth/weaponpropertygrowth（表），合成方式为社区通行' },
     bonus:      { mech: 'corroborated', confidence: 'medium', basis: '加成区：1+属性伤害加成+技能类型加成+通用加成，同区相加；两份参考计算器印证（REPORT C7）' },
     deepen:     { mech: 'corroborated', confidence: 'medium', basis: '加深区：攻击方加深同区相加 1+Σ加深；两份参考计算器印证（REPORT C5）' },
-    deepenTarget: { mech: 'community', confidence: 'low', basis: '加深区（含目标受伤加深 enemy.damageTaken）：受击方易伤与攻击方加深是否同区未定。引擎（直伤与异常效应同一口径）按同区相加 1+加深+受伤；另一读法（wuwa-calc-site）为独立乘区 (1+加深)×(1+受伤)：直伤 REPORT C6 相加 1.25 vs 相乘 1.265，异常 REPORT §9.4-4 / N8 风蚀 3 层 +加深 50% +受伤 10% 差 −3.03%。未实测，保留相加' },
+    deepenTarget: { mech: 'community', confidence: 'low', basis: '（v3.4 起不再使用，保留键名兼容旧存档/旧拆解）v3.3 及以前把目标受伤 enemy.damageTaken 与加深同区相加；已由 MECH.taken 取代' },
+    taken:      { mech: 'corroborated', confidence: 'medium', basis: '受到伤害提升区（易伤，v3.4 / ww-calc-3.4）：目标侧「受到…伤害提升/提高」与 enemy.damageTaken 为独立乘区 1+Σ易伤，与加深区相乘。依据：rhecpev/wuwa-damage-calculator 실측 docs/피해-실측-대조.md（千咲 6 链 받는 피해 40% + 부스트 25%：分区 6738.75 → 游戏 6739；同区相加 6353.7，差 −5.7%）；另有多份独立公式实现分区（MULTI_TOOL_CROSSCHECK.md）。v3.3 及以前按 Fandom/WuWaSim 同区相加，因实测推翻。局限：一套配置（千咲 6 链 + 穗穗延奏）、一名测试者，14 条同时含加深与易伤的实测行分区 14/14 吻合、相加 0/14；未测（待验证）：多个易伤来源之间是否同区相加、目标侧「受到 X 效应伤害加深」与攻击方加深是否同区（按措辞归加深区）、易伤/加深是否作用于异常效应（异常路径：enemy.damageTaken 与 taken:anomaly 按独立乘区计、taken:all 不计入，均为未测假设）' },
     crit:       { mech: 'table', confidence: 'high', basis: '暴击区：基础暴击 5% / 暴伤 150%（baseproperty.Crit/CritDamage）；期望=1+min(CR,1)×(CD−1)' },
     defense:    { mech: 'corroborated', confidence: 'medium', basis: '防御区：(800+8·Lv攻)/(800+8·Lv攻+DEF敌×(1−无视防御)×(1−减防))；敌防 792+8·Lv 由表推导；两份参考印证（REPORT C2/C3/C10）' },
     resistance: { mech: 'corroborated', confidence: 'medium', basis: '抗性区：有效抗性 = 基础 − 减抗 − 穿透；<0 → 1−res/2；0≤res<0.8 → 1−res；两份参考印证（REPORT C1/C3）' },
@@ -44,7 +45,8 @@
     dmgReduce:  { mech: 'unsolved', confidence: 'low', basis: '减伤区：目标 DamageReduce* 字段存在，乘区形式 (1−Σ) 未证实；默认 0' },
     energy:     { mech: 'table', confidence: 'high', basis: '共鸣能量：damage.Energy/100 × 共鸣效率；解放消耗 = EnergyMax/100（62/62 与描述一致）' },
     concerto:   { mech: 'community', confidence: 'medium', basis: '协奏能量：命中行 ElementPower/100；命中行为 0 时退回技能描述“回复协奏能量”（结算时机未证实）' },
-    swap:       { mech: 'community', confidence: 'medium', basis: '切人：协奏满 100 → 离场者延奏 + 入场者变奏，协奏清零；切人冷却未在表中定位' },
+    swap:       { mech: 'community', confidence: 'medium', basis: '切人：协奏满 100 → 离场者延奏 + 入场者变奏，协奏清零；切人冷却见 MECH.swapCooldown' },
+    swapCooldown: { mech: 'community-consensus', confidence: 'medium', basis: '切人冷却（v3.4 / ww-calc-3.4 起默认 1.0 s，游戏时间）：切出的角色 1.0 s 内不能切回；若排轴要求提前切回，引擎在切人前插入等待（不报错、不跳步：顺延到冷却结束；result.adjust = {swapCdDelays 次数, swapCdDelaySec 总顺延秒数}，无顺延为 0；时间轴被顺延的切人动作带 delayedBy（秒）。手写/锁定/分享链接重放与搜索同一路径，搜索结果若含顺延也照样计入，但搜索会自然偏好不顺延的序列）。来源：三家独立实现一致——wuwa-calc-site db.ts:154 swapCooldown=1.0、ok-ww BaseCombatTask.py:457（switch_out 后 ≤1 s）、M4STER-3 team-engine.ts:17 SWITCH_BACK_COOLDOWN_SECONDS=1；WuWaSim 无此常量、Riley SWAP_DELAY 为交接延迟非冷却。只有多工具一致，没有实测。config.swapCooldown=0 关闭（v3.3 口径）' },
     durations:  { mech: 'unsolved', confidence: 'low', basis: '动作时长：表中无动作时长；有 action_frames.json（社区测帧 WuwaLAB，按 60fps 换算）时取其 duration_s（仍标 est，dur=frames），否则用可调默认值（dur=default）；延奏按 0 s；声骸技能用默认值' },
     swapTiming: { mech: 'unsolved', confidence: 'low', basis: '切人就绪：max(no_swap, earliest_cancel)，无取消点时取完整时长（引擎假设，config.swapRule 可改 full/swapTime）' },
     buffText:   { mech: 'community', confidence: 'low', basis: '增益：由武器/套装/共鸣链/固有/延奏描述文本解析，触发条件为关键词推断' },
@@ -55,15 +57,18 @@
     anomalyZones: { mech: 'community', confidence: 'low', basis: '异常效应乘区：不暴击、不吃攻击/属性/技能类型加成，只吃该效应专属加成/加深与目标侧效果（受伤加深、减抗、减防），防御按附加者等级；与 wuwa-calc-site CombatCalculator 一致（单一参考，未实测）' },
     anomalyTiming: { mech: 'community', confidence: 'low', basis: '异常效应时序：buff.json GE 字段（持续/周期/附加即生效/层数上限/溢出清空/到期移除层数）按 UE GAS 枚举解读（StackDurationRefreshPolicy 0=附加刷新、StackPeriodResetPolicy 1=不重置、StackExpirationRemoveNumber 0=全清/1=减一层）；解读为假设' },
     electroDecay: { mech: 'unsolved', confidence: 'low', basis: '电磁效应减半后的持续时间（两种读法，未实测）：A（引擎默认）15 秒持续时间自首次附加起算、减半不刷新 → 10 层 10→5→2 共 3 跳；B（wuwa-calc-site negativeStatus.ts）每次到期减半并刷新持续时间 → 10/5/2/1 共 4 跳（多 1 层一跳，约占总量 6.5%）。原始数据 StackDurationRefreshPolicy=0 只说明附加时刷新，减半是否续时无法判定（REPORT §9.4-2）。config.electroRefreshOnHalve=true 切换为 B' },
-    endCredit:  { mech: 'unsolved', confidence: 'low', basis: '窗口末尾：时长结束时仍在进行的动作按窗口内时长比例计入伤害与能量（默认 prorate；无逐段命中时间表，按线性）。config.endCredit=\'full\' 恢复全额计入（会让搜索把长动画大招放在窗口末尾）' },
+    endCredit:  { mech: 'unsolved', confidence: 'low', basis: '窗口末尾：时长结束时仍在进行的动作按窗口内命中计入伤害与能量（默认 prorate；有 hitTimes 按窗口内命中权重，否则线性）。模块 apply() 在截断动作上施加的异常（addAnomaly/detonateAnomaly）不结算（v3.4.1 起；apply 时刻为真实动作结束，已超出窗口；修复 #16 等窗口边缘假象）。config.endCredit=\'full\' 恢复全额计入（会让搜索把长动画大招放在窗口末尾）' },
     tune:       { mech: 'unsolved', confidence: 'low', basis: '偏谐（谐度/偏移）机制未建模（stream B B4 保持“未建模”）；引擎只提供最小状态钩子：目标的 集谐/震谐/骇破 ·偏移/干涉 状态由模块按技能文本附加（api.applyTune，持续时间取自模块），触发「为敌人添加【X·偏移】时」类增益与 onTeam tune 事件；偏谐值累积、谐度破坏伤害本身未建模（模块近似）' },
-    timeStop:   { mech: 'community', confidence: 'medium', basis: '时停（默认 config.timeStop="exclude"，WuWaSim toa 口径）：只有消耗能量的共鸣解放主镜头的时停帧（action_frames time_stop）不消耗战斗时间，期间增益/冷却/异常计时冻结（增益冻结与 Prydwen 2024 说法相反，待验证）→ 引擎把这段时停从动作战斗时长中扣除（伤害照常结算，切人/取消点夹在剩余时长内）；组合动作只扣一次（各段最大值）；其他时停（共鸣回路、谐振破坏、不耗能量的解放等）按完整时长计，除非帧条目/模块带 tsVerified（实测来源）。WuWaSim 条目的 freezeTime 与 stepDuration 的关系未明，不扣除。config.timeStop="include" = 旧口径（按完整动画时长推进所有计时）' },
+    timeStop:   { mech: 'community', confidence: 'medium', basis: '时停（默认 config.timeStop="exclude"，WuWaSim toa 口径）：只有消耗能量的共鸣解放主镜头的时停帧（action_frames time_stop）不消耗战斗时间，期间增益/冷却/异常计时冻结（增益冻结与 Prydwen 2024 说法相反，待验证）→ 引擎把这段时停从动作战斗时长中扣除（伤害照常结算，切人/取消点夹在剩余时长内）；组合动作只扣一次（各段最大值）；其他时停（共鸣回路、谐振破坏、不耗能量的解放等）按完整时长计，除非帧条目/模块带 tsVerified（实测来源）。v3.3 起双时钟（MECH.clock）：WuWaSim 条目同样扣除 freezeTime（TIMING_MODEL：gameTime = stepDuration − freezeTime），时停夹在本步内，整段时停的步占 0 秒游戏时间（取消 0.05 s 下限）。config.timeStop="include" = 旧口径（按完整动画时长推进所有计时）' },
+    clock:      { mech: 'community', confidence: 'medium', basis: '双时钟（v3.3，WuWaSim TIMING_MODEL / Endaxis TimeContext）：realTime 按完整步长推进，gameTime 按 步长 − 时停（夹在本步内）推进；窗口、增益/异常持续、冷却都按 gameTime。默认 ToA 口径：DPS 分母 = gameTime（窗口）；config.dpsClock="real" 改用 realTime（窗口 + 时停秒数）；config.timeStop="include" = 开放口径（两个时钟重合）。result.clock {mode, gameTime, realTime, frozen, dpsClock}，时间轴动作带 rt / rtEnd（realTime 位置）' },
+    stepDuration: { mech: 'community', confidence: 'medium', basis: '步长 = max(动画, 伤害锁定)（v3.3，WuWaSim TIMING_MODEL「the animation, or the damage, whichever finishes later」）：WuWaSim 条目 max(stepDuration, resolvesAt)；WuwaLAB 条目 max(total_frames, 最后一个 hits[].commit_frame)。只“落地”晚于动画结束的命中（弹体/延迟命中，commit ≤ 全长）不延长步长。时间轴动作带 stepRule（resolvesAt / lastCommit）与 stepAnim（原动画时长）' },
     bane:       { mech: 'table', confidence: 'medium', basis: '虚湮效应：buff.json 10060000 每层减防 2%，上限 3 层（6%）；减防并入防御区 defReduce（与 wuwa-calc-site 一致，单一参考）；不造成伤害' },
     stamina:    { mech: 'community', confidence: 'medium', basis: '耐力：baseproperty.StrengthMax 14000/100=140（初始，表）+ 数据坞 +100 → 240（社区）；StrengthRecover 250（/100 每 0.1 s → 25/秒，与 fandom 一致）；停止消耗 1.5 s 后开始回复（fandom，社区）；重击消耗取技能描述「重击耐力消耗」，缺省 25；全队共用（社区）' },
   };
   const ANOMALY_ZH = { erosion: '风蚀效应', frazzle: '光噪效应', flare: '电磁效应', burst: '聚爆效应', chafe: '霜渐效应', bane: '虚湮效应' };
   const ANOMALY_SHORT = { erosion: '风蚀', frazzle: '光噪', flare: '电磁', burst: '聚爆', chafe: '霜渐', bane: '虚湮' };
   const ANOMALY_BY_ZH = Object.fromEntries(Object.entries(ANOMALY_SHORT).map(([k, v]) => [v, k]));
+  const SWAP_COOLDOWN_DEFAULT = 1.0; // v3.4, MECH.swapCooldown
   const STAMINA_DEFAULT = { enabled: true, max: 240, regen: 25, delay: 1.5, heavyCost: 25 };
 
   const ELEMENTS = ['physical', 'glacio', 'fusion', 'electro', 'aero', 'spectro', 'havoc'];
@@ -74,7 +79,27 @@
 
   // default action durations (seconds) — MECH.durations (unsolved); override via config.durations / member.durations
   const DEFAULT_DURATIONS = { A: 0.55, H: 1.1, E: 1.0, R: 2.0, Q: 0.8, I: 1.2, O: 0, S: 0.25, X: 1.0 };
-  const DEFAULT_SEARCH = { beamWidth: 96, maxExpansions: 120000, topN: 5, potentialWeight: 0.5, allowExtras: false };
+  const DEFAULT_SEARCH = { beamWidth: 96, maxExpansions: 120000, topN: 5, potentialWeight: 0.5, allowExtras: false, portfolio: true, effort: 'standard' };
+  // v3.4.1 MECH.portfolio (search only): branches run besides the default beam; every candidate (and every config.search.seeds entry) is replayed by
+  // the same engine and the best in-window damage wins. The default scoring is unchanged — the next-cycle term exists only inside its own branch.
+  const PORTFOLIO_BRANCHES = [
+    { name: 'strat', budget: { stratify: 0.25 } },
+    { name: 'cycle', budget: { cycle: { discount: 0.5, cap: 0.08 } } },
+    // v3.5 (plan 3): resource-potential pruning — held energy / concerto / 同奏 valued as expected damage at full weight, stratified by situation
+    { name: 'strat35', budget: { stratify: 0.25, v35: true }, v35: true },   // N3: situation buckets instead of min(swaps,12)
+    { name: 'res', budget: { potentialWeight: 1, unisonWeight: 1, stratify: 0.25, v35: true }, v35: true },
+  ];
+  // v3.5 search (MECH.search35): budget ladder (monotone in compute), auto expansions for long windows, local improvement. Old links: search.v35=false
+  const LADDER = [32, 48, 96, 128, 192];
+  const EXPANSIONS_PER_BEAM_SECOND = 17;   // N4: bw96 × 120 s needs ≈185k expansions (measured) → 96×120×17 = 195,840
+  const LOCAL_DEFAULT = { evals: 2000 };
+  // v3.5 search.effort: 'standard' (default, page budget ≈ v3.4.1 time: HJS120 ≈ 30 s) | 'deep' (opt-in: budget ladder, auto expansions,
+  // situation/resource branches, full local budget). Explicit search.ladder / autoExpansions / localEvals / portfolioBranches override the tier.
+  const SEARCH_EFFORT = {
+    standard: { ladder: false, autoExpansions: false, v35Branches: false, localEvals: 600, localSeedPrefixes: 0 },
+    deep: { ladder: true, autoExpansions: true, v35Branches: true, localEvals: LOCAL_DEFAULT.evals, localSeedPrefixes: null }
+  };
+  const effortOf = (c) => SEARCH_EFFORT[c.search && c.search.effort] || SEARCH_EFFORT.standard;
 
   // ------------------------------------------------------------------ stat keys
   const KEYMAP = {
@@ -211,6 +236,11 @@
   }
 
   /** Parse "X提升N%" / "X加深N%" effects from a substituted Chinese description. Keyword heuristics (MECH.buffText). */
+  // v3.5 N11: one stack-count pattern for every branch (main list, 无视防御/抗穿, 减抗)
+  const STACK_RE = /(?:可以叠加|可叠加|最多叠加|叠加至|上限为)\s*(\d+|[一二两三四五六七八九十])\s*层/;
+  const stacksOf = (sent) => { const m = STACK_RE.exec(sent); return m ? (CN_NUM[m[1]] || parseInt(m[1], 10)) : 1; };
+  // v3.5 N12: 「自身每1%的共鸣效率使队伍中角色攻击提升X%，上限Y%」 (重明之羽) → team atkPct, value resolved from the holder's energy regen in buildContext
+  const PER_ER_RE = /每\s*1%\s*的?共鸣效率使(队伍中(?:的)?角色|自身)?攻击提升\s*(\d+(?:\.\d+)?)%[，,]\s*上限\s*(\d+(?:\.\d+)?)%/;
   function parseTextEffects(text) {
     const out = [], late = [];
     if (!text) return out;
@@ -255,7 +285,7 @@
         const DUR = /(?:持续|存在)\s*(\d+(?:\.\d+)?)\s*秒/;
         const allDu = [...new Set((String(text).match(/(?:持续|存在)\s*\d+(?:\.\d+)?\s*秒/g) || []).map((x) => x.replace(/\D*?(\d+(?:\.\d+)?)\D*$/, '$1')))];
         const du = DUR.exec(after) || DUR.exec(sent) || (allDu.length === 1 ? DUR.exec(String(text)) : null);
-        const st = /(?:可叠加|最多叠加|叠加至|上限为)\s*(\d+|[一二两三四五六七八九十])\s*层/.exec(sent);
+        const st = STACK_RE.exec(sent);   // v3.5 N11a: + 「可以叠加」 (display: 和光回唱 3 层; damage is module-stacked)
         out.push({
           key, extraKeys: extraKeys.length ? extraKeys : undefined, verb, value: val, conditional: conditional || !!ta || kill, trigger: trig, kill: kill || undefined, target: taken ? 'team' : /^自身/.test(segs[segs.length - 1]) ? 'self' : detectTarget(sent),
           duration: du ? parseFloat(du[1]) : null, maxStacks: st ? (CN_NUM[st[1]] || parseInt(st[1], 10)) : 1,
@@ -277,14 +307,14 @@
         const cm = /^(.*(?:时|后|期间|之后|秒内))/.exec(pre);
         const du = /(?:持续|存在)\s*(\d+(?:\.\d+)?)\s*秒/.exec(sent) || /(\d+(?:\.\d+)?)\s*秒内/.exec(pre);
         late.push({ key: k, verb: '无视', value: parseFloat(mm[2]) / 100, conditional: cond, trigger: cond ? (anomalyApplyTrigger(pre) || detectTrigger(cm ? cm[1] : pre)) : null,
-          target: 'self', duration: du ? parseFloat(du[1]) : null, maxStacks: 1, text: sent.trim() });
+          target: 'self', duration: du ? parseFloat(du[1]) : null, maxStacks: stacksOf(sent), text: sent.trim() });   // v3.5 N11b: was hard-coded 1 (驭冕铸雷之权 可叠加5层)
       }
       const rs = /抗性(?:减少|降低)\s*(\d+(?:\.\d+)?)%/.exec(sent);
       if (rs) {
         const el = Object.entries(ELEMENT_ZH).find(([, zh]) => sent.includes(zh));
         const du = /持续\s*(\d+(?:\.\d+)?)\s*秒/.exec(sent);
         out.push({ key: 'resShred:' + (el ? el[0] : 'all'), verb: '减抗', value: parseFloat(rs[1]) / 100, conditional: true, trigger: detectTrigger(sent),
-          target: 'team', duration: du ? parseFloat(du[1]) : null, maxStacks: 1, text: sent.trim() });
+          target: 'team', duration: du ? parseFloat(du[1]) : null, maxStacks: stacksOf(sent), text: sent.trim() });   // v3.5 N11b (减抗 branch)
       }
     }
     return out.concat(late);
@@ -367,6 +397,11 @@
       duration: e.duration, maxStacks: e.maxStacks || 1, endsOnSwap: !!e.endsOnSwap, unmodeled: !!e.unmodeled,
       mech: MECH.buffText.mech, confidence: e.conditional ? 'low' : 'medium', basis: MECH.buffText.basis,
     };
+    const per = e.key === 'energyRegen' && PER_ER_RE.exec(e.text || '');
+    if (per) {   // v3.5 N12 (重明之羽): was energyRegen +0.001 self; now team atkPct = min(cap, rate × holder's energy regen %), resolved in buildContext
+      b.stats = [{ key: 'atkPct', value: parseFloat(per[3]) / 100 }]; b.target = per[1] && per[1] !== '自身' ? 'team' : 'self'; b.name = statLabel('atkPct');
+      b.perER = { rate: parseFloat(per[2]) / 100, cap: parseFloat(per[3]) / 100 };
+    }
     b.mode = b.unmodeled ? 'off' : (!e.conditional ? 'on' : (e.trigger && e.trigger.on !== 'manual' ? 'auto' : 'off'));
     if (b.unmodeled) b.lowReason = e.reason;
     else if (e.kill) b.lowReason = '击败/击杀触发（木桩模拟不触发），默认关闭，可手动开启';
@@ -547,7 +582,10 @@
     const ty = DMG_TYPES.includes(hit.type) ? hit.type : null;
     const sumKeys = (ns) => (a[ns + ':all'] || 0) + (el ? a[ns + ':' + el] || 0 : 0) + (el && el !== 'physical' ? a[ns + ':allElement'] || 0 : 0) + (ty ? a[ns + ':' + ty] || 0 : 0);
     const bonus = 1 + sumKeys('dmg');
-    const deepen = 1 + sumKeys('deep') + (enemy.damageTaken || 0);
+    const deepen = 1 + sumKeys('deep');
+    // v3.4: target-side “受到…伤害提升” (taken:*) + enemy.damageTaken = separate multiplicative zone (MECH.taken)
+    const takenSum = sumKeys('taken') + (enemy.damageTaken || 0);
+    const taken = 1 + takenSum;
     const critM = critMultiplier(panel.critRate, panel.critDmg, mode);
     // per-damage-type penetration: defIgnore:<type>, resPen:<el>:<type>, resPen:all:<type>
     const tyIg = ty ? a['defIgnore:' + ty] || 0 : 0;
@@ -558,19 +596,20 @@
     const effRes = baseRes - shred;
     const resM = resistanceMultiplier(effRes);
     const red = 1 - (enemy.dmgReduce || 0);
-    const common = base * bonus * deepen * d.value * resM * red;
+    const common = base * bonus * deepen * taken * d.value * resM * red;
     const perHit = { expected: common * critMultiplier(panel.critRate, panel.critDmg, 'expected'), crit: common * panel.critDmg, noncrit: common };
     const total = { expected: perHit.expected * count, crit: perHit.crit * count, noncrit: perHit.noncrit * count };
     const zones = [
       zone('base', '基础区', stat, `${statName} ${Math.round(stat).toLocaleString('en-US')}${flat ? ' + ' + flat : ''}`, { stat: hit.scaling, flat }),
       zone('multiplier', '倍率', mult * count, `${round(mult * 100, 2)}%${count > 1 ? '×' + count : ''}${multUp ? `（含倍率提升 ${round(multUp * 100, 2)}%）` : ''}`),
       zone('bonus', '伤害加成', bonus),
-      zone(enemy.damageTaken ? 'deepenTarget' : 'deepen', '加深', deepen, null, { key: 'deepen', targetTaken: enemy.damageTaken || 0 }),
+      zone('deepen', '加深', deepen, null, { key: 'deepen' }),
+    ].concat(takenSum ? [zone('taken', '受到伤害提升', taken, `1 + ${round(takenSum, 4)}${enemy.damageTaken ? `（含目标受伤 ${round(enemy.damageTaken, 4)}）` : ''}（独立乘区，v3.4）`, { key: 'taken', targetTaken: enemy.damageTaken || 0 })] : [], [
       zone('crit', mode === 'crit' ? '暴击' : mode === 'noncrit' ? '不暴' : '暴击期望', critM, null, { critRate: panel.critRate, critDmg: panel.critDmg }),
       zone('defense', '防御', d.value, null, { enemyDef: d.enemyDef, effectiveDef: d.effDef }),
       zone(effRes >= 0.8 ? 'resistanceHigh' : 'resistance', '抗性', resM, `${round(resM, 4)}（有效抗性 ${round(effRes * 100, 2)}%）`, { key: 'resistance', baseRes, shred, effectiveRes: effRes, neg: effRes < 0, highSegment: effRes >= 0.8 }),
       zone('dmgReduce', '减伤', red),
-    ];
+    ]);
     return { perHit, total, zones, effectiveRes: effRes, element: el, type: ty, base, heal: 0 };
   }
 
@@ -625,7 +664,7 @@
     const levelKey = spec.levelKey || 'basic';
     return Object.assign({
       key: spec.key, cls: spec.cls, label: spec.label || ((skill ? skill.name : '') + (spec.labels && typeof spec.labels[0] === 'string' && spec.labels[0] !== '技能伤害' ? '·' + spec.labels[0].replace(/伤害$/, '') : '')),
-      skillId: skill ? skill.id : null, skillType: skill ? skill.type : null, hits, level: spec.level || lv[levelKey] || 1, levelKey,
+      skillId: skill ? skill.id : (spec.skillId != null ? spec.skillId : null), skillType: skill ? skill.type : null, hits, level: spec.level || lv[levelKey] || 1, levelKey,
       energy: hitEnergy, concerto, concertoSource, cooldown: spec.cooldown || 0, cdKey: spec.cdKey || null, cost: spec.cost,
       lowHits: hits.filter((h) => h.confidence !== 'high').length, defDur: spec.dur, durKey: spec.durKey || null,
       ownStage: !!spec.ownStage, forceCrit: !!spec.forceCrit, scale: spec.scale || null, module: !!spec.module, inferred: spec.inferred || null,
@@ -727,25 +766,40 @@
     const kind = frameSrcKind(label, e);
     if (kind === 'wuwasim') {
       const mk = e.markers_s || {};
-      const out = { label, duration: e.duration_s, cancel: null, timeStop: mk.freezeTime > 0 ? mk.freezeTime : null, noSwap: null, swapAt: null, nextAction: true,
-        markers: mk, source: e.source || null, version: e.version || null, srcKind: kind, calcData: false };
+      // MECH.stepDuration (v3.3, WuWaSim TIMING_MODEL): a step costs max(animation, resolvesAt) — the key's damage is credited in full,
+      // so the clock runs until its last bullet has fired (9 keys roster-wide: 炽霞 skill, 灯灯 forte_heavy_glare, 赞妮 breakthrough …)
+      const late = e.duration_s != null && mk.resolvesAt > e.duration_s + EPS;
+      const out = { label, duration: late ? mk.resolvesAt : e.duration_s, cancel: null, timeStop: mk.freezeTime > 0 ? mk.freezeTime : null, noSwap: null, swapAt: null, nextAction: true,
+        markers: mk, source: e.source || null, version: e.version || null, srcKind: kind, calcData: false,
+        stepAnim: e.duration_s, stepRule: late ? 'resolvesAt' : null };
       if (e.duration_s == null) { out.missing = true; out.reason = (e.notes || 'WuWaSim stepDuration 为 null').slice(0, 160); }
       return out;
     }
     const fps = e.fps || 60;
     const fr = e.frames || {};
     // prefer exact frames/fps over the 4-decimal rounded seconds
-    const dur = e.duration_s == null ? null : (fr.total > 0 ? fr.total / fps : e.duration_s);
+    const anim = e.duration_s == null ? null : (fr.total > 0 ? fr.total / fps : e.duration_s);
+    // MECH.stepDuration (v3.3): max(full animation, last commit_frame) — a hit locked in after the animation has ended (2 WuwaLAB entries:
+    // 安可 Wooly Attack 4 49f > 46f, 漂泊者·气动 Wind Cutter 3 132f > 56f). Hits that only LAND later (commit ≤ total: projectiles, e.g.
+    // 守岸人 Chaos Theory commit 17f, lands 55–65f) do not lengthen the step — WuWaSim resolvesAt is the bullet fire time, i.e. the commit.
+    const lastCommit = typeof fr.last_commit === 'number' ? fr.last_commit / fps : null;
+    const dur = anim != null && lastCommit != null && lastCommit > anim + EPS ? lastCommit : anim;
     const cancel = e.cancel_s == null ? null : (typeof fr.earliest_cancel === 'number' ? fr.earliest_cancel / fps : e.cancel_s);
     const ts = Array.isArray(fr.time_stop) && fr.time_stop.length === 2 ? Math.max(0, fr.time_stop[1] - fr.time_stop[0]) / fps : 0;
-    const out = { label, duration: dur, cancel, timeStop: ts > 0 ? ts : null,
+    const out = { label, duration: dur, cancel, timeStop: ts > 0 ? ts : null, stepAnim: anim, stepRule: dur !== anim ? 'lastCommit' : null, lastCommit,
       // MECH.timeStop (WuWaSim toa): non-liberation time stops only count when the entry carries a measured-source flag
       tsVerified: e.tsVerified ? (typeof e.tsVerified === 'string' ? e.tsVerified : (e.tsSource || true)) : null,
       noSwap: fr.no_swap != null ? fr.no_swap / fps : null, swapAt: fr.swap_resolved != null ? fr.swap_resolved / fps : null,
-      source: e.source || null, version: e.version || null, calcData: /\[wuwa-calc-data\]/.test(label), srcKind: kind,
+      // v3.4.1 MECH.buffTiming: per-hit frames (WuwaLAB hits[].f, mv) + time-stop window, for hit-time buff coverage
+      hitFrames: Array.isArray(e.hits) && e.hits.length ? e.hits.map((h) => ({ f: +h.f || 0, w: h.mv > 0 ? +h.mv : 1 })) : null, fps,
+      tsWin: Array.isArray(fr.time_stop) && fr.time_stop.length === 2 && fr.time_stop[1] > fr.time_stop[0] ? fr.time_stop.slice() : null,
+      frameConf: e.confidence || null, source: e.source || null, version: e.version || null, calcData: /\[wuwa-calc-data\]/.test(label), srcKind: kind,
       lowConf: kind === 'riley' ? 'Riley31415/wuwa_calc：未注明游戏版本与帧数出处（源仓库称取自 WuwaLAB 或用户粘贴的帧数表）' : null };
     if (dur == null) { out.missing = true; out.reason = (e.notes || '源数据 duration 为 null').slice(0, 160); }
-    else if (/核对：不一致|内部矛盾/.test(e.notes || '')) {
+    else if (/核对：不一致|内部矛盾/.test(e.notes || '') && !e.duration_confirmed && !e.duration_adopted) {
+      // v3.3: e.duration_confirmed = the total is confirmed by a second independent source (漂泊者·导电 Overshock tap 122f: WuwaLAB 999849 +
+      // WuWaSim forte_heavy_overshock / row 1309111, confidence high); e.duration_adopted = single-source total adopted by decision
+      // (Overshock (Hold) 122f, WuwaLAB only, confidence medium). The contradiction is then in the cancel field only (already null) and the entry is used
       // conflicting sources (散华: WuwaLAB vs wuwa-calc-data) or internally inconsistent entry (漂泊者·导电 Skill 2) → treat as null
       out.missing = true; out.conflict = true; out.sourceDuration = dur;
       out.reason = /内部矛盾/.test(e.notes) ? '源数据内部矛盾（earliest_cancel > total）' : `两个来源不一致（WuwaLAB ${round(dur, 3)}s vs wuwa-calc-data）`;
@@ -874,7 +928,7 @@
     const own = act.module && act.key && act.key !== act.cls;
     const keys = [...new Set([act.key, act.durKey, act.cls === 'A' && act.stage ? 'A' + act.stage : null, act.extra || own ? null : act.cls].filter(Boolean))];
     const user = Object.assign({}, ctx.cfg.durations || {}, (mem.cfg && mem.cfg.durations) || {});
-    act.cancel = null; act.noSwap = null; act.durReason = null; act.frameLabel = null; act.timeStop = null;
+    act.cancel = null; act.noSwap = null; act.durReason = null; act.frameLabel = null; act.timeStop = null; act.hitTimes = null; act.hitTimesSrc = null;
     for (const k of keys) if (user[k] != null) { act.duration = user[k]; act.durSource = 'config'; act.est = false; return; }
     const modMap = mem.mod && mem.mod.frames ? mem.mod.frames : null;
     // echo skills are never taken from frames (team decision: echo durations stay default)
@@ -886,6 +940,7 @@
     if (f && !f.missing && !f.noChar && f.duration != null) {
       act.duration = f.duration; act.durSource = 'frames'; act.durRef = (f.source || '') + (f.version ? ' @' + f.version : '');
       act.cancel = f.cancel; act.noSwap = f.noSwap; act.frameLabel = f.label || null; act.timeStop = f.timeStop || null;
+      act.stepRule = f.stepRule || null; act.stepAnim = f.stepRule ? f.stepAnim : null;
       act.frameSrc = f.srcKind || 'wuwalab'; act.frameSrcZh = FRAME_SRC_ZH[act.frameSrc] || null; act.nextAction = !!f.nextAction;
       act.frameLow = f.lowConf || null;
       if (f.parts > 1) act.durNote = (act.cls === 'Q' ? '声骸 ' : '模块组合 ') + f.parts + ' 段动作时长相加';
@@ -894,12 +949,24 @@
       // other time stops (forte circuit, tune break, 圆舞曲, 洞悉 …) count full duration unless the frame entry / module act carries tsVerified (measured source)
       act.tsEligible = act.timeStop > 0 ? ((act.cls === 'R' && act.cost > 0) || !!f.tsVerified || !!act.tsVerified || ctx.cfg.timeStopScope === 'all') : false; // timeStopScope:'all' = pre-17:20 behaviour (comparison only)
       act.tsBasis = act.timeStop > 0 ? (act.cls === 'R' && act.cost > 0 ? 'liberation' : (f.tsVerified || act.tsVerified) ? 'verified:' + (f.tsVerified || act.tsVerified) : 'not-liberation') : null;
-      if ((ctx.cfg.timeStop || 'exclude') === 'exclude' && act.timeStop > 0 && act.tsEligible && act.duration > 0 && f.srcKind !== 'wuwasim') {
-        act.durationFull = act.duration; act.duration = Math.max(0.05, act.duration - act.timeStop);
+      // MECH.clock (v3.3 dual clock, WuWaSim TIMING_MODEL): realTime advances by the full step, gameTime (the fight clock: window, buffs,
+      // cooldowns, anomalies) by step − freeze; the freeze is clamped to its own step, so a whole-step freeze costs 0 game seconds (the
+      // pre-v3.3 0.05 s floor is gone). WuWaSim entries are included now: their freezeTime is defined against stepDuration (TIMING_MODEL).
+      if ((ctx.cfg.timeStop || 'exclude') === 'exclude' && act.timeStop > 0 && act.tsEligible && act.duration > 0) {
+        act.durationFull = act.duration; act.duration = Math.max(0, act.duration - Math.min(act.timeStop, act.duration));
         if (act.cancel != null) act.cancel = Math.max(0, Math.min(act.cancel, act.duration));
         if (act.noSwap != null) act.noSwap = Math.max(0, Math.min(act.noSwap, act.duration));
       }
       act.est = framesIndex(ctx.frames).scraper ? true : false; // community measurements stay est:true
+      // v3.4.1 MECH.buffTiming: hit times (game seconds from action start) from the frame entry's per-hit frames; frozen (excluded time-stop) frames cost 0
+      if (f.hitFrames && !(f.parts > 1)) {
+        const fps = f.fps || 60, tw = f.tsWin, ex = act.durationFull != null;
+        act.hitTimes = f.hitFrames.map((h) => {
+          let fr = h.f; if (ex && tw) fr -= Math.max(0, Math.min(h.f, tw[1]) - tw[0]);
+          return { t: Math.max(0, Math.min(act.duration, fr / fps)), w: h.w };
+        }).sort((a, b) => a.t - b.t);
+        act.hitTimesSrc = 'frames';
+      }
       return;
     }
     if (act.cls === 'O') {
@@ -997,6 +1064,8 @@
       enemy: { level: 90, resTier: 0.1, resShred: 0, enemyId: null, defIgnore: 0, defReduce: 0, dmgReduce: 0 },
       team: [], rotation: { mode: 'search', sequence: '', start: 0, onBlocked: 'wait' },
       search: Object.assign({}, DEFAULT_SEARCH), start: { energy: 0, concerto: 0 }, modules: true, endCredit: 'prorate',
+      // v3.4.1 model keys (migrateConfig fills the ≤3.4 values for old links): buff coverage per hit time, 赞妮 延奏 module stats, 丽贝卡 机枪塔
+      buffTiming: 'hit', outroModuleStats: true, rebeccaTurret: true,
     };
   }
 
@@ -1078,6 +1147,8 @@
     if (en.resByElement) enemy.resByElement = Object.assign({}, enemy.resByElement || {}, en.resByElement);
     if (enemy.resShred > 1.5) enemy.resShred /= 100;
     ctx.enemy = enemy;
+    // v3.5 N12: per-energy-regen buffs take the holder's static energy regen (total, 1 = 100%): value = min(cap, rate × ER%)
+    members.forEach((m) => m.buffDefs.forEach((b) => { if (b.perER) { const er = finalPanel(m, []).energyRegen; b.stats = [{ key: 'atkPct', value: Math.min(b.perER.cap, b.perER.rate * er * 100) }]; b.perER.er = er; } }));
     members.forEach((m) => m.buffDefs.forEach((b) => ctx.bd.set(b.id, b)));
     const noMod = members.filter((m) => !m.mod);
     ctx.searchable = !noMod.length || !!cfg.search.force;
@@ -1304,7 +1375,9 @@
     const st = anomalyTargetStats(ctx, s, t, owner, type);
     const enemy = ctx.enemy;
     const bonus = 1 + (st['dmg:anomaly'] || 0) + (st['dmg:anomaly:' + type] || 0);
-    const deepen = 1 + (st['deep:anomaly'] || 0) + (st['deep:anomaly:' + type] || 0) + (enemy.damageTaken || 0);
+    const deepen = 1 + (st['deep:anomaly'] || 0) + (st['deep:anomaly:' + type] || 0);
+    const takenSum = (st['taken:anomaly'] || 0) + (st['taken:anomaly:' + type] || 0) + (enemy.damageTaken || 0); // MECH.taken (v3.4); whether vulnerability applies to anomalies is UNTESTED (rhecpev anomaly rows are Suisui's chafe, Chisa C6 taken only covers Chisa's own damage); taken:all deliberately not applied here (assumption)
+    const taken = 1 + takenSum;
     const d = defenseMultiplier(lv, enemy.level, enemy.defIgnore || 0, (enemy.defReduce || 0) + (st.defReduce || 0), enemy.defOverride);
     const el = def.element;
     const baseRes = enemy.resByElement && enemy.resByElement[el] != null ? enemy.resByElement[el] : enemy.resTier;
@@ -1313,17 +1386,18 @@
     const resM = resistanceMultiplier(effRes);
     const red = 1 - (enemy.dmgReduce || 0);
     const cr = o.crit ? critMultiplier(o.crit.rate, o.crit.dmg, ctx.mode) : 1;
-    const value = base * mult * bonus * deepen * d.value * resM * red * cr;
+    const value = base * mult * bonus * deepen * taken * d.value * resM * red * cr;
     const zones = [
       zone('anomalyBase', '异常基础', base, `Lv${lv} 基础值 ${base}`, { key: 'base', level: lv }),
       zone('anomalyBase', '每层倍率', mult, `${round(mult * 100, 2)}%（${stacks} 层${o.scale && o.scale !== 1 ? ' ×' + round(o.scale, 3) : ''}）`, { key: 'multiplier', stacks }),
       zone('anomalyZones', '效应加成', bonus, null, { key: 'bonus' }),
-      zone(enemy.damageTaken ? 'deepenTarget' : 'anomalyZones', '加深', deepen, enemy.damageTaken ? `1 + 加深 ${round(deepen - 1 - enemy.damageTaken, 4)} + 目标受伤 ${round(enemy.damageTaken, 4)}（相加；另一读法相乘 ${round((deepen - enemy.damageTaken) * (1 + enemy.damageTaken), 4)}）` : null, { key: 'deepen', targetTaken: enemy.damageTaken || 0 }),
+      zone('anomalyZones', '加深', deepen, null, { key: 'deepen' }),
+    ].concat(takenSum ? [zone('taken', '受到伤害提升', taken, `1 + ${round(takenSum, 4)}${enemy.damageTaken ? `（含目标受伤 ${round(enemy.damageTaken, 4)}）` : ''}（独立乘区，v3.4）`, { key: 'taken', targetTaken: enemy.damageTaken || 0 })] : [], [
       zone('anomalyZones', o.crit ? '暴击期望（模块）' : '不暴击', cr, null, { key: 'crit' }),
       zone('defense', '防御', d.value, null, { enemyDef: d.enemyDef, effectiveDef: d.effDef }),
       zone(effRes >= 0.8 ? 'resistanceHigh' : 'resistance', '抗性', resM, `${round(resM, 4)}（有效抗性 ${round(effRes * 100, 2)}%）`, { key: 'resistance', baseRes, shred, effectiveRes: effRes, neg: effRes < 0, highSegment: effRes >= 0.8 }),
       zone('dmgReduce', '减伤', red),
-    ];
+    ]);
     return { value, zones, el, mult, base };
   }
   /** settle once: book damage on the applier, record a status entry (timeline + breakdown) */
@@ -1567,6 +1641,7 @@
     const D = S.t;
     const sh = (x) => (x == null ? x : x - D);
     st.active = S.active;
+    if (S.lastOut) st.lastOut = S.lastOut.map((x) => (x == null ? x : x - D)); // swap-back cooldown carries across loops (MECH.swapCooldown)
     st.m.forEach((m, i) => {
       const o = S.m[i];
       m.energy = o.energy; m.concerto = o.concerto; m.stage = o.stage; m.cd = {};
@@ -1594,7 +1669,7 @@
   function clone(s) {
     return { t: s.t, active: s.active, m: s.m.map((x) => ({ energy: x.energy, concerto: x.concerto, cd: Object.assign({}, x.cd), stage: x.stage, cs: deepCopy(x.cs) })),
       buffs: s.buffs.map((b) => Object.assign({}, b)), damage: s.damage, heal: s.heal, perMember: s.perMember.slice(), byType: Object.assign({}, s.byType),
-      swaps: s.swaps, libs: s.libs, prev: s, action: null, sides: null, n: s.n + 1, an: deepCopy(s.an), anT: s.anT, tune: s.tune ? deepCopy(s.tune) : undefined, sta: s.sta, staFrom: s.staFrom, swapCut: s.swapCut };
+      swaps: s.swaps, libs: s.libs, prev: s, action: null, sides: null, n: s.n + 1, an: deepCopy(s.an), anT: s.anT, tune: s.tune ? deepCopy(s.tune) : undefined, sta: s.sta, staFrom: s.staFrom, swapCut: s.swapCut, lastOut: s.lastOut, swapCdWait: s.swapCdWait, swapCdN: s.swapCdN };
   }
   function mkApi(ctx, s, mi, tEnd) {
     const mem = ctx.members[mi];
@@ -1701,6 +1776,8 @@
     if (trig.on === 'any') return trig.any.some((x) => trigMatches(x, on, kind, key));
     if (trig.on === 'act') return on === 'cast' && (trig.keys || []).includes(key);
     if (trig.on !== on) return false;
+    // v3.5 判定 A: a key-scoped trigger on a non-cast event (e.g. {on:'intro', keys:['yIz','zIz']}) matches only those action keys
+    if (trig.keys && on !== 'cast' && !trig.keys.includes(key)) return false;
     if (on === 'anomaly' || on === 'anomalyTeam') return (trig.kinds || []).includes('any') || (trig.kinds || []).includes(kind);
     if (on === 'tune' || on === 'tuneTeam') return (trig.kinds || []).includes('any') || (trig.kinds || []).includes(kind);
     if (on === 'heal') return !trig.kinds || kind == null || trig.kinds.includes(kind);
@@ -1785,12 +1862,62 @@
     return acts;
   }
 
+  // v3.4.1 MECH.buffTiming: hit times of an action (frames, else linear over the action duration — engine assumption, by hit-row multiplier weight)
+  function hitTimesOf(act) {
+    if (act.hitTimes && act.hitTimes.length) return act.hitTimes;
+    if (!(act.duration > EPS)) return null;
+    if (act._linHits && act._linHits.d === act.duration) return act._linHits.h;
+    const w = [];
+    for (const h of act.hits || []) { if (h.calc === 'heal') continue; const m = Array.isArray(h.multiplier) ? Math.max(...h.multiplier.map((x) => +x || 0)) : 1; for (let k = 0; k < Math.max(1, Math.round(h.count || 1)); k++) w.push(m > 0 ? m : 1); }
+    const h = w.map((x, k) => ({ t: act.duration * (k + 1) / w.length, w: x }));
+    act._linHits = { d: act.duration, h };
+    return h;
+  }
+  /** hit groups whose buff set differs (a buff on mi starts/ends strictly inside the hit span) → [{t, frac}] or null (fast path: one evaluation at s.t) */
+  function hitGroups(ctx, s, mi, act, o) {
+    if (ctx.cfg.buffTiming !== 'hit' || o.coord || !(act.duration > EPS)) return null;
+    const ht = hitTimesOf(act); if (!ht || ht.length < 2) return null;
+    const t0 = s.t, t1 = t0 + ht[ht.length - 1].t;
+    if (t1 <= t0 + EPS) return null;
+    const cuts = [];
+    for (const ab of s.buffs) {
+      if (ab.target !== mi) continue;
+      if (ab.until > t0 + EPS && ab.until <= t1 + EPS && ab.start <= t0 + EPS) cuts.push(ab.until);
+      if (ab.start > t0 + EPS && ab.start <= t1 + EPS && ab.until > ab.start) cuts.push(ab.start);
+    }
+    for (const mem of ctx.members) for (const b of mem.buffDefs) if (b.mode === 'on' && b.kind === 'manual') { if (b.from > t0 + EPS && b.from <= t1 + EPS) cuts.push(b.from); if (b.to > t0 + EPS && b.to <= t1 + EPS) cuts.push(b.to); }
+    if (!cuts.length) return null;
+    cuts.sort((a, b) => a - b);
+    const W = ht.reduce((x, h) => x + h.w, 0) || 1, g = [];
+    for (const h of ht) {
+      const th = t0 + h.t; let k = 0; while (k < cuts.length && cuts[k] <= th + EPS) k++;
+      const last = g[g.length - 1];
+      if (last && last.k === k) last.frac += h.w / W; else g.push({ k, t: th, frac: h.w / W });
+    }
+    return g.length > 1 ? g : null;
+  }
   function addDamage(ctx, s, mi, act, extraStats, o) {
     o = o || {};
-    let bs = activeStats(ctx, s, mi, s.t).concat(extraStats || []);
-    // 协同攻击伤害加成/加深（dmg:coord / deep:coord，如 釉瑚 延奏 鉴珍）只作用于协同攻击（sideDamage coord !== false）
-    if (o.coordAtk) { const cx = bs.filter((x) => x && (x.key === 'dmg:coord' || x.key === 'deep:coord')); if (cx.length) bs = bs.concat(cx.map((x) => Object.assign({}, x, { key: x.key.replace(':coord', ':all') }))); }
-    const d = actionDamage(ctx, mi, act, bs, !!ctx._detail, o.times || 1);
+    const statsAt = (t) => {
+      let bs = activeStats(ctx, s, mi, t).concat(extraStats || []);
+      // 协同攻击伤害加成/加深（dmg:coord / deep:coord，如 釉瑚 延奏 鉴珍）只作用于协同攻击（sideDamage coord !== false）
+      if (o.coordAtk) { const cx = bs.filter((x) => x && (x.key === 'dmg:coord' || x.key === 'deep:coord')); if (cx.length) bs = bs.concat(cx.map((x) => Object.assign({}, x, { key: x.key.replace(':coord', ':all') }))); }
+      return bs;
+    };
+    const groups = hitGroups(ctx, s, mi, act, o);
+    let d;
+    if (!groups) d = actionDamage(ctx, mi, act, statsAt(s.t), !!ctx._detail, o.times || 1);
+    else {
+      // v3.4.1 MECH.buffTiming 'hit': each hit group is resolved with the buffs active at its first hit (weights = per-hit multiplier share)
+      for (const gr of groups) {
+        const dg = actionDamage(ctx, mi, act, statsAt(gr.t), !!ctx._detail, (o.times || 1) * gr.frac);
+        // detail parts stay per unit of o.times (consumers multiply by it): part total = Σ group frac × group per-hit total
+        const sc = (p) => Object.assign({}, p, { r: Object.assign({}, p.r, { total: { expected: p.r.total.expected * gr.frac, crit: p.r.total.crit * gr.frac, noncrit: p.r.total.noncrit * gr.frac }, heal: (p.r.heal || 0) * gr.frac }) });
+        if (!d) { d = dg; d.hitGroups = 1; d.parts = d.parts.map(sc); continue; }
+        d.value += dg.value; d.expected += dg.expected; d.crit += dg.crit; d.noncrit += dg.noncrit; d.heal += dg.heal; d.hitGroups++;
+        dg.parts.forEach((p, i) => { const q = d.parts[i]; if (!q) return; const x = sc(p); for (const kk of ['expected', 'crit', 'noncrit']) q.r.total[kk] += x.r.total[kk]; q.r.heal += x.r.heal; });
+      }
+    }
     s.damage += d.value; s.heal += d.heal; s.perMember[mi] += d.value;
     if (ctx._detail) for (const p of d.parts) {
       const ty = p.r.type || p.hit.type; if (!ty || p.hit.calc === 'heal') continue;
@@ -1815,6 +1942,7 @@
     if (act.echoCast) dispatch(ctx, s, { type: 'echoCast', mi, key: act.key, echo: act.echoName || mi + ':' + act.key, t: o.t != null ? o.t : s.t, side: true });
     s.sides = (s.sides || []).concat([{ t: o.t != null ? o.t : s.t, endT: o.t != null ? o.t : s.t, mi, cls: act.cls, key: act.key, label: act.label + (times !== 1 ? ' ×' + round(times, 2) : ''),
       damage: r.d.value, heal: r.d.heal, coord: true, offfield: s.active !== mi, est: false, energyAfter: s.m[mi].energy, concertoAfter: s.m[mi].concerto,
+      skillId: act.skillId != null ? act.skillId : null, skillIdBy: act.skillId != null ? 'act' : null, echoId: echoIdOf(act),
       parts: ctx._detail ? r.d.parts.map((p) => ({ label: p.hit.label, element: p.r.element, type: p.r.type, count: (p.hit.count || 1) * times, value: (ctx.mode === 'crit' ? p.r.total.crit : ctx.mode === 'noncrit' ? p.r.total.noncrit : p.r.total.expected) * times, zones: p.r.zones, confidence: p.hit.confidence })) : undefined }]);
     return r.d.value;
   }
@@ -1827,15 +1955,30 @@
       return o;
     });
   }
+  // v3.2 skillId (game data skill id) for timeline actions: the act's own skill (makeAct) → 'act'; otherwise a non-echo on-field action falls back to the
+  // member's skill of the matching type (A/H 常态攻击 1, E 共鸣技能 2, R 共鸣解放 3, I 变奏 5, O 延奏 11) → 'cls'; echo skills / swaps / waits → null
+  const CLS_SKILL_TYPE = { A: 1, H: 1, E: 2, R: 3, I: 5, O: 11 };
+  function echoIdOf(act) { return !act ? null : act.echoId != null ? act.echoId : (act.extra && act.extra.echoId != null ? act.extra.echoId : null); }
+  function skillIdOf(ctx, mi, cls, act) {
+    // 'act': the skill whose hits the action uses (makeAct); 'cls': class → skill type (A/H→1, E→2, R→3, I→5, O→11) when the resonator has
+    // exactly one skill of that type; several (漂泊者·衍射 1501/1502: two 共鸣解放 / two 共鸣回路) → null + 'ambiguous' (never a silent pick)
+    if (act && act.skillId != null) return { skillId: act.skillId, skillIdBy: 'act' };
+    if (!act || echoIdOf(act) != null || cls === 'Q') return { skillId: null, skillIdBy: act && echoIdOf(act) != null ? 'echo' : null };
+    if (CLS_SKILL_TYPE[cls] == null) return { skillId: null, skillIdBy: null };
+    const sks = ctx.members[mi].R.skills.filter((x) => x.type === CLS_SKILL_TYPE[cls]);
+    if (sks.length === 1) return { skillId: sks[0].id, skillIdBy: 'cls' };
+    return { skillId: null, skillIdBy: sks.length ? 'ambiguous' : 'none' };
+  }
+
   function record(ctx, s, mi, cls, act, t0, t1, r, tok) {
     const ms = s.m[mi];
     const pv = (p) => (ctx.mode === 'crit' ? p.r.total.crit : ctx.mode === 'noncrit' ? p.r.total.noncrit : p.r.total.expected);
-    s.action = { t: t0, endT: t1, mi, cls, tok, key: act ? act.key : null, label: act ? act.label : ACTION_ZH[cls],
+    s.action = { t: t0, endT: t1, mi, cls, tok, key: act ? act.key : null, label: act ? act.label : ACTION_ZH[cls], ...skillIdOf(ctx, mi, cls, act), echoId: act && echoIdOf(act),
       damage: r ? r.d.value : 0, heal: r ? r.d.heal : 0, energyBefore: r ? r.eBefore : ms.energy, energyAfter: ms.energy,
       concertoBefore: r ? r.cBefore : ms.concerto, concertoAfter: ms.concerto,
       concertoSource: act ? act.concertoSource : null, lowHits: act ? act.lowHits : 0, extra: !!(act && act.extra),
       est: act ? !!act.est : (cls === 'S'), durSource: act ? act.durSource : 'default', durReason: act ? act.durReason || null : (cls === 'S' ? '切人时长：默认值' : null),
-      frameLabel: act ? act.frameLabel || null : null, frameSrc: act ? act.frameSrc || null : null, frameLow: act ? act.frameLow || null : null, nextAction: act ? !!act.nextAction : false, timeStop: act ? act.timeStop || null : null, tsBasis: act ? act.tsBasis || null : null, timeStopSaved: act && act.durationFull > act.duration + EPS ? round(act.durationFull - act.duration, 4) : 0, endCut: act && act.duration > EPS && t0 + act.duration > ctx.duration + EPS ? round((ctx.duration - t0) / act.duration, 4) : null, swapReadyT: act && cls !== 'O' ? t0 + swapReadyOf(ctx, act) : null,
+      frameLabel: act ? act.frameLabel || null : null, frameSrc: act ? act.frameSrc || null : null, frameLow: act ? act.frameLow || null : null, stepRule: act ? act.stepRule || null : null, stepAnim: act && act.stepRule ? act.stepAnim : null, nextAction: act ? !!act.nextAction : false, timeStop: act ? act.timeStop || null : null, tsBasis: act ? act.tsBasis || null : null, timeStopSaved: act && act.durationFull > act.duration + EPS ? round(act.durationFull - act.duration, 4) : 0, endCut: act && act.duration > EPS && t0 + act.duration > ctx.duration + EPS ? round((ctx.duration - t0) / act.duration, 4) : null, swapReadyT: act && cls !== 'O' ? t0 + swapReadyOf(ctx, act) : null,
       module: !!(act && act.module), inferred: act ? act.inferred : null,
       stamina: ctx.stamina.enabled ? round(staminaAt(ctx, s, t1), 2) : null, staminaCost: s._staCost || 0 };
     s._staCost = 0;
@@ -1881,12 +2024,20 @@
     }
     const api = mkApi(ctx, n, mi, tEnd);
     const extra = mem.mod && mem.mod.actionStats ? mem.mod.actionStats(api, act, meta) || [] : [];
-    // MECH.endCredit: an action cut by the fight window counts only its in-window fraction (no hit timings → linear); default 'prorate', config.endCredit='full' = old behaviour
+    // MECH.endCredit: an action cut by the fight window counts only its in-window fraction (hit timings → in-window hit weight; else linear); default 'prorate', config.endCredit='full' = old behaviour
     const frac = ctx.cfg.endCredit !== 'full' && act.duration > EPS ? Math.min(1, Math.max(0, (ctx.duration - s.t) / act.duration)) : 1;
     const r = addDamage(ctx, n, mi, act, extra, frac < 1 - EPS ? { times: frac } : undefined);
     // anomaly ticks during the action (applications by this action land at tEnd, after its damage)
     advanceAnomalies(ctx, n, tEnd);
-    if (mem.mod && mem.mod.apply) mem.mod.apply(mkApi(ctx, n, mi, tEnd), act, meta);
+    // v3.4.1: truncated action's apply()-time anomaly is not settled in full at D (Skylake #16). Direct damage already uses
+    // in-window hit weight / linear frac; end-of-action addAnomaly/detonateAnomaly previously still fired at clamped tEnd=D.
+    // Rule: when the action is cut by the window (frac<1 under prorate), suppress anomaly applications from this apply() —
+    // the apply moment is the real action end, which is past the window. (config.endCredit='full' keeps old behaviour.)
+    if (mem.mod && mem.mod.apply) {
+      const apiA = mkApi(ctx, n, mi, tEnd);
+      if (frac < 1 - EPS) { apiA.addAnomaly = () => 0; apiA.detonateAnomaly = () => 0; }
+      mem.mod.apply(apiA, act, meta);
+    }
     // triggered buffs apply from the NEXT hit (team decision): fire after damage
     fire(ctx, n, mi, 'cast', act.cls, null, act.key);
     // stream B B9: unified echo-cast event (echo skills and module actions flagged `echoCast`, e.g. 仇远 答剑); `echo` = name for “同名声骸仅一次”
@@ -1915,6 +2066,18 @@
       n.swapCut = (n.swapCut || 0) + 1;
     }
     const swapCutFrom = n.t < s.t - EPS ? s.t : null;
+    // v3.4 swap-back cooldown (MECH.swapCooldown): the incoming member must have been off-field for ≥ swapCooldown game seconds
+    const swCd = ctx.cfg.swapCooldown != null ? Math.max(0, +ctx.cfg.swapCooldown || 0) : SWAP_COOLDOWN_DEFAULT;
+    let swCdWait = 0;
+    if (swCd > 0) {
+      const lo = n.lastOut ? n.lastOut[j] : null;
+      if (lo != null && n.t < lo + swCd - EPS) {
+        const t1 = Math.min(ctx.duration, lo + swCd);
+        swCdWait = t1 - n.t; n.swapCdWait = (n.swapCdWait || 0) + swCdWait; n.swapCdN = (n.swapCdN || 0) + 1;
+        n.t = t1; advanceAnomalies(ctx, n, n.t); pruneBuffs(n, ctx);
+      }
+      n.lastOut = (n.lastOut || []).slice(); n.lastOut[mi] = n.t;
+    }
     const full = ms.concerto >= 100 - EPS;
     const so = mem.mod && mem.mod.swapOut ? mem.mod.swapOut(mkApi(ctx, n, mi), j) || {} : {};
     const trig = full || !!so.force;
@@ -1924,16 +2087,21 @@
       const rO0 = mem.mod && mem.mod.resolve ? mem.mod.resolve(mkApi(ctx, n, mi), 'O') : null;
       const O = (rO0 && rO0.act) || mem.kit.O;
       const c0 = ms.concerto;
-      const rO = O && O.hits.length ? addDamage(ctx, n, mi, O) : null;
+      // v3.4.1: modules flagged actionStatsOnOutro (赞妮 延奏 同时视为光噪伤害) get their actionStats on the outro hit (config.outroModuleStats=false → ≤3.4 behaviour)
+      const xO = O && O.hits.length && mem.mod && mem.mod.actionStatsOnOutro && mem.mod.actionStats && ctx.cfg.outroModuleStats !== false ? mem.mod.actionStats(mkApi(ctx, n, mi), O, {}) || [] : undefined;
+      const rO = O && O.hits.length ? addDamage(ctx, n, mi, O, xO) : null;
       if (mem.veilAct) sideDamage(ctx, n, mi, mem.veilAct, { coord: false, noGain: true });
       fire(ctx, n, mi, 'outro', 'O', j);
       if (mem.mod && mem.mod.onOutro) mem.mod.onOutro(mkApi(ctx, n, mi), j);
-      if (!so.force) ms.concerto = 0; // 同奏-type forced outro keeps concerto (今汐: “只消耗同奏效果”)
+      // v3.5 判定 C: concerto full AND 同奏 → the outro is still the 同奏-forced one (forced:true, reason kept), only 同奏 is consumed
+      // 同奏-type forced outro keeps concerto (今汐/锁暝: “只消耗同奏效果”); v3.5 N1: a module may ask to clear it (心: no second free outro)
+      if (!so.force || (so.clearConcerto && full)) ms.concerto = 0;   // v3.5 N1 narrow: only a FULL concerto is cleared (no free second outro); otherwise 只消耗同奏
       record(ctx, n, mi, 'O', O, n.t, n.t, rO, a.tok);
       n.action.concertoBefore = c0; n.action.concertoAfter = ms.concerto; n.action.est = true; // 0 s on the outgoing side (assumption, flagged via durReason)
-      n.action.forced = !!so.force && !full; n.action.forceReason = n.action.forced ? (so.reason || 'module') : null;
+      n.action.forced = !!so.force; n.action.forceReason = n.action.forced ? (so.reason || 'module') : null;
       outroAction = n.action;
-      dispatch(ctx, n, { type: 'outro', mi, to: j, t: n.t, forced: n.action.forced, reason: n.action.forceReason });
+      n.action.concertoFull = full; // v3.5 C/N1: full concerto is reported separately, never hides the 同奏-forced flag (both directions: 今汐→心, 心→今汐, 锁暝)
+      dispatch(ctx, n, { type: 'outro', mi, to: j, t: n.t, forced: n.action.forced, reason: n.action.forceReason, concertoFull: full });
     }
     expireOnSwap(n, mi);
     n.active = j;
@@ -1947,9 +2115,12 @@
     if (I) {
       const tEnd = Math.min(ctx.duration, t0 + I.duration);
       const extra = inc.mod && inc.mod.actionStats ? inc.mod.actionStats(mkApi(ctx, n, j, tEnd), I, meta) || [] : [];
-      const rI = addDamage(ctx, n, j, I, extra);
+      // v3.5 (#16 edge, intro path): an intro cut by the window counts its in-window fraction and its apply()-time anomaly is not settled —
+      // same MECH.endCredit rule as cast actions (v3.4.1 covered casts only; the v3.5 search found a swap at D−1 s exploiting it: #16 +13,241 phantom chafe)
+      const fI = ctx.cfg.endCredit !== 'full' && I.duration > EPS ? Math.min(1, Math.max(0, (ctx.duration - t0) / I.duration)) : 1;
+      const rI = addDamage(ctx, n, j, I, extra, fI < 1 - EPS ? { times: fI } : undefined);
       advanceAnomalies(ctx, n, tEnd);
-      if (inc.mod && inc.mod.apply) inc.mod.apply(mkApi(ctx, n, j, tEnd), I, meta);
+      if (inc.mod && inc.mod.apply) { const apiI = mkApi(ctx, n, j, tEnd); if (fI < 1 - EPS) { apiI.addAnomaly = () => 0; apiI.detonateAnomaly = () => 0; } inc.mod.apply(apiI, I, meta); }
       fire(ctx, n, j, 'intro', 'I', null, I.key);
       n.m[j].stage = 0;
       n.t = tEnd;
@@ -1965,6 +2136,7 @@
     }
     if (outroAction) n.action.pre = [outroAction];
     if (swapCutFrom != null) { n.action.swapCut = { from: swapCutFrom, at: t0, rule: ctx.cfg.swapRule || SWAP_RULE.id }; }
+    if (swCdWait > EPS) n.action.delayedBy = round(swCdWait, 4); // frontend contract: timeline action delayedBy (s)
     pruneBuffs(n, ctx);
     return n;
   }
@@ -1995,8 +2167,9 @@
     const plan = parseSequence(text);
     let s = initialState(ctx);
     const steps = [];
-    for (const p of plan) {
-      if (s.t >= ctx.duration - EPS) { steps.push({ raw: p.raw, ok: false, reason: '超出时长' }); continue; }
+    for (let pi = 0; pi < plan.length; pi++) {
+      const p = plan[pi];
+      if (s.t >= ctx.duration - EPS) { steps.push({ index: pi, raw: p.raw, ok: false, reason: '超出时长' }); continue; }
       let a = null, reason = null;
       if (p.t === '?') reason = '无法识别的指令';
       else if (p.t === 'W') a = { mi: s.active, wait: p.w };
@@ -2023,10 +2196,10 @@
           else a = { mi, act: r.act, meta: r.meta, tok: p.raw };
         }
       }
-      if (!a) { steps.push({ raw: p.raw, ok: false, reason, noStamina: !!p.noStamina, t: p.noStamina ? round(s.t, 3) : undefined, mi: p.noStamina ? s.active : undefined, stamina: p.noStamina ? round(staminaAt(ctx, s, s.t), 1) : undefined }); continue; }
+      if (!a) { steps.push({ index: pi, raw: p.raw, ok: false, reason, noStamina: !!p.noStamina, t: p.noStamina ? round(s.t, 3) : undefined, mi: p.noStamina ? s.active : undefined, stamina: p.noStamina ? round(staminaAt(ctx, s, s.t), 1) : undefined }); continue; }
       const n = applyAction(s, a, ctx);
-      if (!n) { steps.push({ raw: p.raw, ok: false, reason: '非法动作' }); continue; }
-      s = n; steps.push({ raw: p.raw, ok: true, key: a.act ? a.act.key : null, label: a.act ? a.act.label : null, est: n.action ? !!n.action.est : false,
+      if (!n) { steps.push({ index: pi, raw: p.raw, ok: false, reason: '非法动作' }); continue; }
+      s = n; steps.push({ index: pi, raw: p.raw, ok: true, key: a.act ? a.act.key : null, label: a.act ? a.act.label : null, est: n.action ? !!n.action.est : false,
         dur: n.action ? durKind(n.action) : null, durReason: n.action && durKind(n.action) === 'default' ? (n.action.durReason || '默认时长') : null });
     }
     return { state: s, steps };
@@ -2076,6 +2249,27 @@
     });
     return w * v;
   }
+  /** v3.4.1 portfolio 'cycle' branch: next-cycle readiness (energy → R potential, concerto → intro/outro potential), discounted and capped at
+   *  cap × the window's filler-rate damage — the uncapped version (review P2) made the search hoard resources (#11 / #15 −90%) */
+  function cycleTerm(ctx, s, cy) {
+    if (!cy) return 0;
+    let v = 0;
+    ctx.members.forEach((mem, i) => { const cost = maxEnergy(mem); if (cost) v += Math.min(1, s.m[i].energy / cost) * ctx.potential[i].R; v += (s.m[i].concerto / 100) * ctx.potential[i].IO; });
+    const cap = (cy.cap == null ? 0.08 : cy.cap) * (ctx.baseRate || 0) * ctx.duration;
+    return Math.min(cap, (cy.discount == null ? 0.5 : cy.discount) * v);
+  }
+  /** v3.5 N3 / plan 4: diversity bucket = who is on field × each member's distance to R (energy quarter) × concerto full × 同奏 held.
+   *  (v3.4.1 used min(swaps,12): after ~12 swaps every state fell in one bucket per member, i.e. no diversity in the second half of long windows) */
+  function situationKey(ctx, s) {
+    return s.active + ':' + s.m.map((x, i) => { const cost = maxEnergy(ctx.members[i]); return (cost ? Math.min(4, Math.floor(4 * x.energy / cost)) : 0) + (x.concerto >= 100 - EPS ? 'F' : '') + (unisonHeld(s, i) ? 'U' : ''); }).join('');
+  }
+  function unisonHeld(s, i) { const cs = s.m[i].cs; if (!cs) return false; const u = cs.tongzou != null ? cs.tongzou : cs.tz; return u != null && u > s.t + EPS; }
+  /** v3.5 plan 3: 同奏 held by a member = the next swap is a forced outro + a responding intro → valued as the best teammate intro/outro potential */
+  function unisonTerm(ctx, s) {
+    let v = 0;
+    s.m.forEach((x, i) => { if (!unisonHeld(s, i)) return; let best = 0; ctx.potential.forEach((p, j) => { if (j !== i) best = Math.max(best, p.IO || 0); }); v += best; });
+    return v;
+  }
   function heuristic(ctx, s) {
     const w = ctx.search.potentialWeight || 0;
     // time-normalised: remaining time valued at the best sustained filler rate, so fast and slow actions compare fairly
@@ -2099,6 +2293,7 @@
       v += w * (s.m[i].concerto / 100) * ctx.potential[i].IO;
       if (mem.mod && mem.mod.potential) v += w * (mem.mod.potential(mkApi(ctx, s, i)) || 0);
     });
+    if (ctx.search.unisonWeight) v += w * ctx.search.unisonWeight * unisonTerm(ctx, s);
     return v;
   }
   /** search heuristic: damage of anomaly ticks still pending inside the fight window (static estimate, no buffs) */
@@ -2194,13 +2389,64 @@
     });
   }
 
-  /** Bounded beam search over action sequences. Deterministic (stable tie-break on token string). */
+  /**
+   * v3.4 swap-cooldown seeding (search only). Diagnosis (V34_ENGINE_DIFF.md §4): the beam is myopic about long build-ups (露西 4×H → 暗网深潜
+   * pays off ~10 actions later and rides near the beam cut even without the cooldown); the cooldown correctly charges the ≤1 s wait of a
+   * fast swap-back, which pushes such lines below the cut. Fix: when the swap cooldown is on and the team can swap, also run the same beam with
+   * the cooldown off, replay its top sequences under the real cooldown (delays applied; steps that become illegal — e.g. pushed out of the
+   * window — are dropped and the trimmed sequence must replay cleanly), and let them compete with the cooldown-on results by the same final
+   * score. config.search.cdSeed === false disables it. Result: never below the cooldown-off optimum replayed with delays.
+   */
+  function swapCdOf(ctx) { return ctx.cfg.swapCooldown != null ? Math.max(0, +ctx.cfg.swapCooldown || 0) : SWAP_COOLDOWN_DEFAULT; }
   function beamSearch(ctx, budget) {
+    const r = beamSearchCore(ctx, budget);
+    if (!(swapCdOf(ctx) > 0) || ctx.members.length < 2 || ctx.search.cdSeed === false) return r;
+    const had = Object.prototype.hasOwnProperty.call(ctx.cfg, 'swapCooldown'), saved = ctx.cfg.swapCooldown;
+    let r0;
+    ctx.cfg.swapCooldown = 0;
+    try { r0 = beamSearchCore(ctx, budget); } finally { if (had) ctx.cfg.swapCooldown = saved; else delete ctx.cfg.swapCooldown; }
+    const rw = ctx.residualOn ? residualWeight(ctx) : 0;
+    const scoreSt = (st) => st.damage + (rw ? rw * residualValue(ctx, st) : 0) + (ctx.steadyLoop ? carryValue(ctx, st) : 0);
+    const onBlocked = ctx.cfg.rotation && ctx.cfg.rotation.onBlocked;
+    const pool = new Map();
+    for (const x of r.ranked) pool.set(x.sequence, Object.assign({ _score: x._score != null ? x._score : null }, x));
+    let seeded = 0, best0 = null;
+    for (const x of r0.ranked) {
+      let rr = runSequence(ctx, x.sequence, { onBlocked });
+      let seq = x.sequence;
+      if (rr.steps.some((st) => !st.ok)) {
+        seq = rr.steps.filter((st) => st.ok).map((st) => st.raw).join(' ');
+        if (!seq) continue;
+        rr = runSequence(ctx, seq, { onBlocked });
+        if (rr.steps.some((st) => !st.ok)) continue;
+      }
+      const st = rr.state;
+      const e = { sequence: seq, damage: st.damage, dps: st.damage / ctx.duration, t: st.t, liberations: st.libs, swaps: st.swaps,
+        residual: rw ? round(residualValue(ctx, st), 1) : undefined, cdSeed: true, _score: scoreSt(st) };
+      if (!best0 || e._score > best0._score) best0 = e;
+      if (!pool.has(seq)) { pool.set(seq, e); seeded++; }
+    }
+    // score the cooldown-on entries the same way (replay; the beam already holds these values, replay is exact)
+    for (const [k, e] of pool) if (e._score == null) { const rr = runSequence(ctx, k, { onBlocked }); e._score = scoreSt(rr.state); }
+    const ranked = [...pool.values()].sort((a, b) => (b._score - a._score) || (a.sequence < b.sequence ? -1 : 1)).slice(0, Math.max(1, (Object.assign({}, ctx.search, budget || {})).topN || r.ranked.length));
+    const out = Object.assign({}, r, { ranked: ranked.map((e) => { const o = Object.assign({}, e); delete o._score; return o; }),
+      expanded: r.expanded + r0.expanded, ms: r.ms + r0.ms, rounds: r.rounds + r0.rounds,
+      cdSeed: { seeds: r0.ranked.length, admitted: seeded, picked: !!(ranked[0] && ranked[0].cdSeed), bestSeedDamage: best0 ? round(best0.damage, 1) : null,
+        cdOnBest: r.ranked[0] ? round(r.ranked[0].damage, 1) : null, ms: r0.ms } });
+    return out;
+  }
+  /** Bounded beam search over action sequences. Deterministic (stable tie-break on token string). */
+  function beamSearchCore(ctx, budget) {
     const B = Object.assign({}, ctx.search, budget || {});
+    // v3.5: scoring knobs of a branch budget (potentialWeight / unisonWeight) must reach heuristic(), which reads ctx.search
+    const saved = ctx.search; ctx.search = Object.assign({}, saved, budget && (budget.potentialWeight != null || budget.unisonWeight != null) ? { potentialWeight: B.potentialWeight, unisonWeight: B.unisonWeight } : {});
+    try { return beamSearchCore0(ctx, B); } finally { ctx.search = saved; }
+  }
+  function beamSearchCore0(ctx, B) {
     const prevExtras = ctx._allowExtras;
     ctx._allowExtras = !!B.allowExtras;
     const t0 = Date.now();
-    let frontier = [initialState(ctx)];
+    let frontier = [B.startState || initialState(ctx)];
     let expanded = 0, rounds = 0;
     const finals = [];
     while (frontier.length && expanded < B.maxExpansions && rounds < 1000) {
@@ -2223,9 +2469,17 @@
         const e = byKey.get(k);
         if (!e || c.damage > e.damage + EPS || (Math.abs(c.damage - e.damage) <= EPS && tokensOf(c).join(' ') < tokensOf(e).join(' '))) byKey.set(k, c);
       }
-      const scored = [...byKey.values()].map((c) => ({ c, h: heuristic(ctx, c), k: tokensOf(c).join(' ') }));
+      const scored = [...byKey.values()].map((c) => ({ c, h: heuristic(ctx, c) + (B.cycle ? cycleTerm(ctx, c, B.cycle) : 0), k: tokensOf(c).join(' ') }));
       scored.sort((a, b) => (b.h - a.h) || (a.k < b.k ? -1 : a.k > b.k ? 1 : 0));
-      frontier = scored.slice(0, B.beamWidth).map((x) => x.c);
+      if (B.stratify) {
+        // v3.4.1 portfolio 'strat' branch: top half by rank, then up to stratify×beamWidth per bucket (on-field member × swap count), then the rest by rank
+        const cap = Math.max(1, Math.floor(B.beamWidth * B.stratify)), cnt = new Map(), pick = [], rest = [];
+        for (const x of scored) { const bk = B.v35 ? situationKey(ctx, x.c) : x.c.active + ':' + Math.min(x.c.swaps, 12); const n = cnt.get(bk) || 0; if (n < cap) { cnt.set(bk, n + 1); pick.push(x); } else rest.push(x); }
+        const sel = new Set(scored.slice(0, Math.floor(B.beamWidth / 2)));
+        for (const x of pick) { if (sel.size >= B.beamWidth) break; sel.add(x); }
+        for (const x of rest) { if (sel.size >= B.beamWidth) break; sel.add(x); }
+        frontier = [...sel].map((x) => x.c);
+      } else frontier = scored.slice(0, B.beamWidth).map((x) => x.c);
     }
     finals.push(...frontier);
     ctx._allowExtras = prevExtras;
@@ -2233,7 +2487,7 @@
     for (const f of finals) { const k = tokensOf(f).join(' '); if (!uniq.has(k) || uniq.get(k).damage < f.damage) uniq.set(k, f); }
     // final pick: damage (+ residual terminal value when on; ranking only)
     const rw = ctx.residualOn ? residualWeight(ctx) : 0;
-    const scoreOf = (st) => { if (st._res == null) { st._res = rw ? residualValue(ctx, st) : 0; st._carry = ctx.steadyLoop ? carryValue(ctx, st) : 0; } return st.damage + rw * st._res + st._carry; };
+    const scoreOf = (st) => { if (st._res == null) { st._res = rw ? residualValue(ctx, st) : 0; st._carry = ctx.steadyLoop ? carryValue(ctx, st) : (B.cycle ? cycleTerm(ctx, st, B.cycle) : 0); } return st.damage + rw * st._res + st._carry; };
     const ranked = [...uniq.entries()].sort((a, b) => (scoreOf(b[1]) - scoreOf(a[1])) || (a[0] < b[0] ? -1 : 1));
     return { ranked: ranked.slice(0, B.topN).map(([k, st]) => ({ sequence: k, damage: st.damage, dps: st.damage / ctx.duration, t: st.t, liberations: st.libs, swaps: st.swaps,
       residual: rw ? round(st._res, 1) : undefined })), residual: rw ? { weight: rw, horizon: residualHorizon(ctx) } : null,
@@ -2288,15 +2542,153 @@
       resources: (m.mod.resources || []).map((r) => ({ key: r.key, name: r.name, max: r.max, segmented: !!r.segmented, confidence: r.confidence || m.mod.confidence, basis: r.basis || null })) };
   }
 
+  /**
+   * v3.4.1 MECH.portfolio: default beam result `sr` + PORTFOLIO_BRANCHES + seeds (config.search.seeds: [sequence | {sequence, src}] — preset
+   * sequences / our own template token sequences; each seed is also used as a prefix: the beam continues from the state after each of its swaps
+   * up to search.seedPrefixes). Every candidate is replayed (illegal steps dropped, the trimmed sequence must replay cleanly) and ranked by
+   * in-window damage incl. anomaly ticks up to the window end; ties keep the default beam's order. Never below the default beam's own best
+   * replayed candidate by construction.
+   */
+  function portfolio(c, sr) {
+    const t0 = Date.now(), onBlocked = c.cfg.rotation.onBlocked, D = c.duration;
+    const bname = 'beam' + ((sr.budget && sr.budget.beamWidth) || c.search.beamWidth);   // N5: was hard-coded 'beam96'
+    const pool = new Map(), branches = [{ name: bname, n: sr.ranked.length, ms: sr.ms, best: null }];
+    const evalSeq = (seq0) => {
+      let seq = String(seq0 || '').trim(); if (!seq) return null;
+      let rr = runSequence(c, seq, { onBlocked });
+      if (rr.steps.some((st) => !st.ok)) { seq = rr.steps.filter((st) => st.ok && !st.auto).map((st) => st.raw).join(' '); if (!seq) return null; rr = runSequence(c, seq, { onBlocked }); if (rr.steps.some((st) => !st.ok)) return null; }
+      const st = rr.state; advanceAnomalies(c, st, D);
+      return { sequence: seq, damage: st.damage, dps: st.damage / D, t: st.t, liberations: st.libs, swaps: st.swaps };
+    };
+    const add = (seq, src, ord) => {
+      if (!seq || pool.has(seq)) return pool.get(seq) || null;
+      const e = evalSeq(seq); if (!e) return null;
+      if (e.sequence !== seq && pool.has(e.sequence)) return pool.get(e.sequence);
+      e.src = src; e.ord = ord; pool.set(e.sequence, e); return e;
+    };
+    let ord = 0;
+    for (const x of sr.ranked) add(x.sequence, bname, ord++);
+    const B0 = Object.assign({}, c.search);
+    for (const br of PORTFOLIO_BRANCHES) {
+      if (c.search.portfolioBranches && !c.search.portfolioBranches.includes(br.name)) continue;
+      if (br.v35 && c.search.v35 === false) continue;
+      if (br.v35 && !effortOf(c).v35Branches && !c.search.portfolioBranches) continue;   // effort 'standard': v3.4.1 branch set
+      const r = beamSearch(c, br.budget); branches.push({ name: br.name, n: r.ranked.length, ms: r.ms, best: null });
+      for (const x of r.ranked) add(x.sequence, br.name, ord++);
+    }
+    // seeds (+ prefix continuation: beam from the state after the k-th swap of the seed)
+    const seeds = (c.cfg.search.seeds || []).map((x) => (typeof x === 'string' ? { sequence: x, src: 'seed' } : x)).filter((x) => x && x.sequence);
+    const maxPre = c.search.seedPrefixes == null ? 2 : c.search.seedPrefixes;
+    let seedMs = 0;
+    for (const sd of seeds) {
+      const ts = Date.now();
+      const e = add(sd.sequence, 'seed:' + (sd.src || 'seed'), ord++);
+      const lp = effortOf(c).localSeedPrefixes;   // standard: local seeds are improved by local search instead of prefix beams
+      const nPre = sd.local && lp != null && c.search.v35 !== false && c.search.local !== false && c.search.seedPrefixes == null ? lp : maxPre;
+      if (e && nPre > 0) {
+        const toks = e.sequence.split(/\s+/), cuts = [];
+        toks.forEach((tk, i) => { if (/^S\d$/.test(tk) && i > 0) cuts.push(i); });
+        for (const cut of cuts.slice(0, nPre)) {
+          const pre = toks.slice(0, cut).join(' '), rr = runSequence(c, pre, { onBlocked });
+          if (rr.steps.some((st) => !st.ok) || rr.state.t >= D - EPS) continue;
+          const r = beamSearchCore(c, { startState: rr.state, topN: 3 });
+          for (const x of r.ranked) add(x.sequence, 'seed-prefix:' + (sd.src || 'seed'), ord++);
+        }
+      }
+      seedMs += Date.now() - ts;
+    }
+    // v3.5 plan 4: local improvement from the current best and from every seed flagged local (hand rotations): adjacent swaps, shifting a swap
+    // point by one, inserting a filler before a swap, deleting a step; only strict improvements are accepted. Deterministic (evaluation budget,
+    // not wall time). search.local === false disables it; search.localEvals sets the budget.
+    let local = null;
+    if (c.search.v35 !== false && c.search.local !== false) {
+      const tl = Date.now(); let evals = 0, accepted = 0; const maxE = c.search.localEvals == null ? effortOf(c).localEvals : c.search.localEvals;
+      const sorted0 = [...pool.values()].sort((a, b) => (b.damage - a.damage > EPS ? 1 : a.damage - b.damage > EPS ? -1 : a.ord - b.ord));
+      const starts = [sorted0[0]].concat(seeds.filter((x) => x.local).map((x) => pool.get(x.sequence) || [...pool.values()].find((e) => e.src === 'seed:' + (x.src || 'seed')))).filter(Boolean);
+      const uniqStarts = [...new Set(starts)];
+      const needSC = c.members.length > 1 && c.cfg.search.supportCycle !== false;
+      // the current best gets half of the budget, the hand starts share the rest; then the best again with what is left
+      const shares = uniqStarts.map((_, k) => (uniqStarts.length === 1 ? maxE : k === 0 ? Math.floor(maxE / 2) : Math.floor(maxE / 2 / (uniqStarts.length - 1))));
+      for (let si = 0; si < uniqStarts.length; si++) {
+        const st0 = uniqStarts[si];
+        let cur = st0, budgetLeft = shares[si], improved = true;
+        while (improved && budgetLeft > 0) {
+          improved = false;
+          const T = cur.sequence.split(/\s+/), cands = [];
+          for (let i = 0; i < T.length; i++) {
+            if (/^S\d$/.test(T[i])) {
+              if (i > 0) cands.push(T.slice(0, i - 1).concat([T[i], T[i - 1]], T.slice(i + 1)));
+              if (i + 1 < T.length) cands.push(T.slice(0, i).concat([T[i + 1], T[i]], T.slice(i + 2)));
+              for (const f of ['E', 'A', 'H', 'Q']) cands.push(T.slice(0, i).concat([f], T.slice(i)));
+            } else if (i + 1 < T.length && T[i] !== T[i + 1] && !/^S\d$/.test(T[i + 1])) cands.push(T.slice(0, i).concat([T[i + 1], T[i]], T.slice(i + 2)));
+            cands.push(T.slice(0, i).concat(T.slice(i + 1)));
+          }
+          for (const cand of cands) {
+            if (budgetLeft <= 0) break;
+            const sq = cand.join(' ');
+            if (pool.has(sq)) continue;
+            if (needSC && supportCompliant(c, cur.sequence) && !supportCompliant(c, sq)) continue;   // a compliant start stays support-cycle compliant (B12b)
+            budgetLeft--; evals++;
+            const e = add(sq, 'local', ord++);
+            if (e && e.damage > cur.damage + EPS) { cur = e; accepted++; improved = true; break; }
+          }
+        }
+      }
+      local = { evals, accepted, starts: uniqStarts.length, ms: Date.now() - tl };
+    }
+    const all = [...pool.values()].sort((a, b) => (b.damage - a.damage > EPS ? 1 : a.damage - b.damage > EPS ? -1 : a.ord - b.ord));
+    for (const br of branches) { const b = all.find((x) => x.src === br.name); br.best = b ? round(b.damage, 1) : null; }
+    const topN = Math.max(1, B0.topN || 5);
+    const out = Object.assign({}, sr, { ranked: all.slice(0, topN).map((e) => { const o = Object.assign({}, e); delete o.ord; return o; }) });
+    out.portfolio = { picked: all[0] ? all[0].src : null, defaultBest: sr.ranked[0] ? round((pool.get(sr.ranked[0].sequence) || {}).damage || sr.ranked[0].damage, 1) : null,
+      best: all[0] ? round(all[0].damage, 1) : null, branches, seeds: seeds.length, seedMs, local, candidates: pool.size, ms: Date.now() - t0 };
+    out.ms = (sr.ms || 0) + out.portfolio.ms;
+    return out;
+  }
   function simulate(config, data) {
     const idx = ensureIndex(data);
     const steady = !!(config && config.start && config.start.steady);
     let ctx = buildContext(config, idx);
     let seq = ctx.cfg.rotation.sequence || '';
     let search = null;
-    const wantSearch = ctx.cfg.rotation.mode === 'search' || !seq;
+    // v3.5 N10: an explicit manual rotation with an empty sequence no longer silently becomes an auto-search (it was shown as a manual rotation)
+    const emptyManual = ctx.cfg.rotation.mode === 'manual' && !String(seq).trim();
+    if (emptyManual) ctx.warnings.push({ level: 'error', code: 'manual-empty', text: '手动排轴的序列为空：未运行自动搜索，总伤为 0。请填写序列，或切换到自动搜索。' });
+    const wantSearch = ctx.cfg.rotation.mode === 'search' || (!seq && !emptyManual);
     const pick = (c) => {
       if (!(wantSearch && c.searchable)) return { search: null, seq };
+      let ladder = null;
+      if (c.search.v35 !== false) {
+        // N4: long windows get enough expansions for the beam to reach the window end (v3.4.1: bw96/120000 truncated at 120 s)
+        const need = Math.ceil(c.search.beamWidth * c.duration * EXPANSIONS_PER_BEAM_SECOND);
+        const ax = c.cfg.search && c.cfg.search.autoExpansions != null ? c.cfg.search.autoExpansions !== false : effortOf(c).autoExpansions;
+        if (ax && need > c.search.maxExpansions) c.search.maxExpansions = need;
+        // N2: budget ladder — every lower rung's best sequence is a seed, so a larger beam is never below a smaller rung (induction)
+        const rungs = LADDER.filter((w) => w < c.search.beamWidth);
+        const lad = c.cfg.search && c.cfg.search.ladder != null ? c.cfg.search.ladder !== false : effortOf(c).ladder;
+        if (rungs.length && lad) {
+          const w = rungs[rungs.length - 1], tl = Date.now();
+          const sub = JSON.parse(JSON.stringify(config));
+          sub.search = Object.assign({}, sub.search || {}, { beamWidth: w, maxExpansions: Math.max(1, Math.round(c.search.maxExpansions * w / c.search.beamWidth)), standardSeed: false });
+          sub.rotation = Object.assign({}, sub.rotation || {}, { mode: 'search' });
+          const r0 = simulate(sub, idx);
+          const sq = r0.search && r0.search.ranked && r0.search.ranked[0] ? r0.search.ranked[0].sequence : null;
+          ladder = { rung: w, best: r0.total != null ? round(r0.total, 1) : null, ms: Date.now() - tl };
+          if (sq) c.cfg.search.seeds = (c.cfg.search.seeds || []).concat([{ sequence: sq, src: 'ladder' + w }]);
+        }
+      }
+      // effort 'deep' ⊇ 'standard': the standard search at the same width is run first and its best sequence is a seed, so deep ≥ standard
+      // for every config (deterministic; search.standardSeed === false skips it — used for ladder rungs)
+      let stdRun = null;
+      if (c.search.v35 !== false && effortOf(c) === SEARCH_EFFORT.deep && !(c.cfg.search && c.cfg.search.standardSeed === false)) {
+        const ts = Date.now(), sub = JSON.parse(JSON.stringify(config));
+        sub.search = Object.assign({}, sub.search || {}, { effort: 'standard' });
+        sub.rotation = Object.assign({}, sub.rotation || {}, { mode: 'search' });
+        const r0 = simulate(sub, idx);
+        const sq = r0.search && r0.search.ranked && r0.search.ranked[0] ? r0.search.ranked[0].sequence : null;
+        stdRun = { best: r0.total != null ? round(r0.total, 1) : null, ms: Date.now() - ts };
+        if (sq) c.cfg.search.seeds = (c.cfg.search.seeds || []).concat([{ sequence: sq, src: 'standard' }]);
+      }
       let sr = beamSearch(c);
       // B12b: the support-cycle constraint narrows the beam; also search unconstrained and admit its results when they comply anyway
       if (c.members.length > 1 && c.cfg.search.supportCycle !== false) {
@@ -2318,6 +2710,10 @@
         sr2.calibration = { filler: c.rateFiller.map((x) => round(x, 1)), realised: rates.map((x) => round(x, 1)), firstPass: sr.ranked[0].sequence };
         sr = sr2;
       }
+      if (c.cfg.search.portfolio !== false) sr = portfolio(c, sr);
+      if (ladder) { sr.ladder = ladder; sr.ms = (sr.ms || 0) + ladder.ms; }
+      if (stdRun) { sr.standard = stdRun; sr.ms = (sr.ms || 0) + stdRun.ms; }
+      sr.budgetUsed = { beamWidth: c.search.beamWidth, maxExpansions: c.search.maxExpansions, effort: c.search.v35 === false ? 'v3.4.1' : (SEARCH_EFFORT[c.search.effort] ? c.search.effort : 'standard') };
       return { search: sr, seq: sr.ranked.length ? sr.ranked[0].sequence : '' };
     };
     // 稳态开局: loop k starts from loop k−1's end state (cold loop first); the last loop is reported
@@ -2352,13 +2748,25 @@
     const up = buffUptime(ctx, s);
     const upOf = (id) => up.filter((u) => u.id === id);
     const timeline = timelineOf(s);
+    // MECH.clock: realTime position of every action (gameTime t + freeze seconds of the actions before it); a freeze ends with its own step
+    let frozen = 0;
+    for (const x of timeline) {
+      x.rt = round(x.t + frozen, 4);
+      if (x.timeStopSaved > 0 && !x.status) frozen += x.timeStopSaved;
+      x.rtEnd = x.endT != null ? round(x.endT + frozen, 4) : null;
+    }
+    const gameEnd = Math.min(s.t, ctx.duration), clockMode = (ctx.cfg.timeStop || 'exclude') === 'exclude' ? 'toa' : 'open';
+    const dpsClock = ctx.cfg.dpsClock === 'real' ? 'real' : 'game';
+    const realTime = round(ctx.duration + frozen, 4);
     return {
       engine: VERSION, dataVersion: idx.meta.version, sourceCommit: idx.meta.source_commit, config: ctx.cfg, mech: MECH,
       duration: ctx.duration, mode: ctx.mode, enemy: ctx.enemy, sequence: seq, steps: run.steps,
       searchable: ctx.searchable, searchDisabledReason: ctx.searchable ? null : ctx.searchReason, searchSkipped: wantSearch && !ctx.searchable,
       framesLoaded: !!ctx.frames, framesRef: ctx.frames ? (() => { const fx = framesIndex(ctx.frames); return { version: (fx && fx.version) || ctx.frames.version || null, source: (fx && fx.source) || ctx.frames.source || null, swapRule: ctx.cfg.swapRule || SWAP_RULE.id }; })() : null,
       swapRule: Object.assign({}, SWAP_RULE, { id: ctx.cfg.swapRule || SWAP_RULE.id }),
-      total: s.damage, dps: s.damage / ctx.duration, heal: s.heal, perMember: s.perMember, byType: s.byType, swaps: s.swaps, liberations: s.libs, endT: s.t,
+      // MECH.clock: ToA (default) divides by gameTime = the window; config.dpsClock:'real' divides by realTime (window + frozen seconds)
+      total: s.damage, dps: s.damage / (dpsClock === 'real' ? realTime : ctx.duration), heal: s.heal, perMember: s.perMember, byType: s.byType, swaps: s.swaps, adjust: { swapCdDelays: s.swapCdN || 0, swapCdDelaySec: round(s.swapCdWait || 0, 4) }, swapCooldown: ctx.cfg.swapCooldown != null ? Math.max(0, +ctx.cfg.swapCooldown || 0) : SWAP_COOLDOWN_DEFAULT, liberations: s.libs, endT: s.t,
+      clock: { mode: clockMode, gameTime: ctx.duration, realTime, frozen: round(frozen, 4), gameEnd: round(gameEnd, 4), dpsClock }, realTime,
       timeline,
       // MECH.timeStop: seconds removed from the fight clock by timeStop='exclude' (Σ durationFull − duration over executed actions); 0 under 'include'
       timeStopSaved: round(timeline.reduce((acc, x) => acc + (x.timeStopSaved || 0), 0), 3), timeStopMode: ctx.cfg.timeStop || 'exclude',
@@ -2599,7 +3007,7 @@
     const creditOf = (a) => (result.config && result.config.endCredit === 'full' ? 1 : a.endCut);
     const modeZh = { expected: '期望', crit: '暴击', noncrit: '不暴' }[result.mode];
     const tf = result.tailFreeze || { pct: 0, idx: [], sec: null };
-    const summary = { total: result.total, dps: result.dps, duration: D, timeStopSaved: result.timeStopSaved || 0, tailFreezePct: tf.pct, tailFreeze: tf.idx.length ? { pct: tf.pct, sec: tf.sec, idx: tf.idx, bonus: tf.bonus } : null, mode: result.mode, swaps: result.swaps, liberations: result.liberations, heal: result.heal,
+    const summary = { total: result.total, dps: result.dps, duration: D, timeStopSaved: result.timeStopSaved || 0, clock: result.clock || null, realTime: result.realTime != null ? result.realTime : null, tailFreezePct: tf.pct, tailFreeze: tf.idx.length ? { pct: tf.pct, sec: tf.sec, idx: tf.idx, bonus: tf.bonus } : null, mode: result.mode, swaps: result.swaps, liberations: result.liberations, heal: result.heal,
       cards: [
         { k: '总伤害 · ' + modeZh, v: Math.round(result.total), s: `${D} 秒 · 单目标 · ${result.enemy.name} Lv${result.enemy.level}`, hero: true },
         { k: 'DPS', v: Math.round(result.dps) }, { k: '切人次数', v: result.swaps }, { k: '解放次数', v: result.liberations }],
@@ -2613,15 +3021,20 @@
       stamina: staminaView(result, i) }));
     const acts = result.timeline.filter((a) => a.cls !== 'W' && !a.status);
     const onf = onFieldIntervals(result);
+    // v3.4 delayedBy contract: a delayed plain swap (cls S, no intro) is not a lane action, so the delay is also carried by the incoming
+    // member's next lane action (timeline.swaps keeps its own copy; intro swaps already carry it on the I action). View only, no value change.
+    const swDelay = new Map();
+    acts.forEach((a, k) => { if (a.cls === 'S' && a.delayedBy > 0) { const nx = acts.slice(k + 1).find((b) => b.mi === a.mi && b.cls !== 'S'); if (nx && !(nx.delayedBy > 0)) swDelay.set(nx, a.delayedBy); } });
     const lanes = mem.map((m, i) => ({ member: i, id: m.id, name: m.name, el: m.element,
       actions: acts.filter((a) => a.mi === i && a.cls !== 'S').map((a) => ({
         cls: a.cls === 'I' || a.cls === 'O' ? a.cls : a.cls, // A H E R Q, or I/O markers
         mark: a.cls === 'I' ? 'I' : a.cls === 'O' ? 'O' : null,
-        label: a.label, t: round(a.t, 3), endT: round(a.endT, 3), leftPct: pct(a.t), widthPct: a.cls === 'O' ? 0 : Math.max(0.6, pct(a.endT - a.t)),
+        label: a.label, t: round(a.t, 3), endT: round(a.endT, 3), rt: a.rt != null ? a.rt : null, rtEnd: a.rtEnd != null ? a.rtEnd : null, leftPct: pct(a.t), widthPct: a.cls === 'O' ? 0 : Math.max(0.6, pct(a.endT - a.t)),
         damage: a.damage, low: (a.lowHits || 0) > 0 || !!a.extra, est: !!a.est, durSource: a.durSource || null,
         dur: a.coord ? null : durKind(a), durReason: !a.coord && durKind(a) === 'default' ? (a.durReason || '默认时长') : null, frameLabel: a.frameLabel || null,
         durSrcTag: a.frameSrc || null, durSrcZh: a.frameSrc ? FRAME_SRC_ZH[a.frameSrc] : null, frameLow: a.frameLow || null,
-        swapCut: a.swapCut || null, coord: !!a.coord, offfield: !!a.offfield, forced: !!a.forced, key: a.key || null, inferred: a.inferred || null,
+        tok: a.tok || null, skillId: a.skillId != null ? a.skillId : null, skillIdBy: a.skillIdBy || null, echoId: a.echoId != null ? a.echoId : null,
+        swapCut: a.swapCut || null, delayedBy: a.delayedBy || swDelay.get(a) || 0, coord: !!a.coord, offfield: !!a.offfield, forced: !!a.forced, key: a.key || null, inferred: a.inferred || null,
         truncated: a.endCut != null, credit: a.endCut != null ? creditOf(a) : null, timeStop: a.timeStop || null, tailFreeze: tf.idx.includes(result.timeline.indexOf(a)),
         // .ww-freeze: exclude → frozen seconds removed from the clock (thin marker, widthPct 0); include → occupies timeStop seconds from action start
         freeze: a.timeStop > 0 ? { sec: round(a.timeStop, 3), excluded: !!a.timeStopSaved, basis: a.tsBasis || null, leftPct: pct(a.t), widthPct: a.timeStopSaved ? 0 : pct(Math.min(a.timeStop, a.endT - a.t)) } : null,
@@ -2634,7 +3047,7 @@
         residual: (u.residual || []).map(([a, b]) => ({ t: a, endT: b, leftPct: pct(a), widthPct: pct(b - a), title: `窗口结束后仍剩 ${round(b - a, 2)} 秒（不计入伤害）` })), carried: !!u.carried })),
       // 稳态开局: carried-over state at t=0 → <i class="ww-carry">
       carry: result.runMode && result.runMode.kind === 'steady' ? carryView(result.runMode.carried[i]) : null }));
-    const swaps = acts.filter((a) => a.cls === 'S' || a.cls === 'I').map((a) => ({ t: round(a.t, 3), leftPct: pct(a.t), to: a.mi }));
+    const swaps = acts.filter((a) => a.cls === 'S' || a.cls === 'I').map((a) => ({ t: round(a.t, 3), leftPct: pct(a.t), to: a.mi, delayedBy: a.delayedBy || 0 }));
     const ruler = []; const step = D <= 30 ? 5 : D <= 60 ? 10 : 20; for (let t = 0; t <= D + EPS; t += step) ruler.push(t);
     const timeline = { duration: D, ruler, lanes, swaps, status: statusLanes(result, pct),
       windowEnd: { t: D, leftPct: pct(D), endCredit: result.config && result.config.endCredit === 'full' ? 'full' : 'prorate', truncated: acts.filter((a) => a.endCut != null).length } };
@@ -2665,14 +3078,14 @@
     for (const a of result.timeline) for (const p of a.parts || []) {
       if (!p.zones || !p.zones.length) continue;
       const k = a.mi + '|' + a.label + '|' + p.label;
-      if (!rows.has(k)) rows.set(k, { member: a.mi, name: mem[a.mi].name, cls: a.cls, action: a.label, hit: p.label, el: p.element, type: p.type, typeZh: typeZh(p.type), count: 0, hits: 0, damage: 0, zones: p.zones, confidence: p.confidence, lowReason: p.lowReason, status: !!a.status, anomaly: a.anomaly || null });
+      if (!rows.has(k)) rows.set(k, { member: a.mi, name: mem[a.mi].name, cls: a.cls, action: a.label, skillId: a.skillId != null ? a.skillId : null, echoId: a.echoId != null ? a.echoId : null, hit: p.label, el: p.element, type: p.type, typeZh: typeZh(p.type), count: 0, hits: 0, damage: 0, zones: p.zones, confidence: p.confidence, lowReason: p.lowReason, status: !!a.status, anomaly: a.anomaly || null });
       const r = rows.get(k); r.count += 1; r.hits += p.count; r.damage += p.value;
       if (a.endCut != null && !a.status) { r.truncated = true; r.credit = creditOf(a); }
     }
     const breakdown = { representative: rep ? { member: rep.a.mi, action: rep.a.label, hit: rep.p.label, t: rep.a.t, value: rep.p.value, zones: rep.p.zones } : null,
       effectiveRes: rep ? rep.p.zones.find((z) => z.key === 'resistance').effectiveRes : null,
       rows: [...rows.values()].sort((a, b) => b.damage - a.damage) };
-    const search = result.search ? { expanded: result.search.expanded, truncated: result.search.truncated, ms: result.search.ms, budget: result.search.budget,
+    const search = result.search ? { expanded: result.search.expanded, truncated: result.search.truncated, ms: result.search.ms, budget: result.search.budget, budgetUsed: result.search.budgetUsed || null,
       candidates: result.search.ranked.map((c, i) => ({ rank: i + 1, title: `候选 ${i + 1} · 解放 ${c.liberations} · 切人 ${c.swaps}`, desc: c.sequence, total: c.damage, dps: c.dps,
         gapPct: round((c.damage / (result.search.ranked[0].damage || 1) - 1) * 100, 2), best: i === 0, cur: c.sequence === result.sequence, sequence: c.sequence })) } : null;
     const team = mem.map((m) => ({ member: m.index, name: m.name, el: m.element, module: m.moduleInfo.module, noModule: !m.moduleInfo.module, chain: m.chain, chainCfg: m.chainCfg, chainModeled: m.chainModeled,
@@ -2697,9 +3110,69 @@
     const anomalyTotal = Object.entries(result.byType).filter(([k]) => /^anomaly:/.test(k)).reduce((a, [, v]) => a + v, 0);
     if (anomalyTotal > 0) summary.cards.push({ k: '异常效应伤害', v: Math.round(anomalyTotal), s: round(100 * anomalyTotal / tot, 1) + '%', status: true });
     return { version: result.dataVersion, searchable: result.searchable, searchDisabled: result.searchable ? null : { reason: result.searchDisabledReason },
+      // v3.2: manual/locked sequences — every rejected token with its plan index (never silently skipped); auto cooldown waits are not illegal
+      illegal: (result.steps || []).filter((x) => !x.ok && !x.auto).map((x) => ({ index: x.index != null ? x.index : null, token: x.raw, reason: x.reason || '非法动作' })),
+      waits: (result.steps || []).filter((x) => x.auto).map((x) => ({ token: x.raw, reason: x.reason })),
+      sequence: result.sequence || '', ids: mem.map((m) => m.id),
+      // v3.4 MECH.swapCooldown: swaps earlier than 1.0 s after the incoming member left the field are delayed (never illegal)
+      adjust: result.adjust || { swapCdDelays: 0, swapCdDelaySec: 0 }, swapCooldown: result.swapCooldown != null ? result.swapCooldown : null,
       team, resources, summary, gauges, timeline, seq, buffs, share, breakdown, warnings: result.warnings, search,
       stamina: result.stamina ? { max: result.stamina.max, regen: result.stamina.regen, delay: result.stamina.delay, shared: true, rejected: steps.filter((x) => x.noStamina).length, mech: result.stamina.mech.mech } : null };
   }
+
+  // ------------------------------------------------------------------ v3.4.1 share-link migration (contract: frontend/ww/COMPONENTS.md「v3.4.1 migrateConfig」)
+  // MIGRATE:BEGIN — ES5, self-contained: build_page.py inlines this block into the page main thread (window.__simMigrateConfig)
+  var MIGRATE_TABLE = {
+    game: 'ww', current: 'ww-calc-3.5',
+    order: ['ww-calc-3.2', 'ww-calc-3.3', 'ww-calc-3.4', 'ww-calc-3.4.1', 'ww-calc-3.5'],
+    // per version: the value every key had in that version (only keys whose default changed since); dot path = nested key
+    defaults: {
+      'ww-calc-3.2': { buffTiming: 'start', outroModuleStats: false, rebeccaTurret: false, 'search.portfolio': false, 'search.v35': false, 'search.effort': 'standard' },
+      'ww-calc-3.3': { buffTiming: 'start', outroModuleStats: false, rebeccaTurret: false, 'search.portfolio': false, 'search.v35': false, 'search.effort': 'standard' },
+      'ww-calc-3.4': { buffTiming: 'start', outroModuleStats: false, rebeccaTurret: false, 'search.portfolio': false, 'search.v35': false, 'search.effort': 'standard' },
+      'ww-calc-3.4.1': { buffTiming: 'hit', outroModuleStats: true, rebeccaTurret: true, 'search.portfolio': true, 'search.v35': false, 'search.effort': 'standard' },
+      'ww-calc-3.5': { buffTiming: 'hit', outroModuleStats: true, rebeccaTurret: true, 'search.portfolio': true, 'search.v35': true, 'search.effort': 'standard' }
+    },
+    // v3.5: judgement corrections are NOT revertible defaults (no config key restores them): a link from an older version whose team matches
+    // gets a notice explaining why its total may differ; the config itself is never changed for them
+    notices: [
+      { id: 'v35-unison', since: 'ww-calc-3.5', kind: 'model-correction', revertible: false, anyOf: [1311, 1312], withAnyOf: [1304, 1311, 1312],
+        text: 'v3.5 判定修正（心 / 今汐 / 锁暝 同奏）：① 心「循流引兴替」攻击 +50% 现在会在诸相同奏变奏入场时生效；② 队友获得同奏后立即切人，心的「灯同辉」也会记录；③ 协奏已满且带同奏时离场仍按同奏强制延奏处理，下一位角色会响应同奏；④ 心带同奏且协奏已满时，强制放出的延奏会消耗满协奏，不再随后再白拿一次延奏；协奏未满时仍只消耗同奏效果。这是对旧版判定错误的修正，没有开关可以恢复旧算法，所以这条链接的总伤可能和分享时不同。' },
+      { id: 'v35-general', since: 'ww-calc-3.5', kind: 'model-correction', revertible: false,
+        text: 'v3.5 判定修正（所有队伍）：① 窗口末尾被截断的变奏技能按窗口内比例计伤，且不再结算超出窗口的异常伤害；② 「无视防御 / 减抗」类效果按文本的可叠加层数计算（如驭冕铸雷之权 5 层）；③ 重明之羽改为按共鸣效率给全队加攻击（上限 25%）。这是判定修正，不能切回旧算法，旧链接的总伤可能变化。' }
+    ]
+  };
+  /** migrateConfig(config, linkEngineVersion) → {config, filled, from, known, to}: fills ONLY keys missing from the link's config with the
+   *  defaults of the link's engine version (unknown / missing version → earliest in the table); values written in the link are never changed;
+   *  filled = dot paths that were filled. The input is not mutated. Same function in the hsr engine (hsr_fixes_patch migrate_config). */
+  function migrateConfig(config, linkEngineVersion) {
+    var T = MIGRATE_TABLE, known = T.order.indexOf(linkEngineVersion) >= 0, from = known ? linkEngineVersion : T.order[0];
+    var out = config && typeof config === 'object' ? JSON.parse(JSON.stringify(config)) : {}, filled = [];
+    if (from !== T.current) {
+      var d = T.defaults[from] || {};
+      Object.keys(d).forEach(function (path) {
+        var ks = path.split('.'), o = out;
+        for (var i = 0; i < ks.length - 1; i++) {
+          if (o[ks[i]] == null) o[ks[i]] = {};
+          else if (typeof o[ks[i]] !== 'object') return;
+          o = o[ks[i]];
+        }
+        var k = ks[ks.length - 1];
+        if (Object.prototype.hasOwnProperty.call(o, k) && o[k] !== undefined) return;
+        o[k] = JSON.parse(JSON.stringify(d[path])); filled.push(path);
+      });
+    }
+    var notices = [], ti = [], fi = T.order.indexOf(from);
+    ((out && out.team) || []).forEach(function (m) { if (m) ti.push(m.id || m.characterId || m.charId); });
+    (T.notices || []).forEach(function (nt) {
+      if (fi >= T.order.indexOf(nt.since)) return;
+      var has = function (l) { return !l || l.some(function (x) { return ti.indexOf(x) >= 0; }); };
+      var other = !nt.withAnyOf || ti.filter(function (x) { return nt.withAnyOf.indexOf(x) >= 0; }).length >= 2;
+      if (has(nt.anyOf) && other) notices.push({ id: nt.id, kind: nt.kind, revertible: nt.revertible, text: nt.text });
+    });
+    return { config: out, filled: filled, from: from, known: known, to: T.current, notices: notices };
+  }
+  // MIGRATE:END
 
   return {
     VERSION, MECH, SWAP_RULE, framesIndex, ANOMALY_ZH, STAMINA_DEFAULT, probeAnomaly, anomalyHit, anomMult, addAnomaly, advanceAnomalies, ELEMENTS, ELEMENT_ZH, DMG_TYPES, DMG_TYPE_ZH, DEFAULT_DURATIONS, DEFAULT_SEARCH, ACTION_ZH,
@@ -2710,6 +3183,7 @@
     substatTierTable, TIER_ZH,
     registerChar, getChar, listChars, makeAct, estimate, resolveButton, mkApi, BUTTONS,
     compareGear, weaponVariants, sonataVariants, echoMainVariants, toView, chainModeledOf,
+    migrateConfig, MIGRATE_TABLE,
     _frameLookup: frameLookup, // tests only
   };
 });

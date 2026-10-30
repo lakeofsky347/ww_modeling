@@ -21,6 +21,8 @@
  * 按键映射（引擎只有 A/H/E/R/Q）：电涌满时 E = 长按超负荷（协奏 ≥ 60，否则短按）；H = 短按超负荷（本角色无常规重击，格挡架势未建模）
  * 雷陨：每段千声翻涌触发 1 次（低）
  * 动作帧：WuwaLAB（按原样映射）；衍射三段映射 Hunt / 1 / 2（低：WuwaLAB 命名与段数对应关系未确认）
+ * 电涌清空时点（v3.4，WuwaLAB 线上 10-10 快照）：超负荷长/短按的 forte_1 −12000（=−120 电涌）记在第 9 个命中（114f），不再是施放时；
+ *   模块改为施放后 114f 清空（cs.dyClrT），此前读取电涌按未清空计。电磁效应 10 层（WuwaLAB inflict_electro_flare 也在 114f）仍在施放时附加，仅记录。
  * 专武：无（null）
  * 共鸣链：未建模（chainModeled 0）
  */
@@ -34,6 +36,8 @@
   const TN_GAIN = 4, TN_DRAIN = 10;
   const TS = [['s1', '千声翻涌·衍射第一段伤害', 0.35], ['s2', '千声翻涌·衍射第二段伤害', 0.83], ['s3', '千声翻涌·衍射第三段伤害', 0.7],
     ['h1', '千声翻涌·湮灭第一段伤害', 0.78], ['h2', '千声翻涌·湮灭第二段伤害', 0.82], ['h3', '千声翻涌·湮灭第三段伤害', 1.13], ['jz', '千声翻涌·剑止万律伤害', 1.7]];
+  const OS_CLR = 114 / 60; // v3.4: 电涌 cleared on the 9th Overshock hit (WuwaLAB 10-10: forte_1 −12000 at 114f)
+  const dyAt = (cs, t) => (cs.dyClrT != null && t >= cs.dyClrT - 1e-9 ? 0 : cs.dy);
   const tnAt = (cs, t) => (cs.lj ? Math.max(0, cs.tn - TN_DRAIN * Math.max(0, t - cs.tnT)) : 0);
   function def(id) {
     const file = id === 1309 ? 'rover_electro' : 'rover_electro_f';
@@ -48,7 +52,7 @@
         jz: '共鸣回路·Skill: Thrum of All Sounds - Silencing Blade', lib: '共鸣解放·Liberation: Ultimate Tactics', I: '变奏入场·Intro: Thunderous Fury',
       }),
       resources: [
-        { key: 'dy', name: '电涌', max: 120, segmented: false, confidence: 'low' },
+        { key: 'dy', name: '电涌', max: 120, segmented: false, confidence: 'low', get: (cs, t) => dyAt(cs, t) },
         { key: 'tn', name: '霆怒', max: 100, segmented: false, confidence: 'low', get: (cs, t) => +tnAt(cs, t).toFixed(1) },
       ],
       kit(H) {
@@ -71,10 +75,10 @@
         return K;
       },
       fillerKeys: ['a1', 'a2', 'a3', 'a4'],
-      init() { return { dy: 0, lj: false, tn: 0, tnT: 0, st: 0, ts: 0, kdOpen: false, dsMi: null, dsUntil: null }; },
+      init() { return { dy: 0, dyClrT: null, lj: false, tn: 0, tnT: 0, st: 0, ts: 0, kdOpen: false, dsMi: null, dsUntil: null }; },
       resolve(api, btn) {
         const K = api.mem.modKit, cs = api.cs, t = api.t, lj = cs.lj && tnAt(cs, t) > 0;
-        const full = cs.dy >= 120 - 1e-9 && !lj;
+        const full = dyAt(cs, t) >= 120 - 1e-9 && !lj;
         switch (btn) {
           case 'A': return cs.kdOpen ? { act: K.kd } : { act: K['a' + ((cs.st % 4) + 1)] };
           case 'H':
@@ -95,6 +99,7 @@
       apply(api, act) {
         const cs = api.cs, k = act.key, t = api.t, te = api.tEnd;
         if (cs.lj && tnAt(cs, t) <= 0) { cs.lj = false; cs.ts = 0; }
+        if (cs.dyClrT != null && t >= cs.dyClrT - 1e-9) { cs.dy = 0; cs.dyClrT = null; }
         cs.kdOpen = false;
         const addDy = (n) => { cs.dy = Math.min(120, cs.dy + n); };
         if (/^a\d$/.test(k)) { cs.st = +k.slice(1) % 4; addDy(DY[k]); return; }
@@ -105,11 +110,11 @@
           case 'kd': addDy(DY.kd); break;
           case 'I': addDy(DY.I); break;
           case 'osT':
-            cs.dy = 0; api.addAnomaly('flare', 10);
+            cs.dyClrT = t + OS_CLR; api.addAnomaly('flare', 10);
             api.fireBuff('osAtk', api.mi, { duration: 20 });
             break;
           case 'os':
-            cs.dy = 0; api.addAnomaly('flare', 10); api.addConcerto(api.mi, -60);
+            cs.dyClrT = t + OS_CLR; api.addAnomaly('flare', 10); api.addConcerto(api.mi, -60);
             cs.lj = true; cs.tn = 100; cs.tnT = te; cs.ts = 0;
             break;
           case 'O': cs.lj = false; cs.tn = 0; cs.ts = 0; break;
@@ -129,7 +134,7 @@
       potential(api) {
         const cs = api.cs, K = api.mem.modKit, tn = tnAt(cs, api.t);
         if (tn > 0) return tn / 100 * 0.5 * 6 * api.est(K.h1);
-        return cs.dy / 120 * 0.5 * api.est(K.os);
+        return dyAt(cs, api.t) / 120 * 0.5 * api.est(K.os);
       },
     };
   }

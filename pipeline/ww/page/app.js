@@ -40,17 +40,125 @@ var MAINS = {
   1: [['Atk%', '攻击%'], ['LifeMax%', '生命%'], ['Def%', '防御%']],
 };
 var SKILLS = [['basic', '常态攻击'], ['skill', '共鸣技能'], ['liberation', '共鸣解放'], ['intro', '变奏技能'], ['forte', '共鸣回路']];
-var MECH_ZH = { table: '表格推导', corroborated: '社区印证', community: '待验证', unsolved: '估计' };
+var MECH_ZH = { table: '表格推导', corroborated: '社区印证', community: '待验证', unsolved: '估计', 'community-consensus': '多工具一致（未实测）' };
 var SWAP_ZH = { cancel: '取消点', full: '等动作结束', swapTime: '9 帧' };
 var STORE = CFG.storageKey || 'ww-sim:config:v1';
 
 // ---------------------------------------------------------------- state
 var S = { data: null, chars: null, weapons: null, sonatas: null, echoes: null, tiers: [], tierByKey: {}, config: null, sel: 0, echoSel: 0,
-  view: null, lastSearch: null, error: null, running: false, pending: false, jobId: 0, worker: null, workerReady: false, ms: null, modules: {} };
+  view: null, lastSearch: null, error: null, running: false, pending: false, jobId: 0, worker: null, workerReady: false, ms: null, modules: {}, runMeta: {} };
+// v3.2 engine events & API (bridge: pipeline/shared/sim_bridge.js, prepended by build_page.py)
+var SIM = window.__mkSimBridge('ww', (window.__WW_PAGE__ || {}).engineVersion || window.__SIM_ENGINE_VERSION__);   // v3.3 engineVersion (build constant)
+// v3.3 chunks (pipeline/shared/sim_chunks.js; COMPONENTS.md「v3.3 数据分块与按需加载」): the index (data/ww.json) carries slim resonator /
+// weapon / echo records; the full original records (data/ww-r|w|e<id>.json) and the character modules (data/ww-m<id>-engine.js) are
+// merged in before anything reads them, so the engine always sees exactly the v3.2 data. Every computation waits for its chunks.
+var COLL = { resonator: 'resonators', weapon: 'weapons', echo: 'echoes' };
+var MODS = CFG.modules || {};   // resonator id → module chunk id ('mod:<id>'; the rover pairs share one)
+S.full = {}; S.echoIdx = {}; S.addQ = { mods: [], recs: [] }; S.loading = false;
+function chunkErr(code, msg, id) { var x = new Error(msg); x.code = code; x.chunk = id; return x; }
+function processChunk(e, text) {
+  if (e.kind === 'index' || e.kind === 'module') return text;
+  var o = JSON.parse(text);
+  if (!o || o.chunk !== e.id || o.game !== 'ww' || o.dataVersion !== CFG.version || !o.record) throw chunkErr('mismatch', '分块内容与清单不一致：' + e.id + '（可能混用了新旧版本的文件，请强制刷新）', e.id);
+  return o;
+}
+var LD = window.__mkSimChunks ? window.__mkSimChunks('ww', { manifestUrl: CFG.chunksUrl, base: CFG.chunkBase || '', boot: CFG.boot || [], dataVersion: CFG.version, process: processChunk }) : null;
+function execModule(id, src) {
+  var owner = 0; for (var k in MODS) if (MODS[k] === id) { owner = +k; break; }
+  var s = document.createElement('script');
+  s.text = src + '\n//# sourceURL=' + id;
+  (document.head || document.documentElement).appendChild(s);
+  s.parentNode.removeChild(s);
+  if (owner && !(E.getChar && E.getChar(owner))) throw chunkErr('parse', '角色模块执行失败：' + id, id);
+}
+/** merge one loaded chunk into S.data (full record replaces the slim one at the same position) / execute a module; false if already merged */
+function mergeChunk(id, payload) {
+  if (S.full[id]) return false;
+  if (payload == null) throw chunkErr('missing', '分块未加载：' + id, id);
+  if (id.indexOf('mod:') === 0) {
+    execModule(id, payload);
+    S.addQ.mods.push([id, payload]);
+  } else {
+    var rec = payload.record, arr = S.data[COLL[payload.kind]], i;
+    for (i = 0; i < arr.length; i++) if (arr[i].id === rec.id) break;
+    if (i >= arr.length) throw chunkErr('mismatch', '索引里没有 ' + id, id);
+    arr[i] = rec;
+    if (payload.kind === 'resonator') S.chars[rec.id] = rec;
+    else if (payload.kind === 'weapon') S.weapons[rec.id] = rec;
+    S.addQ.recs.push({ kind: payload.kind, record: rec });
+  }
+  S.full[id] = 1;
+  return true;
+}
+/** chunk ids a config needs (team resonators + their modules, weapons, echoes with an echoId) that are not merged yet */
+function needChunks(cfg) {
+  var out = [], ids = { resonator: [], weapon: [], echo: [] };
+  function add(cid, kind, oid) {
+    if (S.full[cid] || out.indexOf(cid) >= 0) return;
+    out.push(cid); if (ids[kind].indexOf(oid) < 0) ids[kind].push(oid);
+  }
+  ((cfg && cfg.team) || []).forEach(function (m) {
+    if (!m || m.id == null || !S.chars[m.id]) return;
+    add('res:' + m.id, 'resonator', +m.id);
+    if (MODS[m.id]) add(MODS[m.id], 'resonator', +m.id);
+    if (m.weapon && m.weapon.id != null && S.weapons[m.weapon.id]) add('wpn:' + m.weapon.id, 'weapon', +m.weapon.id);
+    (m.echoes || []).forEach(function (e) { if (e && e.echoId != null && S.echoIdx[e.echoId]) add('echo:' + e.echoId, 'echo', +e.echoId); });
+  });
+  return { chunks: out, ids: ids };
+}
+/** download + merge everything cfg needs; resolves the newly merged chunk ids */
+function ensure(cfg, phase) {
+  var n = needChunks(cfg);
+  if (!n.chunks.length) return Promise.resolve([]);
+  if (!LD) return Promise.reject(chunkErr('loader', '分块加载器缺失（sim_chunks.js）', null));
+  return LD.load(n.chunks, phase || 'lazy', { ids: n.ids }).then(function (o) {
+    var got = [];
+    n.chunks.forEach(function (id) { if (mergeChunk(id, o[id])) got.push(id); });
+    if (got.length) S.idx = E.indexData(S.data);
+    return got;
+  });
+}
+function takeAdd() { var a = S.addQ; S.addQ = { mods: [], recs: [] }; return a.mods.length || a.recs.length ? a : null; }
+function loadFailed(e, rid, keepView) {
+  var msg = '数据加载失败：' + (e && e.message || e);
+  var extra = { phase: 'load', code: (e && e.code) || 'error', chunk: (e && e.chunk) || null, file: (e && e.file) || null };
+  if (!keepView) { S.error = msg; S.view = null; renderAll(); }
+  var r = rid != null ? rid : (SIM.takeReserved ? SIM.takeReserved() : null);
+  if (r != null) SIM.abort(r, msg, extra);
+  else SIM.fire('sim:error', Object.assign({ game: 'ww', runId: null, message: msg }, extra));
+}
+// v3.3: intent delay for the member picker (hover / focus / press → 80 ms → prefetchMember; leave / blur cancels; one prefetch per id)
+var PF_DELAY = 80, pfTimer = null, pfItem = null, pfDone = {};
+function pfIntentStart(it) {
+  if (!it || it === pfItem) return;
+  var id = +it.getAttribute('data-id');
+  if (pfDone[id]) return;
+  clearTimeout(pfTimer); pfItem = it;
+  pfTimer = setTimeout(function () {
+    pfTimer = null;
+    if (pfItem !== it) return;
+    pfItem = null;
+    if (pfDone[id]) return;
+    pfDone[id] = 1; prefetchMember(id);
+  }, PF_DELAY);
+}
+function pfIntentCancel(it) { if (!it || it === pfItem) { clearTimeout(pfTimer); pfTimer = null; pfItem = null; } }
+function prefetchMember(id) {
+  if (!LD || !S.chars || !S.chars[id]) return;
+  var n = needChunks({ team: [defaultMember(+id)] });
+  if (n.chunks.length) LD.prefetch(n.chunks);
+}
+window.__simEnsure = function (cfg) { return S.data ? ensure(cfg, 'lazy') : Promise.reject(new Error('数据尚未加载')); };
+window.__simPrefetch = function (kind, id) {
+  if (!LD || !S.data) return;
+  if (kind === 'resonator') return prefetchMember(id);
+  var cid = kind === 'weapon' ? 'wpn:' + id : kind === 'echo' ? 'echo:' + id : null;
+  if (cid && !S.full[cid]) LD.prefetch([cid]);
+};
 
 // ---------------------------------------------------------------- data helpers
 function charById(id) { return S.chars[id]; }
-function hasModule(id) { return !!(E && E.getChar && E.getChar(+id)); }
+function hasModule(id) { return !!MODS[id] || !!(E && E.getChar && E.getChar(+id)); }   // v3.3: modules load on demand; CFG.modules lists them all
 // chainModeled（引擎字段，见 COMPONENTS.md）：所选链数高于它时按 chainModeled 计算
 function chainCap(m) { if (!m || m.module === false || !E || !E.chainModeledOf || !S.idx) return null; var c = E.chainModeledOf(S.idx, m.id); return c == null ? null : c; } // == result.members[i].chainModeled
 function chainCapTag(m) {
@@ -120,15 +228,18 @@ function startWorker() {
     var w = new Worker(new URL(CFG.workerUrl, location.href).href);
     w.onmessage = function (ev) {
       var m = ev.data || {};
-      if (m.type === 'ready') { S.workerReady = true; if (S.pending || S.running) { S.running = false; run(); } }
-      else if (m.type === 'init-error') { S.worker = null; w.terminate(); if (S.running || S.pending) { S.running = false; run(); } }
+      // a job queued before the worker was ready keeps its id / runId (re-running would orphan its sim:start, e.g. the share-link run)
+      if (m.type === 'ready') { S.workerReady = true; var q = S.queued; S.queued = null; if (q) postSim(q.id, q.cfg); else if (S.pending) run(); }
+      else if (m.type === 'init-error') { S.worker = null; w.terminate(); flushQueued(); }
       else if (m.type === 'result') onResult(m);
     };
-    w.onerror = function () { if (!S.workerReady) { S.worker = null; try { w.terminate(); } catch (e) {} if (S.running) { S.running = false; run(); } } };
+    w.onerror = function () { if (!S.workerReady) { S.worker = null; try { w.terminate(); } catch (e) {} flushQueued(); } };
     w.postMessage({ type: 'init', engineUrl: new URL(CFG.engineUrl, location.href).href, text: S.dataText });
     S.worker = w;
   } catch (e) { S.worker = null; }
 }
+function postSim(id, cfg) { S.worker.postMessage({ type: 'sim', id: id, config: cfg, add: takeAdd() }); }   // add: chunks merged since the last message
+function flushQueued() { var q = S.queued; S.queued = null; if (q) setTimeout(function () { runSync(q.id, q.cfg); }, 0); else if (S.pending) { S.running = false; run(); } }
 function simConfig() { var c = clone(S.config); return c; }
 function runSync(id, cfg) {
   var t0 = Date.now();
@@ -144,16 +255,30 @@ function schedule(delay) { clearTimeout(runTimer); runTimer = setTimeout(run, de
 function run() {
   clearTimeout(runTimer);
   if (S.running) { S.pending = true; return; }
+  if (needChunks(S.config).chunks.length) {   // v3.3: fetch the chunks first; sim:start only once everything is merged
+    S.pending = false; S.running = true; S.loading = true; renderStatus();
+    ensure(S.config, 'lazy').then(function (got) {
+      S.running = false; S.loading = false;
+      if (got.length) renderInputs(true);
+      run();
+    }, function (e) {
+      S.running = false; S.loading = false; renderStatus();
+      loadFailed(e);
+    });
+    return;
+  }
   S.pending = false; S.running = true; S.jobId += 1;
   var id = S.jobId, cfg = simConfig();
+  S.runMeta[id] = { rid: SIM.begin(), cfg: clone(cfg), src: rotationSourceOf(cfg) };
   renderStatus();
-  if (S.worker && S.workerReady) S.worker.postMessage({ type: 'sim', id: id, config: cfg });
-  else if (S.worker && !S.workerReady) { /* run when the worker reports ready */ }
+  if (S.worker && S.workerReady) postSim(id, cfg);
+  else if (S.worker && !S.workerReady) S.queued = { id: id, cfg: cfg };   // posted when the worker reports ready (same job id)
   else setTimeout(function () { runSync(id, cfg); }, 0);
 }
 function onResult(m) {
   S.running = false;
-  if (m.id !== S.jobId) { if (S.pending) run(); return; }
+  var meta = S.runMeta[m.id]; delete S.runMeta[m.id];
+  if (m.id !== S.jobId) { if (meta) SIM.fail(meta.rid, '已被新的计算取代'); if (S.pending) run(); return; }
   S.ms = m.ms;
   if (m.error) { S.error = m.error; S.view = null; }
   else {
@@ -163,7 +288,124 @@ function onResult(m) {
   window.__WW_LAST__ = { total: m.total, sequence: m.sequence, ms: m.ms, error: m.error || null, jobId: m.id,
     timeStopSaved: m.view ? m.view.summary.timeStopSaved || 0 : null, tailFreeze: m.view ? m.view.summary.tailFreeze || null : null, members: m.view ? m.view.team : null, warnings: m.view ? m.view.warnings : null };
   renderAll();
+  if (meta) {
+    if (m.error) SIM.fail(meta.rid, m.error);
+    else { try { SIM.done(meta.rid, simDetail(m, meta.cfg, meta.src)); } catch (e) { SIM.fail(meta.rid, '结果导出失败：' + (e && e.message || e)); } }
+  }
   if (S.pending) run();
+}
+// result detail (sim:result / __simResult / __simApply promise): see frontend/ww/COMPONENTS.md「Engine events & API (v3.2)」
+// flat action order shared by detail.timeline (index) and the DOM (.ww-act data-act-index): lanes in order, actions in lane order,
+// then stable-sorted by t, member. returns [{li, ai}] (position = detail.timeline index)
+function flatActs(V) {
+  var out = [];
+  V.timeline.lanes.forEach(function (l, li) { l.actions.forEach(function (a, ai) { out.push({ li: li, ai: ai, t: a.t, member: l.member }); }); });
+  out.sort(function (a, b) { return a.t - b.t || a.member - b.member; });
+  return out;
+}
+// v3.3 rotationSource: 'search' (rotation.mode search → the engine searched), 'preset' (a preset's fixed sequence: loaded from the
+// preset menu / a preset card, or any manual rotation equal to a preset's sequence for the same team), 'locked' (__simApply lockRotation),
+// 'manual' (anything else the user arranged: edited steps, applied search candidate, imported / shared manual sequence).
+// S.rotTag remembers the last preset / lockRotation sequence; any edit changes the sequence and so falls back to 'manual'.
+function rotationSourceOf(cfg) {
+  var r = (cfg && cfg.rotation) || {};
+  if (r.mode === 'search' || !r.sequence) return 'search';
+  if (S.rotTag && S.rotTag.seq === r.sequence) return S.rotTag.kind;
+  if (r.origin === 'search') return 'manual';   // replay of a searched result's detail.config (explicit sequence) — never 'preset'
+  var ids = JSON.stringify(((cfg && cfg.team) || []).map(function (m) { return m && m.id; }));
+  var hit = (CFG.presets || []).some(function (p) { var pr = (p.config && p.config.rotation) || {};
+    return pr.mode === 'manual' && pr.sequence === r.sequence && JSON.stringify(((p.config && p.config.team) || []).map(function (m) { return m && m.id; })) === ids; });
+  return hit ? 'preset' : 'manual';
+}
+function simDetail(m, cfg, src) {
+  var V = m.view, ids = V.ids || [], dmg = {};
+  (V.share.byMember || []).forEach(function (x) { dmg[x.member] = x; });
+  var tl = flatActs(V).map(function (f, i) {
+    var l = V.timeline.lanes[f.li], a = l.actions[f.ai];
+    return { index: i, lane: l.member, laneIndex: f.ai, member: l.member, id: l.id != null ? l.id : ids[l.member], t: a.t, endT: a.endT, rt: a.rt != null ? a.rt : null, rtEnd: a.rtEnd != null ? a.rtEnd : null, cls: a.cls, key: a.key, tok: a.tok, label: a.label,
+        skillId: a.skillId, skillIdBy: a.skillIdBy, skillIcon: ((skillOf(l.id != null ? l.id : ids[l.member], a.skillId) || {}).skillIcon) || null, echoId: a.echoId, damage: a.damage || 0, coord: !!a.coord, offfield: !!a.offfield,
+        timeStop: a.timeStop, truncated: !!a.truncated, credit: a.credit, tailFreeze: !!a.tailFreeze, delayedBy: a.delayedBy || 0 };
+  });
+  var seq = String(V.sequence || m.sequence || '');
+  // v3.3: a searched run exports its rotation explicitly — detail.config.rotation = {mode:'manual', sequence:<searched sequence>,
+  // origin:'search'} — so __simApply(detail.config) / share links / plans replay exactly this rotation (no new search, no preset
+  // sequence; same total to the last digit; rotationSource 'manual'). Exception: 稳态开局 (start.steady) searches per loop, a single
+  // manual sequence would not reproduce it → config kept as is (mode search; re-search is deterministic, same total).
+  if (V.search && seq && !(cfg && cfg.start && cfg.start.steady)) {
+    cfg = clone(cfg);
+    cfg.rotation = Object.assign({}, cfg.rotation || {}, { mode: 'manual', sequence: seq, origin: 'search' });
+  }
+  // v3.3 MECH.clock: clock {mode, gameTime, realTime, frozen, gameEnd, dpsClock} (gameTime = window; realTime = window + frozen seconds);
+  // timeline[i].rt / rtEnd = realTime position (t / endT stay on the game clock). engineVersion is added by the bridge (SIM.done).
+  var ck = V.summary.clock || null;
+  return SIM.clone({ dataVersion: S.data.meta.version, dataCommit: S.data.meta.source_commit, engine: E.VERSION || null, config: cfg,
+    // v3.3: searched = this run's rotation came from the engine's automatic search (view.search present); rotationSource see rotationSourceOf
+    searched: !!(V && V.search), rotationSource: src || rotationSourceOf(cfg),
+    clock: ck ? { mode: ck.mode, gameTime: ck.gameTime, realTime: ck.realTime, frozen: ck.frozen, gameEnd: ck.gameEnd, dpsClock: ck.dpsClock } : null,
+    summary: V.summary,
+    members: V.team.map(function (t, i) { var d = dmg[i] || {}; return { index: i, id: ids[i], name: t.name, el: t.el, chain: t.chain, chainModeled: t.chainModeled, module: t.module, damage: d.damage || 0, pct: d.pct || 0 }; }),
+    // v3.4 swap cooldown (pass-through from toView, no value change): adjust {swapCdDelays, swapCdDelaySec}, swapCooldown (s), timeline[i].delayedBy
+    adjust: V.adjust || { swapCdDelays: 0, swapCdDelaySec: 0 }, swapCooldown: V.swapCooldown != null ? V.swapCooldown : null,
+    timeline: tl, breakdown: V.breakdown, rotation: seq ? seq.split(/\s+/) : [], illegal: V.illegal || [], waits: V.waits || [], warnings: V.warnings || [] });
+}
+function simFindMissingIds(cfg) {
+  var out = [], son = {}, ech = {};
+  (S.data.sonatas || []).forEach(function (x) { son[x.id] = 1; });
+  (S.data.echoes || []).forEach(function (x) { ech[x.id] = 1; });
+  function miss(kind, id, ok) { if (id != null && id !== '' && !ok) out.push(kind + ':' + id); }
+  ((cfg && cfg.team) || []).forEach(function (m) {
+    if (!m) return;
+    miss('resonator', m.id, S.chars[m.id]);
+    if (m.weapon) miss('weapon', m.weapon.id, S.weapons[m.weapon.id]);
+    (m.echoes || []).forEach(function (e) { if (!e) return; miss('echo', e.echoId, ech[e.echoId]); miss('sonata', e.set, son[e.set]); });
+  });
+  return out.filter(function (x, i) { return out.indexOf(x) === i; });
+}
+window.__simFindMissingIds = simFindMissingIds;
+// __simApply(config, {runId, lockRotation}) → Promise<detail>. lockRotation: tokens (detail.rotation) or objects with .tok; replayed as a manual
+// sequence on top of config.rotation (keeps start etc.); rejected tokens come back in detail.illegal [{index, token, reason}] — never skipped silently
+// v3.3: the chunks the config needs are loaded (and merged) first; the runId is reserved only after that, so a computation started
+// meanwhile cannot take it. A load failure rejects with e.detail.phase === 'load' (sim:error, no sim:start).
+window.__simApply = function (config, opts) {
+  opts = opts || {};
+  var c0 = null, pre = null;
+  try {
+    if (!S.data) throw new Error('数据尚未加载');
+    if (!config || typeof config !== 'object') throw new Error('config 必须是对象');
+    c0 = clone(config);
+    var miss0 = simFindMissingIds(c0);
+    if (miss0.length) throw new Error('数据中不存在：' + miss0.join(', '));
+  } catch (e) { pre = e; }
+  if (pre) return applyNow(config, opts);
+  return ensure(c0, 'lazy').then(function () { return applyNow(config, opts); },
+    function (e) { var q = SIM.request(opts.runId); loadFailed(e, q.runId, true); return q.promise; });
+};
+function applyNow(config, opts) {
+  var q = SIM.request(opts.runId), c;
+  try {
+    if (!S.data) throw new Error('数据尚未加载');
+    if (!config || typeof config !== 'object') throw new Error('config 必须是对象');
+    c = clone(config); delete c.actionFrames; delete c.substatTiers;
+    var miss = simFindMissingIds(c);
+    if (miss.length) throw new Error('数据中不存在：' + miss.join(', '));
+    // v3.3 opts.search: ignore any fixed (preset / manual) sequence and run the automatic search; the result is the search result only
+    // (the preset rule max(search, previous sequence) is a build-time rule for preset cards and is NOT mixed in here)
+    if (opts.search && opts.lockRotation) throw new Error('opts.search 与 opts.lockRotation 不能同时使用');
+    S.rotTag = null;
+    if (opts.search) c.rotation = Object.assign({}, c.rotation || {}, { mode: 'search', sequence: '' });
+    if (opts.lockRotation) {
+      if (!Array.isArray(opts.lockRotation)) throw new Error('lockRotation 必须是数组');
+      var toks = opts.lockRotation.map(function (x) { var t = typeof x === 'string' ? x : (x && x.tok); t = String(t == null ? '' : t).trim(); return t && !/\s/.test(t) ? t : '?'; });
+      c.rotation = Object.assign({}, c.rotation || {}, { mode: 'manual', sequence: toks.join(' ') });
+      S.rotTag = { kind: 'locked', seq: c.rotation.sequence };
+    }
+    c.rotation = c.rotation || { mode: 'search', sequence: '' };
+    var bad = validConfig(c);
+    if (bad) throw new Error(bad);
+  } catch (e) { SIM.abort(q.runId, e && e.message || e); return q.promise; }
+  S.config = c; S.sel = 0; S.echoSel = 0; S.lastSearch = null; save(); renderInputs();
+  run();
+  return q.promise;
 }
 function searchKey() { var c = clone(S.config); delete c.rotation; delete c.buffOverrides; return JSON.stringify(c); }
 
@@ -175,7 +417,8 @@ function renderTop() {
     '<button class="ww-btn pri" id="ww-run">开始模拟</button>';
   $('ww-preset').onchange = function () {
     var p = CFG.presets[+this.value]; if (!p) return;
-    S.config = clone(p.config); S.sel = 0; S.echoSel = 0; S.lastSearch = null; save(); renderInputs(); run(); this.value = '';
+    S.config = clone(p.config); S.rotTag = p.config.rotation && p.config.rotation.mode === 'manual' ? { kind: 'preset', seq: p.config.rotation.sequence } : null;
+    S.sel = 0; S.echoSel = 0; S.lastSearch = null; save(); renderInputs(); run(); this.value = '';
     toast('已载入预设：' + p.name);
   };
   $('ww-run').onclick = function () { run(); };
@@ -185,7 +428,7 @@ function renderTop() {
 function renderStatus() {
   var b = $('ww-run'); if (!b) return;
   b.disabled = false;
-  b.textContent = S.running ? (S.config.rotation.mode === 'search' ? '搜索中…' : '计算中…') : '开始模拟';
+  b.textContent = S.loading ? '加载数据…' : S.running ? (S.config.rotation.mode === 'search' ? '搜索中…' : '计算中…') : '开始模拟';
 }
 function toast(msg) {
   var t = document.createElement('div'); t.className = 'ww-toast'; t.textContent = msg; document.body.appendChild(t);
@@ -261,6 +504,10 @@ function openPicker(slot) {
         setMember(slot, defaultMember(id)); close();
       };
       it.onkeydown = function (ev) { if (ev.key === 'Enter') it.onclick(); };
+      // v3.3: prefetch the resonator's chunks (record + module + default weapon / echo) on hover / press / focus after an 80 ms intent delay
+      // (same as the theme's preset cards, frontend/theme/presets.js PF_DELAY); leaving / blurring cancels; each item at most once; no background preload
+      it.onpointerenter = it.onpointerdown = it.onfocus = function () { pfIntentStart(it); };
+      it.onpointerleave = it.onblur = function () { pfIntentCancel(it); };
     });
     var rm = box.querySelector('[data-remove]');
     if (rm) rm.onclick = function () { removeMember(slot); close(); };
@@ -427,6 +674,9 @@ function renderSettings() {
     field('开场在场', sel('rotation.start', members, rot.start || 0)) +
     field('搜索宽度', numInput('search.beamWidth', (c.search && c.search.beamWidth) || (E.DEFAULT_SEARCH && E.DEFAULT_SEARCH.beamWidth) || 96, 8, 256, 8)) + '</div>' +
     '<div class="ww-sub">排轴</div>' + seg('ww-rotmode', [['manual', '手动序列'], ['search', '自动搜索']], rot.mode || 'search') +
+    // v3.5 search.effort：缺省 standard（不写入配置）；deep 由用户手动开启，分享链接只在 deep 时带上
+    '<div class="ww-sub">搜索档位</div>' + seg('ww-effort', [['standard', '标准'], ['deep', '深度搜索（耗时明显变长）']], c.search && c.search.effort === 'deep' ? 'deep' : 'standard') +
+    '<div class="ww-effort-hint" style="font-size:11px;color:var(--dim);margin-top:4px">深度搜索：预算阶梯 + 更多搜索分支 + 更大的局部改进，结果不低于标准档；耗时约为标准档的 4–8 倍（120 秒的三人队可达数分钟）。只对自动搜索生效。</div>' +
     '<div class="ww-sub">暴击口径</div>' + seg('ww-mode', [['expected', '期望'], ['crit', '暴击'], ['noncrit', '不暴']], c.mode || 'expected') +
     '<div class="ww-sub">切人时机 <span class="ww-mech unsolved" title="' + esc(E.SWAP_RULE ? E.SWAP_RULE.basis : '') + '">引擎假设</span></div>' +
     seg('ww-swaprule', [['cancel', '取消点'], ['full', '等动作结束'], ['swapTime', '9 帧']], c.swapRule || 'cancel') +
@@ -445,6 +695,8 @@ function renderSettings() {
   function segBind(id, fn) { Array.prototype.forEach.call(R.querySelectorAll('#' + id + ' button'), function (b) { b.onclick = function () { var v = b.getAttribute('data-v'); if (v === 'custom') return; fn(v); changed(false); }; }); }
   segBind('ww-rotmode', function (v) { rot.mode = v; if (v === 'manual' && !rot.sequence && S.view && S.view.seq) rot.sequence = S.view.seq.text; });
   segBind('ww-mode', function (v) { c.mode = v; });
+  segBind('ww-effort', function (v) { if (v === 'deep') { c.search = c.search || {}; c.search.effort = 'deep'; } else if (c.search) delete c.search.effort; });
+  Array.prototype.forEach.call(R.querySelectorAll('#ww-effort button[data-v="deep"]'), function (b) { b.title = '深度搜索：耗时会明显变长（约为标准档的 4–8 倍）'; });
   segBind('ww-swaprule', function (v) { if (v === 'cancel') delete c.swapRule; else c.swapRule = v; });
   segBind('ww-st-energy', function (v) { st.energy = v === 'full' ? 'full' : 0; });
   segBind('ww-st-concerto', function (v) { st.concerto = v === 'full' ? 100 : 0; });
@@ -537,6 +789,17 @@ function renderSeq() {
 
 // ---------------------------------------------------------------- results
 // 角色头像占位 .gava（由主题头像脚本填充；avatar 为 null 时不写 data-icon → 徽章）
+// skill icon placeholder (frontend theme fills it): <span class="gskill" data-icon data-kind data-name>; only for actions with a skillId
+var SKILL_KIND = { 1: 'basic', 2: 'skill', 3: 'ult', 5: 'intro', 6: 'forte', 11: 'outro', 12: 'tune' };
+function skillOf(charId, skillId) {
+  var R = S.chars && S.chars[charId]; if (!R || !R.skills || skillId == null) return null;
+  for (var i = 0; i < R.skills.length; i++) if (R.skills[i].id === skillId) return R.skills[i];
+  return null;
+}
+function gskill(charId, skillId) {
+  var k = skillOf(charId, skillId); if (!k) return '';
+  return '<span class="gskill"' + (k.skillIcon ? ' data-icon="' + esc(k.skillIcon) + '"' : '') + ' data-kind="' + (SKILL_KIND[k.type] || 'passive') + '" data-name="' + esc(k.name || '') + '"></span>';
+}
 function gava(id, size) {
   var R = (S.chars && S.chars[id]) || {};
   return '<span class="gava ' + (size || 'md') + '"' + (R.avatar ? ' data-icon="' + esc(R.avatar) + '"' : '') + ' data-el="' + esc(R.element || '') + '" data-name="' + esc(R.name || String(id || '')) + '"></span>';
@@ -592,15 +855,17 @@ function renderTimeline() {
   var T = V.timeline, ticks = T.ruler.filter(function (t) { return t < T.duration - 1e-9; });
   var html = '<div class="ww-tl"><div class="ruler">' + ticks.map(function (t) { return '<span>' + t + 's</span>'; }).join('') + '</div>';
   var WE = T.windowEnd || { leftPct: 100, t: T.duration, endCredit: 'prorate' };
+  var fidx = {};   // "li:ai" → detail.timeline index
+  flatActs(V).forEach(function (f, i) { fidx[f.li + ':' + f.ai] = i; });
   T.lanes.forEach(function (l, li) {
     html += '<div class="ww-lane" data-el="' + l.el + '"><div class="who">' + gava(l.id != null ? l.id : ((S.config.team[l.member] || {}).id), 'sm') + esc(l.name) + '</div><div class="track">' +
       (l.carry ? '<i class="ww-carry" title="' + esc(l.carry.title) + '"></i>' : '') +
       (li === 0 ? '<i class="ww-window-end" style="left:' + WE.leftPct + '%" title="' + esc('时长结束 ' + WE.t + 's · 越过此处的动作' + (WE.endCredit === 'full' ? '全额计入' : '按窗口内比例计入')) + '"></i>' : '') +
       '<div class="onfield" title="在场区间">' + (l.onfield || []).map(function (s) { return '<i style="left:' + s.leftPct + '%;width:' + s.widthPct + '%" title="在场 ' + s.t.toFixed(2) + 's – ' + s.endT.toFixed(2) + 's"></i>'; }).join('') + '</div>' +
       (l.rejected || []).map(function (r) { return '<div class="ww-act H no-stamina" style="left:' + r.leftPct + '%;width:0.6%" title="' + esc(r.token + ' 被拒 @' + r.t.toFixed(2) + 's：' + r.reason) + '"></div>'; }).join('') +
-      l.actions.map(function (a) {
+      l.actions.map(function (a, ai) {
         var cls = 'ww-act ' + a.cls + (a.offfield ? ' offfield' : '') + (a.est && a.dur !== 'config' ? ' est' : '');
-        return '<div class="' + cls + '"' + (a.dur ? ' data-dur="' + a.dur + '"' : '') + (a.low ? ' data-confidence="low"' : '') + (a.truncated ? ' data-truncated="1" data-credit="' + a.credit + '"' : '') + (a.tailFreeze ? ' data-tail-freeze="1"' : '') + ' style="left:' + a.leftPct + '%;width:' + a.widthPct + '%' + (a.coord ? ';top:20px;height:6px;font-size:0' : '') + '" title="' + esc(actTitle(a)) + '">' + esc(a.cls === 'O' || a.coord ? '' : a.label) + '</div>' +
+        return '<div class="' + cls + '" data-act="' + l.member + ':' + ai + '" data-act-index="' + fidx[li + ':' + ai] + '" data-lane="' + l.member + '" tabindex="0"' + (a.dur ? ' data-dur="' + a.dur + '"' : '') + (a.low ? ' data-confidence="low"' : '') + (a.truncated ? ' data-truncated="1" data-credit="' + a.credit + '"' : '') + (a.tailFreeze ? ' data-tail-freeze="1"' : '') + ' style="left:' + a.leftPct + '%;width:' + a.widthPct + '%' + (a.coord ? ';top:20px;height:6px;font-size:0' : '') + '" title="' + esc(actTitle(a)) + '">' + gskill(l.id != null ? l.id : (V.ids || [])[li], a.skillId) + esc(a.cls === 'O' || a.coord ? '' : a.label) + '</div>' +
           (a.freeze ? '<i class="ww-freeze" style="left:' + a.freeze.leftPct + '%' + (a.freeze.widthPct ? ';width:' + a.freeze.widthPct + '%' : '') + '" title="' + esc('时停 ' + a.freeze.sec.toFixed(2) + ' 秒' + (a.freeze.excluded ? '（不计战斗时间）' : a.freeze.basis === 'not-liberation' ? '（非耗能解放，按完整动画计时）' : '（按完整动画计时）')) + '"></i>' : '');
       }).join('') +
       T.swaps.map(function (s) { return '<div class="ww-swap" style="left:' + s.leftPct + '%"></div>'; }).join('') +
@@ -659,7 +924,7 @@ function renderSearch() {
   var ls = S.lastSearch && S.lastSearch.key === searchKey() ? S.lastSearch.search : null;
   if (ls && searchable) {
     var curSeq = S.view ? S.view.seq.text : null;
-    inner += '<div style="font-size:11.5px;color:var(--dim);margin-bottom:6px">展开 ' + fmt(ls.expanded) + ' 个状态 · ' + fmt(ls.ms) + ' ms · beam ' + ls.budget.beamWidth + (ls.truncated ? ' · 已达展开上限' : '') + '。点击候选套用为手动序列。</div>';
+    inner += '<div style="font-size:11.5px;color:var(--dim);margin-bottom:6px">展开 ' + fmt(ls.expanded) + ' 个状态 · ' + fmt(ls.ms) + ' ms · beam ' + ls.budget.beamWidth + (ls.budgetUsed && ls.budgetUsed.effort === 'deep' ? ' · 深度搜索' : '') + (ls.truncated ? ' · 已达展开上限' : '') + '。点击候选套用为手动序列。</div>';
     inner += '<div class="ww-cands"><div class="hd"><span>#</span><span>方案</span><span>DPS</span><span class="total">总伤</span><span>差距</span></div>' + ls.candidates.map(function (c) {
       return '<div class="ww-cand' + (c.best ? ' best' : '') + (c.sequence === curSeq ? ' cur' : '') + '" data-seq="' + esc(c.sequence) + '" role="button" tabindex="0"><div class="rk">' + c.rank + '</div><div class="desc"><div class="t">' + esc(c.title) + '</div><div class="s" title="' + esc(c.sequence) + '">' + esc(c.sequence) + '</div></div>' +
         '<div class="num">' + fmt(c.dps) + '</div><div class="num total">' + fmt(c.total) + '</div><div class="gap">' + (c.best ? '最优' : c.gapPct + '%') + '</div></div>';
@@ -691,9 +956,9 @@ function renderBreakdown() {
   html += '<div class="ww-mult">' + r.zones.map(zoneHtml).join('<span class="x">×</span>') + '</div>';
   html += '<div class="ww-mech-legend"><span class="table">表格推导</span><span class="corroborated">社区印证</span><span class="community">待验证</span><span class="unsolved">估计</span></div>';
   html += '<div style="max-height:360px;overflow:auto;margin-top:12px"><table class="ww-tbl"><thead><tr><th>角色</th><th>动作 / 命中</th><th>类型</th><th class="num">次数</th><th class="num">伤害</th><th class="num">占比</th></tr></thead><tbody>' +
-    B.rows.slice(0, 60).map(function (x) {
+    B.rows.slice(0, 60).map(function (x, i) {
       var low = x.confidence === 'low';
-      return '<tr' + (x.status ? ' class="status"' : '') + (x.truncated ? ' data-truncated="1" data-credit="' + x.credit + '"' : '') + (low ? ' data-confidence="low" title="' + esc((x.lowReason || '低置信') + (x.truncated ? '\n越过时长结束：计入 ' + (x.credit * 100).toFixed(1) + '%' : '')) + '"' : x.truncated ? ' title="' + esc('越过时长结束：计入 ' + (x.credit * 100).toFixed(1) + '%') + '"' : '') + '><td><span class="ww-tag el" data-el="' + x.el + '"><i class="ww-el"></i>' + esc(x.name) + '</span></td><td>' + esc(x.action) + ' / ' + esc(x.hit) + (low ? ' <span class="ww-tag low">低置信</span>' : '') + '</td><td>' + (x.status ? '<span class="ww-tag status" data-el="' + x.el + '">' + esc(x.typeZh) + '</span>' : esc(x.typeZh)) + '</td><td class="num">' + x.count + '</td><td class="num">' + fmt(x.damage) + '</td><td class="num">' + (V.summary.total ? (100 * x.damage / V.summary.total).toFixed(1) + '%' : '-') + '</td></tr>';
+      return '<tr data-hit="' + i + '" tabindex="0"' + (x.status ? ' class="status"' : '') + (x.truncated ? ' data-truncated="1" data-credit="' + x.credit + '"' : '') + (low ? ' data-confidence="low" title="' + esc((x.lowReason || '低置信') + (x.truncated ? '\n越过时长结束：计入 ' + (x.credit * 100).toFixed(1) + '%' : '')) + '"' : x.truncated ? ' title="' + esc('越过时长结束：计入 ' + (x.credit * 100).toFixed(1) + '%') + '"' : '') + '><td><span class="ww-tag el" data-el="' + x.el + '"><i class="ww-el"></i>' + esc(x.name) + '</span></td><td>' + gskill((V.ids || [])[x.member], x.skillId) + esc(x.action) + ' / ' + esc(x.hit) + (low ? ' <span class="ww-tag low">低置信</span>' : '') + '</td><td>' + (x.status ? '<span class="ww-tag status" data-el="' + x.el + '">' + esc(x.typeZh) + '</span>' : esc(x.typeZh)) + '</td><td class="num">' + x.count + '</td><td class="num">' + fmt(x.damage) + '</td><td class="num">' + (V.summary.total ? (100 * x.damage / V.summary.total).toFixed(1) + '%' : '-') + '</td></tr>';
     }).join('') + '</tbody></table></div>';
   $('ww-breakdown').innerHTML = html;
 }
@@ -725,8 +990,13 @@ function openImport() {
           if (Array.isArray(o)) o = o[0]; else if (o && Array.isArray(o.cases)) o = Object.assign({}, o.defaults || {}, o.cases[0]);
           o = clone(o); delete o.expect; delete o.probe; delete o.substatTiers; if (o.actionFrames && o.actionFrames !== false) delete o.actionFrames;
           o.rotation = o.rotation || { mode: 'search', sequence: '' };
-          var bad = validConfig(o); if (bad) throw new Error(bad);
-          S.config = normalizeImported(o); S.sel = 0; S.echoSel = 0; S.lastSearch = null; save(); close(); renderInputs(); run(); toast('已导入');
+          if (!o || !Array.isArray(o.team)) throw new Error('编队需要 1–3 名共鸣者');
+          var miss = simFindMissingIds(o); if (miss.length) throw new Error('数据中不存在：' + miss.join(', '));
+          var showErr = function (e) { err.innerHTML = '<div class="ww-err">' + esc('导入失败：' + (e && e.message || e)) + '</div>'; };
+          ensure(o, 'lazy').then(function () {   // v3.3: validation needs the full records
+            var bad = validConfig(o); if (bad) return showErr(bad);
+            S.config = normalizeImported(o); S.sel = 0; S.echoSel = 0; S.lastSearch = null; save(); close(); renderInputs(); run(); toast('已导入');
+          }, showErr);
         } catch (e) { err.innerHTML = '<div class="ww-err">' + esc('导入失败：' + (e && e.message || e)) + '</div>'; }
       };
     });
@@ -743,36 +1013,60 @@ function openExport() {
 // ---------------------------------------------------------------- orchestration
 function renderInputs(keepBuildScroll) { renderTeam(); renderBuild(); renderEnemy(); renderSettings(); renderSeq(); renderSearch(); }
 function renderAll() { renderTeam(); renderStatus(); renderSummary(); renderGauges(); renderSeq(); renderTimeline(); renderBuffs(); renderSearch(); renderShare(); renderBreakdown(); renderWarnings(); }
-function init(text) {
+function init(text, boot) {
   var data;
   try { data = JSON.parse(text); } catch (e) { throw new Error('数据 JSON 解析失败：' + (e && e.message || e)); }
   if (!data || typeof data !== 'object' || !data.meta || !data.resonators) throw new Error('数据格式错误：缺少 meta / resonators');
   if (data.meta.version !== CFG.version || data.meta.source_commit !== CFG.commit) throw new Error('数据版本不匹配：页面需要 ' + CFG.version + ' @' + String(CFG.commit).slice(0, 8) + '，实际为 ' + data.meta.version + ' @' + String(data.meta.source_commit).slice(0, 8) + '（可能是缓存的旧数据，请强制刷新）');
   if (!data.runtime || data.runtime.schema !== 'ww-runtime-1') throw new Error('数据缺少 runtime（副词条档位 / 动作帧）');
   S.data = data; S.dataText = text;
-  S.idx = E.indexData(data);
   S.chars = {}; data.resonators.forEach(function (r) { S.chars[r.id] = r; });
   S.weapons = {}; data.weapons.forEach(function (w) { S.weapons[w.id] = w; });
+  S.echoIdx = {}; data.echoes.forEach(function (x) { S.echoIdx[x.id] = 1; });
+  Object.keys(boot || {}).forEach(function (id) { if (id !== 'index') mergeChunk(id, boot[id]); });   // v3.3: first-screen chunks
+  SIM.assets(data.elementIcons);   // v3.2: window.__simAssets + sim:assets, before any computation
+  S.idx = E.indexData(data);
   S.tiers = E.substatTierTable(data.runtime.substatTiers) || [];
   S.tiers.forEach(function (t) { S.tierByKey[t.key] = t; });
-  $('ww-ver').textContent = '· 数据 ' + data.meta.version + ' · 引擎 ' + (E.VERSION || '') + ' · 模块 ' + E.listChars().length;
+  SIM.presets(simPresets());   // v3.2: window.__simPresets + sim:presets (after data load, before any computation)
+  $('ww-ver').textContent = '· 数据 ' + data.meta.version + ' · 引擎 ' + (E.VERSION || '') + ' · 模块 ' + Object.keys(MODS).length;
   var saved = null;
   try { saved = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch (e) { saved = null; }
-  if (saved && !validConfig(saved)) S.config = saved;
-  else S.config = clone(CFG.presets[0].config);
-  S.config.rotation = S.config.rotation || { mode: 'search', sequence: '' };
-  renderTop(); renderInputs(); renderAll();
-  startWorker();
-  run();
+  if (saved && (typeof saved !== 'object' || !Array.isArray(saved.team) || simFindMissingIds(saved).length)) saved = null;
+  // v3.3: a saved config with non-first-screen resonators loads their chunks before validation (still the first screen: phase 'boot')
+  var pre = saved ? ensure(saved, 'boot').then(null, function (e) { console.warn('[ww] saved config chunks failed, using the default preset:', e); saved = null; }) : Promise.resolve();
+  return pre.then(function () {
+    if (saved && !validConfig(saved)) S.config = saved;
+    else S.config = clone(CFG.presets[0].config);
+    S.config.rotation = S.config.rotation || { mode: 'search', sequence: '' };
+    renderTop(); renderInputs(); renderAll();
+    startWorker();
+    SIM.shareBoot(data.meta.version, run);   // v3.2: a #s= share link skips the default run (falls back to it on decode failure / missing ids)
+  });
+}
+// __simPresets items: {id (= select value), name, desc, members:[{id,name,el,avatar}], memberIds, team, expectedTotal (= expected), config}
+function simPresets() {
+  return (CFG.presets || []).map(function (p, i) {
+    var ids = ((p.config && p.config.team) || []).map(function (m) { return m && m.id; }).filter(function (x) { return x != null; });
+    var mem = ids.map(function (id) { var R = S.chars[id] || {}; return { id: id, name: R.name || String(id), el: R.element || '', avatar: R.avatar || null }; });
+    return { id: String(i), name: p.name, desc: p.desc || '', members: mem, memberIds: ids, team: mem.map(function (x) { return x.name; }).join('/'),
+      expectedTotal: p.expectedTotal == null ? null : p.expectedTotal, expected: p.expectedTotal == null ? null : p.expectedTotal, config: clone(p.config),
+      // v3.3 preset rule: where the card's fixed sequence came from + both candidate totals (null for hand-written presets)
+      seqSource: p.seqSource || null, searchTotal: p.searchTotal == null ? null : p.searchTotal, replayTotal: p.replayTotal == null ? null : p.replayTotal,
+      replayTrimmed: p.replayTrimmed || 0 };   // v3.4 截尾重放: tail steps dropped from the previous release's sequence
+  });
 }
 window.__WW_UI__ = { S: S, run: run, renderAll: renderAll, exportConfig: exportConfig, presets: CFG.presets };
 if (!E) { fail('引擎初始化失败：未找到 WWEngine（assets/ww-engine.js）'); return; }
 if (typeof fetch !== 'function') { fail('浏览器不支持 fetch，无法加载数据'); return; }
-fetch(CFG.dataUrl, { credentials: 'same-origin' }).then(function (r) {
-  if (!r.ok) throw new Error('数据请求失败：HTTP ' + r.status + '（' + CFG.dataUrl + '）');
-  return r.text();
-}, function (e) { throw new Error('数据请求失败：' + (e && e.message || e) + '（' + CFG.dataUrl + '）'); }).then(function (text) {
-  init(text);
+if (!LD) { fail('页面缺少分块加载器（sim_chunks.js）'); return; }
+// v3.3: index + first-screen chunks (sim:progress phase 'boot'); a chunk failure → __uiError + sim:error {phase:'load', runId:null}
+LD.boot().then(function (o) {
+  return init(o.index, o);
+}, function (e) {
+  SIM.fire('sim:error', { game: 'ww', runId: null, message: '数据请求失败：' + (e && e.message || e), phase: 'load', code: (e && e.code) || 'error', chunk: (e && e.chunk) || null, file: (e && e.file) || null });
+  throw new Error('数据请求失败：' + (e && e.message || e));
+}).then(function () {
   ui('__uiReady');
 }).catch(function (e) { console.warn('[ww] load failed:', e); fail(e && e.message || String(e)); });
 })();

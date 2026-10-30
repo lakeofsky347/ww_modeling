@@ -125,3 +125,10 @@
 - 尺寸：`.sm` 20px、`.md` 32px、`.lg` 56px，或 `style="--gava-size:40px"`；默认 1.4em
 - 外框随主题：星铁圆形星环、终末地切角方框、鸣潮菱形金边。编队卡位 `.ww-slot .ava` 里放 `.gava` 可直接替代 `.ww-el`
 - 不要往 `.gava` 里写子元素，也不要给它写边框、圆角；`data-gava`、`data-gava-el`、`.gava-img/.gava-loaded/.gava-err` 是脚本内部状态
+
+## v3.5 分块加载与引擎事件
+发布包里没有单独的 COMPONENTS 增补。页面注释指向的约定写在源码里：
+
+- 分块加载：`pipeline/shared/sim_chunks.js`（`__mkSimChunks`，首屏 `boot` / 按需 `load` / `prefetch`）
+- 引擎事件与分享链接：`pipeline/shared/sim_bridge.js`（`sim:result`、`__simApply`）
+- 旧链接补齐默认值：`pipeline/shared/migrate_ww.js`（`__simMigrateConfig`，口径 `ww-calc-3.5`）
