@@ -31,7 +31,7 @@
     resources: [{ key: 'imp', name: '印象', max: 150, segmented: false, confidence: 'high' }, { key: 'photo', name: '照片', max: 3, segmented: true, confidence: 'high' }, { key: 'film', name: '胶卷', max: 10, segmented: true, confidence: 'high' }],
     kit(H) {
       const ch = H.chain, echo = H.opts.mode === 'echo', ty = echo ? 'echo' : 'basic';
-      const sel = (a, extra) => { const hs = a.hits.filter((h) => h.type === ty || (h.type !== 'basic' && h.type !== 'echo')); return H.act(Object.assign({ key: a.key, cls: a.cls, skill: a.skill, hits: hs, levelKey: a.levelKey, dur: a.duration, label: a.label }, extra || {})); };
+      const sel = (a, extra) => { const hs = a.hits.filter((h) => h.type === ty || (h.type !== 'basic' && h.type !== 'echo')); return H.act(Object.assign({ key: a.key, cls: a.cls, skill: a.skill, skillId: a.skillId, hits: hs, levelKey: a.levelKey, dur: a.duration, label: a.label }, extra || {})); };
       const K = {
         b1: H.act({ key: 'b1', cls: 'A', skill: 1, labels: ['普攻第一段伤害'], levelKey: 'basic', dur: 0.5 }),
         b2: H.act({ key: 'b2', cls: 'A', skill: 1, labels: ['普攻第二段伤害'], levelKey: 'basic', dur: 0.53 }),

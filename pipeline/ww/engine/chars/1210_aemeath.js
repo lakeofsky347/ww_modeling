@@ -129,7 +129,7 @@
       if (k === 'fin' && cs.mode === 'burst' && (ch >= 3 ? n >= 1 : n >= 2)) out.push({ key: 'deep:all', value: 0.25 });
       if ((k === 'pH2' || k === 'mH2') && cs.instant) { out.push({ key: 'deep:all', value: 2 }); if (ch >= 1) out.push({ key: 'critDmg', value: 3 }); }
       if (LIB_KEYS.has(k)) {
-        if (ch >= 6) out.push({ key: 'deep:all', value: 0.4 });
+        if (ch >= 6) out.push({ key: 'taken:all', value: 0.4 });
       }
       return out;
     },

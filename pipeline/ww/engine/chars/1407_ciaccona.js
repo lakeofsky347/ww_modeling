@@ -16,6 +16,10 @@
  * 固有：黎那汐塔之风 四拍重奏 +30%（模块 scale）；幕间伴奏 护盾不建模
  * 共鸣链：1 普攻攻击 +35%（解析）；2 演绎期间队伍气动 +40%（模块光环）；3 第4段额外 +1 音律（谐律速奏 2 次：不建模，已标注）；4 四拍重奏/共鸣解放无视 45% 防御（模块）；5 共鸣解放 +40%（解析）；
  *   6 进入音律独奏时 220% 气动（视为共鸣解放伤害，模块：第4段后追加）
+ *     v3.4（WuwaLAB 线上 10-10 快照「S6: Ensemble Sylph」999961 + 第4段 s6_sylph_damage 事件 80f）：每次第4段 1 次，时间标在施放后 80f；
+ *     命中回能 100（=1.00 共鸣能量）、协奏 0、偏谐 0 按 WuwaLAB 取（游戏表无此行）；倍率 220% 与链 6 原文一致。
+ *     第4段施放回能 2000（=20）在 10-10 快照被删除（该动作命中+事件回能合计 2376→376，未挪到别处）；本模块/引擎从未计入该 20 点
+ *     （回能只取 ww.json 命中行 4×0.94），故已对齐、无需改动。
  * 专武 林间的咏叹调 (21030026)：「为目标添加【风蚀效应】后，自身气动伤害加成提升24%，持续10秒」（解析；anomaly 触发）
  */
 (function (root, factory) {
@@ -23,6 +27,7 @@
   else factory(root.WWEngine, root.WWCharsCommon, root.WWKitB);
 })(typeof self !== 'undefined' ? self : this, function (WW, C, B) {
   'use strict';
+  const C6_AT = 80 / 60; // v3.4 WuwaLAB 10-10: s6_sylph_damage event at 80f of Quadruple Time Steps 4 (timeline marker)
   const { on } = C;
   const SIG = 21030026;
   return WW.registerChar({
@@ -52,7 +57,7 @@
         I: H.act({ key: 'I', cls: 'I', skill: 5, labels: ['技能伤害'], levelKey: 'intro', concertoParam: '回复协奏能量', dur: 0.9 }),
         O: B.outro(H, '和声引风'),
       });
-      K.c6 = H.act({ key: 'c6', cls: 'R', skill: 3, hits: [Object.assign({}, K.lib.hits[0], { label: '链6 音律独奏', multiplier: K.lib.hits[0].multiplier.map(() => 2.2), count: 1 })], levelKey: 'liberation', label: '链6·音律独奏 220%' });
+      K.c6 = H.act({ key: 'c6', cls: 'R', skill: 3, hits: [Object.assign({}, K.lib.hits[0], { label: '链6 音律独奏', multiplier: K.lib.hits[0].multiplier.map(() => 2.2), count: 1, energy: [1.0], concerto: [0], offTune: [0] })], levelKey: 'liberation', label: '链6·音律独奏 220%' });
       return K;
     },
     fillerKeys: ['n1', 'n2', 'n3', 'n4'],
@@ -87,7 +92,7 @@
         const n = +k.slice(1); cs.st = n % 4;
         if (n === 4) {
           api.addAnomaly('erosion', 1); cs.yl = Math.min(3, cs.yl + 1 + (ch >= 3 ? 1 : 0)); cs.soloUntil = te + soloDur;
-          if (ch >= 6) api.deal(api.mem.modKit.c6, { coord: true });
+          if (ch >= 6) api.deal(api.mem.modKit.c6, { coord: true, t: api.t + C6_AT });
         }
         return;
       }

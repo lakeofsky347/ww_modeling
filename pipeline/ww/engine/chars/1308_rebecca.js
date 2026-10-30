@@ -20,7 +20,7 @@
  * 变奏 到我了！：按模式两种变奏（同样切换模式）
  * 延奏 好搭档：「下一位登场角色获得浪客羁绊，全伤害加深15%，持续14秒」（解析 buff，incoming）；
  *   「每0.2秒会获得1层超限，造成重击伤害加深0.5%（若是露西持有浪客羁绊，则直接获得满层），上限为35%」→ 模块按时间累积层数（露西直接 70 层）；
- *   机枪塔 2.5%/次（攻击频率未公开）未建模（低）
+ *   机枪塔 2.5%/次，每 0.2 s，14 s（70 次）；露西过载 8.75%/次 4 s（20 次）—— 间隔取 WuwaLAB Outro: Turret 帧表（v3.4.1 建模，中）
  * 动作帧：WuwaLAB（按原样映射）
  * 专武 碎骨 (21030066)：解析（附加骇破·偏移触发 → 由 applyTune 触发）
  * 共鸣链：未建模（chainModeled 0）
@@ -40,7 +40,7 @@
   };
   return WW.registerChar({
     id: 1308, chainModeled: 0, name: '丽贝卡', version: '0.1', confidence: 'medium',
-    notes: ['狂热回复量为估计（低）', '31型重机枪阶段：尽早两次提升威力，20 发达到 90 过载 → 大烟花；时长 5.0 秒为估计（低）', '骇破·偏移持续 10 秒（未给出）；骇破响应·熔触未建模', '机枪塔伤害未建模（低）', '战术闪避 / 闪避反击 / 空中突袭未建模', '共鸣链未建模'],
+    notes: ['狂热回复量为估计（低）', '31型重机枪阶段：尽早两次提升威力，20 发达到 90 过载 → 大烟花；时长 5.0 秒为估计（低）', '骇破·偏移持续 10 秒（未给出）；骇破响应·熔触未建模', '机枪塔：WuwaLAB 帧表 0.2 s/次，一次性按延奏时刻面板结算（中）；露西非紧接入场的过载未建模', '战术闪避 / 闪避反击 / 空中突袭未建模', '共鸣链未建模'],
     audit: { role: 'support', finishers: ['rtt', 'fw'], window: 25, sig: 21030066, alts: [21030024, 21030064, 21030056], solo: 'rebecca_solo.json', team: 'team_rebecca.json', teamMi: 1 },
     frames: {
       h1: '普攻·Basic: Huntress 1', h2: '普攻·Basic: Huntress 2', h3: '普攻·Basic: Huntress 3',
@@ -75,6 +75,11 @@
           iG: H.act({ key: 'iG', cls: 'I', skill: 5, hits: f(s5, '蠢货，有本事来抓我！伤害'), levelKey: 'intro', concertoParam: '蠢货，有本事来抓我！回复协奏能量', dur: 1.48, label: '蠢货，有本事来抓我！' }),
           O: B.outro(H, '好搭档'),
         });
+      // v3.4.1 延奏 好搭档·机枪塔（游戏文本：每次攻击 2.5% 导电伤害，14 秒；露西强化 倍率 +250%、持续 4 秒）
+      // 攻击间隔：WuwaLAB「Outro: Turret」70 段 / 840f（每 12f = 0.2 s，mv 250）、「Outro: Turret (Lucy)」20 段 / 240f（mv 875 = 2.5% × 3.5）→ 与文本一致
+      { const base = K.iH.hits[0];
+        K.turret = H.act({ key: 'turret', cls: 'O', skill: 11, hits: [B.textHit(H, base, { label: '机枪塔', mv: 0.025, type: 'outro', confidence: 'medium' })], levelKey: 'outro', dur: 0, label: '延奏·机枪塔' });
+        K.turretL = H.act({ key: 'turretL', cls: 'O', skill: 11, hits: [B.textHit(H, base, { label: '机枪塔（露西过载）', mv: 0.0875, type: 'outro', confidence: 'medium' })], levelKey: 'outro', dur: 0, label: '延奏·机枪塔（露西过载）' }); }
       B.patch(H, /该你了/, { trigger: { on: 'manual' }, mode: 'module' }, '模块：小孩子才做选择！/ 哒哒哒 / 砰砰砰 时触发', 'inherent');
       H._cx = H.findBuff((b) => b.kind === 'outro' && /超限/.test(b.text || '')).map((b) => b.id);
       B.patch(H, /每0.2秒会获得1层超限/, { trigger: { on: 'manual' }, mode: 'module', target: 'self', maxStacks: 70 }, '模块：超限按时间累积（露西直接满层）', 'outro');
@@ -135,6 +140,13 @@
       const cs = api.cs, lucy = api.ctx.members[toMi].cfg.id === 1511;
       cs.cxMi = toMi; cs.cxT0 = api.t; cs.cxEnd = api.t + 14; cs.phase = null;
       for (const id of api.H._cx || []) api.fireBuff(id, toMi, { duration: 14, stacks: lucy ? 70 : 1 });
+      // v3.4.1 机枪塔：每 0.2 s 一次，窗口内的次数一次性结算（快照延奏时刻面板；离场，非协同，不回能）。
+      // 露西经此延奏变奏入场 → 过载：倍率 ×3.5、持续 4 s（20 次）。露西之后经其他人延奏入场才强化的情形不建模（低）。config.rebeccaTurret=false → ≤3.4（不计机枪塔）
+      if (api.ctx.cfg.rebeccaTurret !== false) {
+        const K = api.mem.modKit, act = lucy ? K.turretL : K.turret, nMax = lucy ? 20 : 70;
+        const n = Math.max(0, Math.min(nMax, Math.floor((api.duration - api.t) / 0.2 + 1e-9)));
+        if (n > 0 && act) api.deal(act, { count: n, t: api.t, coord: false, noGain: true });
+      }
     },
     onTeam(api, ev) {
       const cs = api.cs;

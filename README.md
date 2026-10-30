@@ -4,6 +4,7 @@
 
 纯静态网页，全部计算在浏览器本地完成：自选队伍与配装，引擎按动作帧排轴（支持自动搜索），结算单目标期望伤害，并逐乘区标出数据可信度。
 
+- 发布版本：**v3.5**（计算口径 `ww-calc-3.5`，打包 2026-10-13）。v3.2–v3.5 的行为变化（切人冷却、易伤乘区、双时钟、分块加载、搜索档位、判定修正）见 [`dist/README-ww.md`](dist/README-ww.md)；公式出处在引擎 `MECH` 表
 - 数据版本：**3.7.8**（游戏 3.7.0；上游 [Arikatsu/WutheringWaves_Data](https://github.com/Arikatsu/WutheringWaves_Data) commit `9218d61`）
 - 64 名共鸣者全部有角色模块，均可自动搜索
 
@@ -17,24 +18,26 @@
 常用命令：
 
     npm test          # 引擎与角色模块测试（node --test，184 项）
-    npm run build     # 重新生成 dist/ww/（引擎 bundle + worker + 页面 + data/ww.json）
+    npm run build     # 重新生成 dist/ww/（引擎核心 + 角色分块 + worker + 页面 + data/chunks.json）
     npm run sim -- pipeline/ww/engine/examples/team_jinhsi.json
 
 需要 Node ≥ 18、Python ≥ 3.9，无第三方依赖。
 
 ## 二、目录
 
-    dist/ww/                  构建产物（index.html、assets/ww-engine.js、assets/ww-worker.js、assets/theme、assets/avatars、data/ww.json）
+    dist/ww/                  构建产物：index.html、assets/ww-engine.js（核心）、assets/ww-worker.js、assets/theme、assets/avatars、assets/skills、assets/elements、data/ww.json（瘦索引）与 data/chunks.json（按需分块）
+    dist/README-ww.md         v3.5 发布说明（随 2026-10-13 包）
     frontend/ww/              页面骨架与组件说明（COMPONENTS.md）
-    frontend/theme/           主题样式、WebGL 背景、游戏切换标签栏、头像脚本、图标
+    frontend/theme/           主题样式、WebGL 背景、游戏切换、头像、分享/方案/对比等脚本
     frontend/apply-theme.py   主题注入脚本（构建时调用）
     pipeline/build_pages.py   页面构建入口（--layout per-game，默认只构建 ww）
+    pipeline/shared/          分块加载、引擎事件桥、旧链接迁移（构建时内联进页面）
     pipeline/ww/engine/       伤害/排轴引擎 ww_engine.js + 角色模块 chars/（64 名） + 测试 + 示例
-    pipeline/ww/page/         页面应用 app.js、worker.js、构建脚本 build_page.py
+    pipeline/ww/page/         页面应用 app.js、worker.js、构建脚本 build_page.py、页面预设快照 presets_v35.json
     pipeline/ww/build_ww.py   从解包数据生成 pipeline/out/ww.json
     pipeline/ww/validation/   校验：动作帧表 action_frames.json、副词条档位、用例、报告 REPORT.md / TEAM_BENCHMARK.md
-    pipeline/out/ww.json      处理后的模拟数据（构建输入）
-    assets-src/icons/ww/      角色头像（64 张，128×128 webp）+ manifest.json + 抓取脚本 ../fetch_icons.py
+    pipeline/out/ww.json      处理后的模拟数据（构建输入；页面再拆成首屏索引和角色/武器/声骸分块）
+    assets-src/icons/ww/      角色头像（64 张）、技能图标、属性图标 + manifest.json + 抓取脚本 ../fetch_icons.py
     pipeline/ww/MECHANICS.md   机制说明；VALIDATION_CASES.md 用例格式
 
 ## 三、重新生成数据（可选）

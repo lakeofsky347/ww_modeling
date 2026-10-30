@@ -2,7 +2,9 @@
 Trims validation/action_frames.json to the fields the engine reads (frameEntry / indexScraperFrames)."""
 import json, re
 
-KEEP_FR = ('total', 'earliest_cancel', 'no_swap', 'swap_resolved', 'time_stop')  # time_stop: timeStop exclude (default) needs it
+# last_commit: v3.3 step length uses the last hit's commit frame (WuwaLAB). resolvesAt is the WuWaSim equivalent.
+KEEP_FR = ('total', 'earliest_cancel', 'no_swap', 'swap_resolved', 'time_stop', 'last_commit')
+KEEP_MK = ('freezeTime', 'nextAttAt', 'skillEndAt', 'resolvesAt')
 NOTE_RE = re.compile(r'核对：不一致|内部矛盾')
 
 
@@ -20,15 +22,19 @@ def trim_frames(fr):
                 continue
             t = {'duration_s': e.get('duration_s'), 'cancel_s': e.get('cancel_s'), 'fps': e.get('fps') or 60}
             mk = e.get('markers_s')
-            if mk:  # WuWaSim: keep the markers the engine reads
-                t['markers_s'] = {k: mk[k] for k in ('freezeTime', 'nextAttAt', 'skillEndAt') if mk.get(k) is not None}
+            if mk:  # WuWaSim: keep the markers the engine reads (empty dict when every kept marker is null)
+                t['markers_s'] = {k: mk[k] for k in KEEP_MK if mk.get(k) is not None}
             f = e.get('frames') or {}
             t['frames'] = {k: f[k] for k in KEEP_FR if k in f and f[k] is not None}
+            if e.get('hits'):
+                t['hits'] = [{'f': h['f'], 'mv': h['mv']} for h in e['hits']]
             if e.get('source'):
                 t['source'] = e['source']
             if e.get('version'):
                 t['version'] = e['version']
-            for k in ('tsVerified', 'tsSource'):  # measured time-stop flag (toa semantics: non-liberation stops excluded only when verified)
+            # tsVerified: measured time-stop (toa: non-liberation stops count only when verified).
+            # duration_confirmed / duration_adopted / confidence: v3.3+ frame-review notes kept on the entry.
+            for k in ('tsVerified', 'tsSource', 'duration_confirmed', 'duration_adopted', 'confidence'):
                 if e.get(k):
                     t[k] = e[k]
             notes = e.get('notes') or ''

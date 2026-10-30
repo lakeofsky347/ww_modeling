@@ -76,7 +76,7 @@
     },
     actionStats(api, act) {
       const cs = api.cs, t = api.t, ch = api.H.chain, out = [];
-      if (DJ.includes(act.key) && on(cs.qcrUntil, t)) out.push({ key: 'deep:all', value: 0.5 });
+      if (DJ.includes(act.key) && on(cs.qcrUntil, t)) out.push({ key: 'taken:all', value: 0.5 });
       if (on(cs.jyUntil, t)) out.push({ key: 'atkPct', value: 0.1 });
       if (ch >= 1) out.push({ key: 'critRate', value: 0.2 });
       if (ch >= 4) out.push({ key: 'atkPct', value: 0.2 });

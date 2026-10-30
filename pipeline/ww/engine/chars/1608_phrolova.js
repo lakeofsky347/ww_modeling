@@ -17,7 +17,7 @@
  * 延奏 未完成的曲目 (1003709): 下一位登场角色湮灭加深 20%、重击加深 25%（解析自动）；「弗洛洛处于指挥状态时施放此技能…切换至其他角色时，赫卡忒将额外施放2次强化攻击·赫卡忒」
  * 固有 变音符：「施放致命组歌、永生组歌、声骸技能时，下一枚获得的【乐声】会变为【乐声·彩乐】」；八重奏：「进入战斗状态获得10层余响…每拥有1层余响，暴击伤害提升2.5%…溢出 1 层暴伤 +1%，最多 100%」→ 模块光环
  * 共鸣链：1 亡与死的乐章/永不消逝的梦呓 ×1.8；2 谱曲终末 ×1.75、余响加成 ×1.75、+14 余响；3 声骸伤害加深 80%（解析）；4 声骸技能 → 全队全属性 +20%（触发补 谱曲终末）；
- *   6 强化攻击 ×1.24；重世幻象 216.42%（未建模，低）；离场指挥时目标受到伤害 +40%（按加深计，低）；在场指挥时湮灭 +60%（光环）。
+ *   6 强化攻击 ×1.24；重世幻象 216.42%（未建模，低）；离场指挥时目标受到伤害 +40%（v3.4 起按易伤独立乘区 taken:all，低）；在场指挥时湮灭 +60%（光环）。
  * 专武 幽冥的忘忧章 (21050066)：「造成声骸技能伤害后12秒内，共鸣技能伤害加成提升32%，声骸技能伤害加深32%，且造成伤害时无视目标8%防御」→ 赫卡忒（声骸伤害）/ Q 造成伤害时触发（模块）
  */
 (function (root, factory) {
@@ -126,7 +126,7 @@
     enhanced(api, why) {
       const cs = api.cs, K = api.mem.modKit;
       const k = this.noteKey(cs, api.s.t);
-      const c6 = api.H.chain >= 6 && api.s.active !== api.mi ? [{ key: 'deep:all', value: 0.4 }] : [];
+      const c6 = api.H.chain >= 6 && api.s.active !== api.mi ? [{ key: 'taken:all', value: 0.4 }] : [];
       api.deal(K[k], { count: 1, stats: c6 });
       this.fireW(api);
       if (api.s.active !== api.mi) this.gainYx(cs, 1);
@@ -182,7 +182,7 @@
       const end = Math.min((ev.t || 0) + (ev.dur || 0), cs.zhUntil, api.ctx.duration);
       let n = 0;
       while (cs.auto.next <= end + 1e-9) { n++; cs.auto.next += per; }
-      if (n) { api.deal(K.hauto, { count: n, stats: api.H.chain >= 6 ? [{ key: 'deep:all', value: 0.4 }] : [] }); this.fireW(api); }
+      if (n) { api.deal(K.hauto, { count: n, stats: api.H.chain >= 6 ? [{ key: 'taken:all', value: 0.4 }] : [] }); this.fireW(api); }
       // 队员声骸技能 → 强化攻击（同名声骸一次）
       const a = ev.act || {};
       const isEcho = a.cls === 'Q' || (api.memberDef(ev.mi).R.id === 1607 && ['R', 'E2', 'drain'].includes(a.key));

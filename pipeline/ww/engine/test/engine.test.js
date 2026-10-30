@@ -65,7 +65,7 @@ test('physical: allElement does not apply', () => {
 });
 test('MECH table: every entry has mech+basis+confidence', () => {
   for (const [k, v] of Object.entries(E.MECH)) {
-    assert.ok(['table', 'corroborated', 'community', 'unsolved', 'heuristic'].includes(v.mech), k); // heuristic = search-only (residual/steady)
+    assert.ok(['table', 'corroborated', 'community', 'community-consensus', 'unsolved', 'heuristic'].includes(v.mech), k); // community-consensus = v3.4 swap cooldown (multi-tool, unmeasured); heuristic = search-only (residual/steady)
     assert.ok(v.basis && v.confidence, k);
   }
 });

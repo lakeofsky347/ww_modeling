@@ -58,7 +58,7 @@ const B4 = {
   1301: { solo: 'calcharo_solo.json', fin: ['dg', 'mc', 'lib'] },
   1303: { solo: 'yuanwu_solo.json', fin: ['wh', 'lib'] },
   1305: { solo: 'xiangliyao_solo.json', fin: ['lib', 'wf', 'yr'] },
-  1307: { solo: 'buling_solo.json', fin: ['shan', 'fl'] },
+  1307: { solo: 'buling_solo.json', fin: ['shan', 'gy'] }, // v3.5 search casts 飞雷诀·归一 (gy) instead of base 飞雷诀 (fl)
   1308: { solo: 'rebecca_solo.json', fin: ['rtt', 'fw'] },
   1309: { solo: 'rover_electro_solo.json', fin: ['os', 'lib', 'jz'] },
   1310: { solo: 'rover_electro_f_solo.json', fin: ['os', 'lib', 'jz'] },

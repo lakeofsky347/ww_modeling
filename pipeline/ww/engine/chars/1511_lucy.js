@@ -107,7 +107,7 @@
     },
     auras(api) {
       if (!on(api.cs.debuffUntil, api.t)) return [];
-      return [{ key: 'deep:all', value: 0.05 }, { key: 'defReduce', value: 0.05 }];   // 义体故障 / 突破协议（目标侧，近似为全队增益）
+      return [{ key: 'taken:all', value: 0.05 }, { key: 'defReduce', value: 0.05 }];   // 义体故障 / 突破协议（目标侧，近似为全队增益）
     },
     apply(api, act) {
       const cs = api.cs, k = act.key, t = api.t, te = api.tEnd, dur = te - t;

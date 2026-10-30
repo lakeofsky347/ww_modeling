@@ -64,6 +64,11 @@
         I: H.act({ key: 'I', cls: 'I', skill: 5, labels: ['技能伤害'], levelKey: 'intro', concertoParam: '回复协奏能量', dur: 1.35 }),
         O: B.outro(H, '晦渡为明'),
       });
+      // v3.5 review: 「消耗【灵性】…提升该次技能的伤害倍率，回复额外的协奏能量」— the enhanced rows' hit data carry the base concerto (月弓) resp. none
+      // (弦引, base comes from 越限的弦引回复协奏能量 = 8), so the 「额外回复协奏能量」 param is ADDED to the base (was: ignored for 月弓, replacing the base for 弦引)
+      const xc = (lab) => H.act({ key: 'xc', cls: 'A', skill: 6, hits: [], concertoParam: lab, noConcertoFallback: true }).concerto || 0;
+      for (let k = 1; k <= 3; k++) K['eb' + k] = Object.assign({}, K['eb' + k], { concerto: K['b' + k].concerto + xc('月弓·普攻第' + B.CN[k - 1] + '段额外回复协奏能量'), concertoSource: 'hits+description' });
+      K.earc = Object.assign({}, K.earc, { concerto: K.arc.concerto + xc('越限的弦引额外回复协奏能量'), concertoSource: 'description+description' });
       if (ch >= 6) K.full = Object.assign({}, K.full, { hits: K.full.hits.map((h, i) => (i === 0 ? Object.assign({}, h, { multiplier: h.multiplier.map((x) => x + 16) }) : h)), inferred: '链6 +1600%' });
       if (H.weaponId === SIG) B.patch(H, /自身获得护盾时：共鸣解放伤害无视目标7.2%防御/, { trigger: { on: 'cast', kinds: ['A', 'H', 'E', 'R', 'I'] }, maxStacks: 5, mode: 'auto' }, '模块：盈昇——每个动作获得护盾', 'weapon');
       return K;
