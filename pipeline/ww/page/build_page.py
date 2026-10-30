@@ -50,6 +50,7 @@ ECHO_SLIM = ('id', 'name', 'nameEn', 'rarity', 'cost', 'phantomType', 'elements'
 HEAD_JS = [
     ('gamenav.js', False), ('gui.js', False), ('share.js', False), ('plans.js', False),
     ('loadui.js', False), ('avatar.js', True), ('presets.js', True), ('clock.js', True),
+    ('resultbar.js', True),
 ]
 LAZY_JS = ('breakdown.js', 'compare.js', 'plans-drawer.js')
 CORE_PARTS = ('ww_engine.js', 'chars/_common.js', 'chars/0_wb_lib.js')
