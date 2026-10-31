@@ -832,8 +832,8 @@ function renderTop() {
   var opts = '<option value="">载入预设…</option>' + (CFG.presets || []).map(function (p, i) { return '<option value="' + i + '">' + esc(p.name) + '</option>'; }).join('');
   $('ww-top-actions').innerHTML = '<select id="ww-preset" style="width:200px" aria-label="载入预设">' + opts + '</select>' +
     '<button class="ww-btn sm" id="ww-import">导入</button><button class="ww-btn sm" id="ww-export">导出</button>';
-  var run = $('ww-top-run');
-  if (run) run.innerHTML = '<label class="auto-toggle" title="改参数后自动重算"><input type="checkbox" id="ww-auto"' + (S.auto ? ' checked' : '') + ' aria-label="自动计算"><span>自动计算</span></label>' +
+  var topRun = $('ww-top-run');
+  if (topRun) topRun.innerHTML = '<label class="auto-toggle" title="改参数后自动重算"><input type="checkbox" id="ww-auto"' + (S.auto ? ' checked' : '') + ' aria-label="自动计算"><span>自动计算</span></label>' +
     '<button type="button" class="ww-btn more-btn" id="ww-more" aria-expanded="false" aria-controls="top-more" aria-haspopup="menu">⋯更多</button>' +
     '<button type="button" class="ww-btn pri" id="ww-run">计算</button>';
   $('ww-preset').onchange = function () {
