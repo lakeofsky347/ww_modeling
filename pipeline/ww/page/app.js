@@ -46,7 +46,8 @@ var STORE = CFG.storageKey || 'ww-sim:config:v1';
 
 // ---------------------------------------------------------------- state
 var S = { data: null, chars: null, weapons: null, sonatas: null, echoes: null, tiers: [], tierByKey: {}, config: null, sel: 0, echoSel: 0,
-  view: null, lastSearch: null, error: null, running: false, pending: false, jobId: 0, worker: null, workerReady: false, ms: null, modules: {}, runMeta: {} };
+  view: null, lastSearch: null, error: null, running: false, pending: false, jobId: 0, worker: null, workerReady: false, ms: null, modules: {}, runMeta: {},
+  auto: true, dirty: false };
 // v3.2 engine events & API (bridge: pipeline/shared/sim_bridge.js, prepended by build_page.py)
 var SIM = window.__mkSimBridge('ww', (window.__WW_PAGE__ || {}).engineVersion || window.__SIM_ENGINE_VERSION__);   // v3.3 engineVersion (build constant)
 // v3.3 chunks (pipeline/shared/sim_chunks.js; COMPONENTS.md「v3.3 数据分块与按需加载」): the index (data/ww.json) carries slim resonator /
@@ -277,6 +278,8 @@ function run() {
 }
 function onResult(m) {
   S.running = false;
+  S.dirty = false;
+  clearStale();
   var meta = S.runMeta[m.id]; delete S.runMeta[m.id];
   if (m.id !== S.jobId) { if (meta) SIM.fail(meta.rid, '已被新的计算取代'); if (S.pending) run(); return; }
   S.ms = m.ms;
@@ -322,7 +325,7 @@ function simDetail(m, cfg, src) {
   (V.share.byMember || []).forEach(function (x) { dmg[x.member] = x; });
   var tl = flatActs(V).map(function (f, i) {
     var l = V.timeline.lanes[f.li], a = l.actions[f.ai];
-    return { index: i, lane: l.member, laneIndex: f.ai, member: l.member, id: l.id != null ? l.id : ids[l.member], t: a.t, endT: a.endT, rt: a.rt != null ? a.rt : null, rtEnd: a.rtEnd != null ? a.rtEnd : null, cls: a.cls, key: a.key, tok: a.tok, label: a.label,
+    return { index: i, lane: l.member, laneIndex: f.ai, member: l.member, id: l.id != null ? l.id : ids[l.member], t: a.t, av: a.t, endT: a.endT, rt: a.rt != null ? a.rt : null, rtEnd: a.rtEnd != null ? a.rtEnd : null, cls: a.cls, key: a.key, tok: a.tok, label: a.label,
         skillId: a.skillId, skillIdBy: a.skillIdBy, skillIcon: ((skillOf(l.id != null ? l.id : ids[l.member], a.skillId) || {}).skillIcon) || null, echoId: a.echoId, damage: a.damage || 0, coord: !!a.coord, offfield: !!a.offfield,
         timeStop: a.timeStop, truncated: !!a.truncated, credit: a.credit, tailFreeze: !!a.tailFreeze, delayedBy: a.delayedBy || 0 };
   });
@@ -412,23 +415,68 @@ function searchKey() { var c = clone(S.config); delete c.rotation; delete c.buff
 // ---------------------------------------------------------------- rendering: top bar
 function renderTop() {
   var opts = '<option value="">载入预设…</option>' + (CFG.presets || []).map(function (p, i) { return '<option value="' + i + '">' + esc(p.name) + '</option>'; }).join('');
-  $('ww-top-actions').innerHTML = '<select id="ww-preset" style="width:200px" aria-label="预设">' + opts + '</select>' +
-    '<button class="ww-btn sm" id="ww-import">导入</button><button class="ww-btn sm" id="ww-export">导出</button>' +
-    '<button class="ww-btn pri" id="ww-run">开始模拟</button>';
+  $('ww-top-actions').innerHTML = '<select id="ww-preset" style="width:200px" aria-label="载入预设">' + opts + '</select>' +
+    '<button class="ww-btn sm" id="ww-import">导入</button><button class="ww-btn sm" id="ww-export">导出</button>';
+  var topRun = $('ww-top-run');
+  if (topRun) topRun.innerHTML = '<label class="auto-toggle" title="改参数后自动重算"><input type="checkbox" id="ww-auto"' + (S.auto ? ' checked' : '') + ' aria-label="自动计算"><span>自动计算</span></label>' +
+    '<button type="button" class="ww-btn more-btn" id="ww-more" aria-expanded="false" aria-controls="top-more" aria-haspopup="menu">⋯更多</button>' +
+    '<button type="button" class="ww-btn pri" id="ww-run">计算</button>';
   $('ww-preset').onchange = function () {
     var p = CFG.presets[+this.value]; if (!p) return;
     S.config = clone(p.config); S.rotTag = p.config.rotation && p.config.rotation.mode === 'manual' ? { kind: 'preset', seq: p.config.rotation.sequence } : null;
-    S.sel = 0; S.echoSel = 0; S.lastSearch = null; save(); renderInputs(); run(); this.value = '';
+    S.sel = 0; S.echoSel = 0; S.lastSearch = null; S.dirty = false; clearStale(); save(); renderInputs(); run(); this.value = '';
     toast('已载入预设：' + p.name);
   };
-  $('ww-run').onclick = function () { run(); };
+  $('ww-run').onclick = function () { if (invalidCount()) return; S.dirty = false; run(); };
   $('ww-import').onclick = openImport;
   $('ww-export').onclick = openExport;
+  var auto = $('ww-auto');
+  if (auto) auto.onchange = function () { S.auto = auto.checked; if (S.auto && S.dirty && !invalidCount()) run(); renderStatus(); };
+  var more = $('ww-more'), bar = $('ww-top');
+  if (more && bar) more.onclick = function (ev) {
+    ev.stopPropagation();
+    var open = bar.classList.toggle('more-open');
+    more.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) { var f = bar.querySelector('#top-more button, #top-more select, #top-more input'); if (f) f.focus(); }
+  };
+  if (!window.__wwMoreBound) {
+    window.__wwMoreBound = true;
+    document.addEventListener('click', function (e) {
+      var top = document.getElementById('ww-top');
+      if (!top || !top.classList.contains('more-open')) return;
+      if (e.target.closest && e.target.closest('#top-more, .more-btn')) return;
+      top.classList.remove('more-open');
+      var b = top.querySelector('.more-btn'); if (b) b.setAttribute('aria-expanded', 'false');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var top = document.getElementById('ww-top');
+      if (!top || !top.classList.contains('more-open')) return;
+      top.classList.remove('more-open');
+      var b = top.querySelector('.more-btn'); if (b) { b.setAttribute('aria-expanded', 'false'); b.focus(); }
+    });
+  }
+  renderStatus();
 }
+function invalidCount() { return document.querySelectorAll('input[aria-invalid="true"]').length; }
+function clearStale() { var el = $('ww-summary'); if (el) el.classList.remove('stale'); }
+function markStale() { var el = $('ww-summary'); if (el && S.view) el.classList.add('stale'); }
 function renderStatus() {
-  var b = $('ww-run'); if (!b) return;
-  b.disabled = false;
-  b.textContent = S.loading ? '加载数据…' : S.running ? (S.config.rotation.mode === 'search' ? '搜索中…' : '计算中…') : '开始模拟';
+  var b = $('ww-run'), st = $('ww-status');
+  var n = invalidCount();
+  if (b) {
+    b.disabled = S.loading || S.running || n > 0;
+    b.textContent = S.loading ? '加载数据…' : S.running ? (S.config && S.config.rotation && S.config.rotation.mode === 'search' ? '搜索中…' : '计算中…') : '计算';
+  }
+  if (!st) return;
+  st.className = 'status';
+  if (S.loading || S.running) { st.className = 'status run'; st.textContent = S.loading ? '加载数据…' : '计算中…'; }
+  else if (n) { st.className = 'status err'; st.textContent = '有 ' + n + ' 项未生效'; }
+  else if (S.error) { st.className = 'status err'; st.textContent = '计算失败'; }
+  else if (S.dirty) st.textContent = S.auto ? '等待重算…' : '参数已修改，点击「计算」';
+  else if (S.view && S.ms != null) st.textContent = '✓ 耗时 ' + S.ms + ' ms';
+  else st.textContent = '';
+  if (window.__gresult) window.__gresult.refresh();
 }
 function toast(msg) {
   var t = document.createElement('div'); t.className = 'ww-toast'; t.textContent = msg; document.body.appendChild(t);
@@ -449,23 +497,21 @@ function renderTeam() {
   var team = S.config.team, html = '<div class="ww-team">';
   for (var i = 0; i < 3; i++) {
     var m = team[i];
-    if (!m) { html += '<div class="ww-slot empty" data-slot="' + i + '" role="button" tabindex="0">＋ 选择共鸣者</div>'; continue; }
+    if (!m) { html += '<button type="button" class="ww-slot empty" data-slot="' + i + '">＋ 选择共鸣者</button>'; continue; }
     var R = charById(m.id), w = weaponById(m.weapon && m.weapon.id), mod = hasModule(m.id) && m.module !== false;
-    html += '<div class="ww-slot' + (i === S.sel ? ' sel' : '') + (mod ? '' : ' no-module') + '" data-slot="' + i + '" data-el="' + R.element + '" role="button" tabindex="0" title="' + (mod ? '角色模块：可自动搜索' : '无角色模块：仅手动排轴') + '">' +
+    html += '<button type="button" class="ww-slot' + (i === S.sel ? ' sel' : '') + (mod ? '' : ' no-module') + '" data-slot="' + i + '" data-el="' + R.element + '" title="' + (mod ? '点击更换共鸣者 · 可自动搜索' : '点击更换共鸣者 · 仅手动排轴') + '">' +
       '<span class="role">' + (i + 1) + ' 号位</span><div class="ava">' + gava(m.id, 'md') + '</div><div class="nm">' + esc(R.name) + '</div>' +
       '<div class="meta">Lv' + (m.level || 90) + ' · ' + esc(w ? w.name : '无武器') + (w ? ' R' + ((m.weapon && m.weapon.rank) || 1) : '') + '</div>' +
       '<div class="ww-chain">' + (function (cap) { return [1, 2, 3, 4, 5, 6].map(function (k) { return '<i' + (k <= (m.chain || 0) ? (cap != null && k > cap ? ' class="on unmodeled" title="第 ' + k + ' 链未建模，不计入"' : ' class="on"') : '') + '></i>'; }).join(''); })(chainCap(m)) + '</div>' +
-      chainCapTag(m) + staminaBar(i) + '</div>';
+      chainCapTag(m) + staminaBar(i) + '<span class="slot-swap">更换</span></button>';
   }
   $('ww-team').innerHTML = html + '</div>';
   Array.prototype.forEach.call($('ww-team').querySelectorAll('.ww-slot'), function (el) {
-    var go = function () {
+    el.onclick = function () {
       var i = +el.getAttribute('data-slot');
       if (!S.config.team[i]) return openPicker(Math.min(i, S.config.team.length));
-      if (i === S.sel) return openPicker(i);
-      S.sel = i; S.echoSel = 0; renderTeam(); renderBuild();
+      S.sel = i; S.echoSel = 0; openPicker(i);
     };
-    el.onclick = go; el.onkeydown = function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); go(); } };
   });
 }
 function modal(title, body, footer, onMount) {
@@ -483,19 +529,44 @@ function modal(title, body, footer, onMount) {
 function openPicker(slot) {
   var cur = S.config.team[slot], used = S.config.team.map(function (m) { return m.id; });
   var list = S.data.resonators.slice().sort(function (a, b) { return (hasModule(b.id) - hasModule(a.id)) || (b.rarity - a.rarity) || (a.id - b.id); });
-  var body = '<div class="ww-grid2" style="margin-bottom:10px"><label class="ww-field"><span>搜索</span><input type="text" id="ww-pick-q" placeholder="名称 / 属性 / 英文"></label>' +
-    '<div class="ww-field"><span>说明</span><div style="font-size:12px;color:var(--dim)">带「模块」标记的角色可自动搜索；其余仅手动排轴。共 ' + list.length + ' 名</div></div></div><div class="ww-pick">' +
+  function chips(group, items) {
+    return '<div class="ww-filters" data-group="' + group + '" role="group" aria-label="' + esc(group === 'el' ? '属性' : group === 'wt' ? '武器' : '星级') + '">' +
+      items.map(function (it, i) { return '<button type="button" data-v="' + esc(it[0]) + '"' + (i === 0 ? ' class="on" aria-pressed="true"' : ' aria-pressed="false"') + '>' + esc(it[1]) + '</button>'; }).join('') + '</div>';
+  }
+  var body = '<div class="ww-grid2" style="margin-bottom:8px"><label class="ww-field"><span>搜索</span><input type="text" id="ww-pick-q" placeholder="名称 / 属性 / 英文" aria-label="搜索共鸣者"></label>' +
+    '<div class="ww-field"><span>说明</span><div style="font-size:12px;color:var(--muted)">带「模块」标记的角色可自动搜索；其余仅手动排轴。共 ' + list.length + ' 名。点槽位直接打开此列表。</div></div></div>' +
+    chips('el', [['', '全部属性']].concat(Object.keys(ELZH).filter(function (k) { return k !== 'physical'; }).map(function (k) { return [k, ELZH[k]]; }))) +
+    chips('wt', [['', '全部武器'], ['1', '长刃'], ['2', '迅刀'], ['3', '佩枪'], ['4', '臂铠'], ['5', '音感仪']]) +
+    chips('rar', [['', '全部星级'], ['5', '5★'], ['4', '4★']]) +
+    '<div class="ww-pick">' +
     list.map(function (R) {
       var taken = used.indexOf(R.id) >= 0 && (!cur || cur.id !== R.id);
-      return '<div class="it' + (cur && cur.id === R.id ? ' cur' : '') + '" data-el="' + R.element + '" data-id="' + R.id + '" data-q="' + esc((R.name + ' ' + (R.nameEn || '') + ' ' + ELZH[R.element] + ' ' + WTYPE[R.weaponType]).toLowerCase()) + '" role="button" tabindex="0"' + (taken ? ' aria-disabled="true" style="opacity:.4"' : '') + '>' +
-        gava(R.id, 'md') + '<div style="min-width:0"><div>' + esc(R.name) + '</div><div style="font-size:10.5px;color:var(--dim)">' +
+      return '<button type="button" class="it' + (cur && cur.id === R.id ? ' cur' : '') + '" data-el="' + R.element + '" data-wt="' + R.weaponType + '" data-rar="' + R.rarity + '" data-id="' + R.id + '" data-q="' + esc((R.name + ' ' + (R.nameEn || '') + ' ' + ELZH[R.element] + ' ' + WTYPE[R.weaponType]).toLowerCase()) + '"' + (taken ? ' aria-disabled="true" style="opacity:.4"' : '') + '>' +
+        gava(R.id, 'md') + '<div style="min-width:0"><div>' + esc(R.name) + '</div><div style="font-size:10.5px;color:var(--muted)">' +
         '<span class="ww-stars">' + (R.rarity >= 5 ? '★★★★★' : '★★★★') + '</span> ' + WTYPE[R.weaponType] + '</div></div>' +
-        (hasModule(R.id) ? '<span class="ww-tag cyan" style="margin-left:auto">模块</span>' : '<span class="ww-tag" style="margin-left:auto">仅手动</span>') + '</div>';
+        (hasModule(R.id) ? '<span class="ww-tag cyan" style="margin-left:auto">模块</span>' : '<span class="ww-tag" style="margin-left:auto">仅手动</span>') + '</button>';
     }).join('') + '</div>';
   var foot = (cur && S.config.team.length > 1 ? '<button class="ww-btn sm" data-remove>移出编队</button>' : '');
   modal('选择共鸣者 · ' + (slot + 1) + ' 号位', body, foot, function (box, close) {
-    var q = box.querySelector('#ww-pick-q');
-    q.oninput = function () { var v = q.value.trim().toLowerCase(); Array.prototype.forEach.call(box.querySelectorAll('.ww-pick .it'), function (it) { it.hidden = v && it.getAttribute('data-q').indexOf(v) < 0; }); };
+    var q = box.querySelector('#ww-pick-q'), filt = { el: '', wt: '', rar: '' };
+    function applyFilter() {
+      var v = q.value.trim().toLowerCase();
+      Array.prototype.forEach.call(box.querySelectorAll('.ww-pick .it'), function (it) {
+        var hide = (v && it.getAttribute('data-q').indexOf(v) < 0) || (filt.el && it.getAttribute('data-el') !== filt.el) ||
+          (filt.wt && it.getAttribute('data-wt') !== filt.wt) || (filt.rar && it.getAttribute('data-rar') !== filt.rar);
+        it.hidden = hide;
+      });
+    }
+    q.oninput = applyFilter;
+    Array.prototype.forEach.call(box.querySelectorAll('.ww-filters'), function (g) {
+      Array.prototype.forEach.call(g.querySelectorAll('button'), function (b) {
+        b.onclick = function () {
+          filt[g.getAttribute('data-group')] = b.getAttribute('data-v');
+          Array.prototype.forEach.call(g.querySelectorAll('button'), function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+          applyFilter();
+        };
+      });
+    });
     Array.prototype.forEach.call(box.querySelectorAll('.ww-pick .it'), function (it) {
       it.onclick = function () {
         if (it.getAttribute('aria-disabled')) return toast('该角色已在编队中');
@@ -540,7 +611,27 @@ function removeMember(slot) {
 
 // ---------------------------------------------------------------- build editor
 function field(label, inner, attrs) { return '<label class="ww-field"' + (attrs || '') + '><span>' + label + '</span>' + inner + '</label>'; }
-function numInput(path, v, min, max, step) { return '<input type="number" data-path="' + path + '" value="' + esc(v) + '" min="' + min + '" max="' + max + '" step="' + (step || 1) + '">'; }
+function numInput(path, v, min, max, step) {
+  var id = 'nh-' + String(path).replace(/[^a-zA-Z0-9]+/g, '-');
+  return '<span class="numwrap"><input type="number" data-path="' + path + '" value="' + esc(v) + '" min="' + min + '" max="' + max + '" step="' + (step || 1) + '" aria-describedby="' + id + '">' +
+    '<span class="numhint" id="' + id + '" hidden>范围 ' + min + '–' + max + '，此值未生效</span></span>';
+}
+function numBad(el) {
+  if (!el || el.type !== 'number') return false;
+  if (el.value === '') return true;
+  var n = +el.value;
+  if (!isFinite(n)) return true;
+  if (el.min !== '' && n < +el.min) return true;
+  if (el.max !== '' && n > +el.max) return true;
+  return false;
+}
+function paintNum(el) {
+  var bad = numBad(el);
+  var hint = el.parentNode && el.parentNode.querySelector ? el.parentNode.querySelector('.numhint') : null;
+  if (bad) { el.setAttribute('aria-invalid', 'true'); if (hint) hint.hidden = false; }
+  else { el.removeAttribute('aria-invalid'); if (hint) hint.hidden = true; }
+  return bad;
+}
 function sel(path, opts, v) { return '<select data-path="' + path + '">' + opts.map(function (o) { return '<option value="' + esc(o[0]) + '"' + (String(o[0]) === String(v) ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select>'; }
 function renderBuild() {
   var m = S.config.team[S.sel];
@@ -592,7 +683,7 @@ function renderBuild() {
       var opts = [['', '—']].concat(S.tiers.map(function (x) { return [x.key, x.zh]; }));
       if (s && !t) opts.push([key, key]);
       var custom = s && ti < 0 && s.value != null ? '<span class="ww-tag low" title="数值不在档位表中，按原值计算">' + esc(s.value) + '</span>' : '';
-      return '<div class="ww-sub-row"><div class="nm">' + sel(EP + 'subs.' + k + '.stat', opts, key) + '</div><div class="ww-tiers">' +
+      return '<div class="ww-sub-row"><div class="nm"><label class="ww-field" style="margin:0"><span class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">副词条 ' + (k + 1) + '</span>' + sel(EP + 'subs.' + k + '.stat', opts, key).replace('<select ', '<select aria-label="副词条 ' + (k + 1) + '" ') + '</label></div><div class="ww-tiers">' +
         (t ? t.values.map(function (v, i) { return '<button data-sub="' + k + '" data-tier="' + i + '" class="' + (i === ti ? 'on' : '') + '"' + (t.probabilities ? ' title="出现概率 ' + t.probabilities[i] + '%"' : '') + '>' + tierVal(t, i) + '</button>'; }).join('') : '') + custom + '</div></div>';
     }).join('') + '</div><div style="font-size:11px;color:var(--dim);margin-top:4px">档位来自 substat_tiers.json（官方公示 + 社区核对，早于 3.7.8）；概率不参与伤害计算。</div>';
   }
@@ -629,7 +720,9 @@ function setPath(path, raw, el) {
   var last = parts[parts.length - 1];
   var num = el && (el.type === 'number' || /(\.id|level|rank|chain|cost|set|echoId|duration|resTier|\.start)$/.test(path));
   var v = raw === '' ? null : num && !isNaN(+raw) ? +raw : raw;
-  if (el && el.type === 'number') { var mn = +el.min, mx = +el.max; if (v == null || isNaN(v)) v = mn; if (!isNaN(mn) && v < mn) v = mn; if (!isNaN(mx) && el.max !== '' && v > mx) v = mx; }
+  if (el && el.type === 'number') {
+    if (paintNum(el)) return;
+  }
   // special cases
   if (/\.module$/.test(path)) { if (v === 'off') o.module = false; else delete o.module; return; }
   if (/\.echoes\.\d+\.cost$/.test(path)) { o.cost = v; if (!(MAINS[v] || []).some(function (x) { return x[0] === o.main; })) o.main = MAINS[v][0][0]; if (o.echoId) { var ex = S.data.echoes.filter(function (x) { return x.id === o.echoId; })[0]; if (ex && ex.cost !== v) delete o.echoId; } return; }
@@ -639,14 +732,23 @@ function setPath(path, raw, el) {
 }
 function bindInputs(root) {
   Array.prototype.forEach.call(root.querySelectorAll('[data-path]'), function (el) {
-    el.onchange = function () { setPath(el.getAttribute('data-path'), el.value, el); changed(/\.module$|\.id$/.test(el.getAttribute('data-path'))); };
+    if (el.type === 'number') el.oninput = function () { paintNum(el); renderStatus(); };
+    el.onchange = function () {
+      if (el.type === 'number' && paintNum(el)) { renderStatus(); return; }
+      setPath(el.getAttribute('data-path'), el.value, el);
+      changed(/\.module$|\.id$/.test(el.getAttribute('data-path')));
+    };
   });
 }
 function changed(structural) {
   save();
+  S.dirty = true;
+  markStale();
   if (structural) renderTeam();
   renderInputs(true);
-  schedule(structural ? 50 : 300);
+  if (invalidCount()) { renderStatus(); return; }
+  if (S.auto) schedule(structural ? 50 : 300);
+  else renderStatus();
 }
 
 // ---------------------------------------------------------------- enemy + settings
@@ -657,11 +759,13 @@ function renderEnemy() {
   $('ww-enemy').innerHTML = '<div class="ww-grid2">' + field('等级', numInput('enemy.level', en.level || 90, 1, 120)) +
     field('防御', '<input type="text" disabled value="' + fmt(792 + 8 * (en.level || 90)) + '（792 + 8·Lv）">') + '</div>' +
     '<div class="ww-sub">抗性</div><div class="ww-res"><div class="ww-seg" id="ww-restier">' + [[0.1, '10%'], [0.4, '40%'], [1, '免疫']].map(function (x) { return '<button data-v="' + x[0] + '" class="' + (Math.abs(tier - x[0]) < 1e-9 ? 'on' : '') + '">' + x[1] + '</button>'; }).join('') + '</div>' +
-    field('减抗%', '<input type="number" id="ww-shred" min="0" max="200" step="1" value="' + Math.round(shred * 1000) / 10 + '">') +
+    field('减抗%', '<span class="numwrap"><input type="number" id="ww-shred" min="0" max="200" step="1" value="' + Math.round(shred * 1000) / 10 + '" aria-describedby="nh-shred"><span class="numhint" id="nh-shred" hidden>范围 0–200，此值未生效</span></span>') +
     '<div class="ww-field"><span>有效抗性</span><div id="ww-effres" style="padding:5px 2px">' + pctTxt(tier - shred) + (tier - shred >= 0.8 ? ' <span class="ww-mech" title="≥80% 段 1/(1+5r)：参考分歧，待验证">待验证</span>' : '') + '</div></div></div>';
   bindInputs($('ww-enemy'));
   Array.prototype.forEach.call($('ww-enemy').querySelectorAll('#ww-restier button'), function (b) { b.onclick = function () { S.config.enemy.resTier = +b.getAttribute('data-v'); changed(false); }; });
-  $('ww-shred').onchange = function () { var v = Math.max(0, +this.value || 0); S.config.enemy.resShred = Math.round(v * 10) / 1000; changed(false); };
+  var shredEl = $('ww-shred');
+  shredEl.oninput = function () { paintNum(shredEl); renderStatus(); };
+  shredEl.onchange = function () { if (paintNum(shredEl)) { renderStatus(); return; } var v = +shredEl.value || 0; S.config.enemy.resShred = Math.round(v * 10) / 1000; changed(false); };
 }
 function seg(id, opts, cur, cls) { return '<div class="ww-seg' + (cls ? ' ' + cls : '') + '" id="' + id + '">' + opts.map(function (o) { return '<button data-v="' + esc(o[0]) + '" class="' + (String(o[0]) === String(cur) ? 'on' : '') + '">' + esc(o[1]) + '</button>'; }).join('') + '</div>'; }
 function renderSettings() {
@@ -865,7 +969,8 @@ function renderTimeline() {
       (l.rejected || []).map(function (r) { return '<div class="ww-act H no-stamina" style="left:' + r.leftPct + '%;width:0.6%" title="' + esc(r.token + ' 被拒 @' + r.t.toFixed(2) + 's：' + r.reason) + '"></div>'; }).join('') +
       l.actions.map(function (a, ai) {
         var cls = 'ww-act ' + a.cls + (a.offfield ? ' offfield' : '') + (a.est && a.dur !== 'config' ? ' est' : '');
-        return '<div class="' + cls + '" data-act="' + l.member + ':' + ai + '" data-act-index="' + fidx[li + ':' + ai] + '" data-lane="' + l.member + '" tabindex="0"' + (a.dur ? ' data-dur="' + a.dur + '"' : '') + (a.low ? ' data-confidence="low"' : '') + (a.truncated ? ' data-truncated="1" data-credit="' + a.credit + '"' : '') + (a.tailFreeze ? ' data-tail-freeze="1"' : '') + ' style="left:' + a.leftPct + '%;width:' + a.widthPct + '%' + (a.coord ? ';top:20px;height:6px;font-size:0' : '') + '" title="' + esc(actTitle(a)) + '">' + gskill(l.id != null ? l.id : (V.ids || [])[li], a.skillId) + esc(a.cls === 'O' || a.coord ? '' : a.label) + '</div>' +
+        var name = (a.cls === 'O' || a.coord) ? '' : (a.label || '');
+        return '<div class="' + cls + '" data-act="' + l.member + ':' + ai + '" data-act-index="' + fidx[li + ':' + ai] + '" data-lane="' + l.member + '" tabindex="0"' + (a.dur ? ' data-dur="' + a.dur + '"' : '') + (a.low ? ' data-confidence="low"' : '') + (a.truncated ? ' data-truncated="1" data-credit="' + a.credit + '"' : '') + (a.tailFreeze ? ' data-tail-freeze="1"' : '') + ' style="left:' + a.leftPct + '%;width:' + a.widthPct + '%' + (a.coord ? ';top:20px;height:6px;font-size:0' : '') + '" title="' + esc(actTitle(a)) + '" aria-label="' + esc(name || a.label || a.cls) + '">' + gskill(l.id != null ? l.id : (V.ids || [])[li], a.skillId) + (name ? '<span class="act-name">' + esc(name) + '</span>' : '') + '</div>' +
           (a.freeze ? '<i class="ww-freeze" style="left:' + a.freeze.leftPct + '%' + (a.freeze.widthPct ? ';width:' + a.freeze.widthPct + '%' : '') + '" title="' + esc('时停 ' + a.freeze.sec.toFixed(2) + ' 秒' + (a.freeze.excluded ? '（不计战斗时间）' : a.freeze.basis === 'not-liberation' ? '（非耗能解放，按完整动画计时）' : '（按完整动画计时）')) + '"></i>' : '');
       }).join('') +
       T.swaps.map(function (s) { return '<div class="ww-swap" style="left:' + s.leftPct + '%"></div>'; }).join('') +
@@ -883,14 +988,15 @@ function renderTimeline() {
   var g0 = V.gauges && V.gauges[0] && V.gauges[0].stamina;
   if (g0 && g0.path && g0.series.length > 1) {
     var sp = g0.path.split(/(?=[ML])/), sfx = sp[0].slice(1).split(' ')[0], slx = sp[sp.length - 1].slice(1).split(' ')[0];
-    html += '<div class="ww-lane res stamina"><div class="who">耐力</div><div class="track" title="' + esc('耐力（队伍共享，0–' + g0.max + '）') + '"><svg viewBox="0 0 100 10" preserveAspectRatio="none"><path class="area" d="' + g0.path + ' L' + slx + ' 10 L' + sfx + ' 10 Z"></path><path d="' + g0.path + '"></path></svg></div></div>';
+    html += '<div class="ww-lane res stamina"><div class="who">耐力</div><div class="track" title="' + esc('耐力（队伍共享，0–' + g0.max + '）') + '"><div class="res-axis" aria-hidden="true"><span>' + esc(String(g0.max)) + '</span><span>0</span></div><svg viewBox="0 0 100 10" preserveAspectRatio="none" role="img" aria-label="' + esc('耐力曲线，0 到 ' + g0.max) + '"><path class="area" d="' + g0.path + ' L' + slx + ' 10 L' + sfx + ' 10 Z"></path><path d="' + g0.path + '"></path></svg></div></div>';
   }
   (V.resources || []).forEach(function (r) {
     if (!r.path) return;
     var pts = r.path.split(/(?=[ML])/), first = pts[0], last = pts[pts.length - 1];
     var fx = first.slice(1).split(' ')[0], lx = last.slice(1).split(' ')[0];
     html += '<div class="ww-lane res" data-el="' + r.el + '"' + (r.confidence === 'low' ? ' data-confidence="low"' : '') + '><div class="who">' + esc(r.name.slice(0, 2) + '·' + r.label) + '</div><div class="track" title="' + esc(r.label + '（0–' + r.max + '）') + '">' +
-      '<svg viewBox="0 0 100 10" preserveAspectRatio="none"><path class="area" d="' + r.path + ' L' + lx + ' 10 L' + fx + ' 10 Z"></path><path d="' + r.path + '"></path></svg></div></div>';
+      '<div class="res-axis" aria-hidden="true"><span>' + esc(String(r.max)) + '</span><span>0</span></div>' +
+      '<svg viewBox="0 0 100 10" preserveAspectRatio="none" role="img" aria-label="' + esc(r.label + '曲线，0 到 ' + r.max) + '"><path class="area" d="' + r.path + ' L' + lx + ' 10 L' + fx + ' 10 Z"></path><path d="' + r.path + '"></path></svg></div></div>';
   });
   html += '</div><div class="ww-tl-legend"><span>◆ 变奏入场</span><span>▶ 延奏离场</span><span>发光块 = 共鸣解放</span><span>金色块 = 声骸技能</span><span>~ 社区帧数时长</span><span>≈ 默认时长</span><span>虚线块 = 后台协同</span><span>底色 = 在场区间</span>' + ((T.status || []).length ? '<span>竖线 = 异常效应结算 · 白线 = 引爆</span>' : '') + '</div>';
   $('ww-timeline').innerHTML = html;
@@ -939,10 +1045,57 @@ function renderSearch() {
     el.onclick = function () { S.config.rotation = Object.assign({}, S.config.rotation, { mode: 'manual', sequence: el.getAttribute('data-seq') }); changed(false); toast('已套用候选序列'); };
   });
 }
+function cmpState() { return window.__gcmp && window.__gcmp.state; }
+function deltaHtml(cur, prev) {
+  if (prev == null || cur == null || !isFinite(cur) || !isFinite(prev)) return '';
+  var d = cur - prev;
+  if (Math.abs(d) < 0.5) return '<span class="ww-delta">±0</span>';
+  var p = prev ? d / prev * 100 : 0;
+  var sign = d > 0 ? '+' : '−';
+  return '<span class="ww-delta ' + (d > 0 ? 'up' : 'down') + '">' + sign + fmt(Math.abs(d)) + (prev ? ' · ' + sign + Math.abs(p).toFixed(1) + '%' : '') + '</span>';
+}
+function cumChart(V) {
+  var acts = flatActs(V), pts = [{ t: 0, v: 0 }], sum = 0, i, a, dmg;
+  for (i = 0; i < acts.length; i++) {
+    a = V.timeline.lanes[acts[i].li].actions[acts[i].ai];
+    dmg = a && a.damage || 0;
+    if (!(dmg > 0)) continue;
+    sum += dmg;
+    pts.push({ t: a.t || 0, v: sum });
+  }
+  if (pts.length < 2) return '';
+  var gst = cmpState(), aCurve = gst && gst.on && gst.A && gst.A.curve, aTotal = gst && gst.on && gst.A && gst.A.summary ? +gst.A.summary.total : null;
+  var T = V.timeline.duration || pts[pts.length - 1].t || 1, ymax = pts[pts.length - 1].v || 1;
+  if (aCurve) aCurve.forEach(function (p) { if (p.av > T) T = p.av; if (p.v > ymax) ymax = p.v; });
+  var W = 640, H = 160, L = 46, R = 8, TP = 10, B = 22, pw = W - L - R, ph = H - TP - B;
+  var step = Math.pow(10, Math.floor(Math.log(ymax / 4) / Math.LN10));
+  if (ymax / step > 6) step *= 2; if (ymax / step > 6) step *= 2.5;
+  if (!(step > 0)) step = ymax;
+  ymax = Math.ceil(ymax / step) * step || 1;
+  function X(t) { return L + pw * Math.max(0, Math.min(T, t)) / (T || 1); }
+  function Y(v) { return TP + ph * (1 - v / ymax); }
+  var d = '';
+  pts.forEach(function (p, n) { d += (n ? 'L' : 'M') + X(p.t).toFixed(1) + ',' + Y(p.v).toFixed(1); });
+  var ad = '';
+  if (aCurve && aCurve.length) aCurve.forEach(function (p, n) { ad += (n ? 'L' : 'M') + X(p.av).toFixed(1) + ',' + Y(p.v).toFixed(1); });
+  var ticks = '', v;
+  for (v = 0; v <= ymax + 1e-6; v += step) ticks += '<line class="' + (v ? 'grid' : 'ax') + '" x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '"></line><text x="' + (L - 4) + '" y="' + (Y(v) + 3).toFixed(1) + '" text-anchor="end">' + (v ? fmt(v) : '0') + '</text>';
+  var cap = '累计伤害 · 横轴为游戏时间（秒）';
+  if (aTotal != null && V.summary && V.summary.total != null) cap += ' · 相对 A ' + (V.summary.total - aTotal >= 0 ? '+' : '−') + fmt(Math.abs(V.summary.total - aTotal));
+  return '<div class="ww-cum"><div class="cap">' + esc(cap) + (ad ? ' · <span style="color:#f1d9a0">虚线 = A</span>' : '') + '</div>' +
+    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(cap) + '">' + ticks +
+    '<path d="' + d + '" fill="none" stroke="#7fd6dc" stroke-width="1.6" stroke-linejoin="round"></path>' +
+    (ad ? '<path d="' + ad + '" fill="none" stroke="#f1d9a0" stroke-width="1.6" stroke-dasharray="6 4" stroke-linejoin="round"></path>' : '') +
+    '<text x="' + (L) + '" y="' + (H - 6) + '">0s</text><text x="' + (W - R) + '" y="' + (H - 6) + '" text-anchor="end">' + esc(String(Math.round(T))) + 's</text></svg></div>';
+}
 function renderShare() {
   var V = S.view; if (!V) { $('ww-share').innerHTML = '<div class="ww-empty">—</div>'; return; }
-  $('ww-share').innerHTML = '<div class="ww-bars">' + V.share.byMember.map(function (m) {
-    return '<div class="row" data-el="' + m.el + '"><div class="nm"><i class="ww-el"></i>' + esc(m.name) + '</div><div class="ww-bar"><i style="width:' + m.pct + '%"></i></div><div class="num">' + fmt(m.damage) + ' · ' + m.pct + '%</div></div>';
+  var gst = cmpState(), aBy = {};
+  if (gst && gst.on && gst.A) (gst.A.members || []).forEach(function (m) { if (m.id != null) aBy[m.id] = m; });
+  $('ww-share').innerHTML = cumChart(V) + '<div class="ww-bars">' + V.share.byMember.map(function (m) {
+    var id = (V.ids || [])[m.member];
+    var prev = aBy[id];
+    return '<div class="row" data-el="' + m.el + '"><div class="nm"><i class="ww-el"></i>' + esc(m.name) + '</div><div class="ww-bar"><i style="width:' + m.pct + '%"></i></div><div class="num">' + fmt(m.damage) + ' · ' + m.pct + '%' + (prev ? deltaHtml(m.damage, prev.damage) : '') + '</div></div>';
   }).join('') + '</div><div class="ww-sub">按伤害类型</div><div class="ww-stack">' + V.share.byType.map(function (t) { return '<i style="width:' + t.pct + '%;background:' + t.color + '" title="' + esc(t.zh + ' ' + t.pct + '%') + '"></i>'; }).join('') + '</div>' +
     '<div class="ww-legend">' + V.share.byType.map(function (t) { return t.status ? '<span class="ww-tag status" style="--el:' + t.color + '" title="异常效应伤害（不暴击，乘区为社区说法）"><i style="--c:' + t.color + '"></i>' + esc(t.zh) + ' ' + t.pct + '%</span>' : '<span><i style="--c:' + t.color + '"></i>' + esc(t.zh) + ' ' + t.pct + '%</span>'; }).join('') + '</div>';
 }
@@ -1056,6 +1209,7 @@ function simPresets() {
       replayTrimmed: p.replayTrimmed || 0 };   // v3.4 截尾重放: tail steps dropped from the previous release's sequence
   });
 }
+document.addEventListener('sim:compare', function () { if (S.view) renderShare(); });
 window.__WW_UI__ = { S: S, run: run, renderAll: renderAll, exportConfig: exportConfig, presets: CFG.presets };
 if (!E) { fail('引擎初始化失败：未找到 WWEngine（assets/ww-engine.js）'); return; }
 if (typeof fetch !== 'function') { fail('浏览器不支持 fetch，无法加载数据'); return; }

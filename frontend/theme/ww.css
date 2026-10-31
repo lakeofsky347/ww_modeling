@@ -2,7 +2,7 @@
 html[data-theme="ww"]{
   --bg:#0a0b0d; --panel:rgba(18,19,22,.78); --panel2:rgba(26,27,31,.86); --panel3:#25262b;
   --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.16);
-  --text:#ecebe7; --muted:#a6a59f; --dim:#77766f;
+  --text:#ecebe7; --muted:#d0cfc9; --dim:#c2c1bb;
   --gold:#d9b46a; --gold2:#f1d9a0; --cyan:#7fd6dc;
   --ok:#8fd9a8; --warn:#e8b45a; --bad:#ef6f6f;
   --glacio:#41aefb; --fusion:#f0744e; --electro:#b46bff; --aero:#55e6b5; --spectro:#f3df6a; --havoc:#e649a6; --physical:#c9c9c9;
@@ -136,7 +136,9 @@ html[data-theme="ww"] [data-confidence="low"]:not(.ww-tag)::after{border-radius:
 .ww-lane .track{position:relative;height:30px}
 .ww-act{position:absolute;top:6px;height:18px;min-width:4px;font-size:10px;line-height:18px;padding:0 4px;overflow:hidden;white-space:nowrap;
   background:color-mix(in srgb,var(--el,var(--gold)) 35%,#111);border-left:2px solid var(--el,var(--gold));color:#fff;cursor:pointer}
-.ww-act:hover{filter:brightness(1.3);z-index:2}
+.ww-act .act-name{pointer-events:none}
+.ww-act:hover,.ww-act:focus-visible{filter:brightness(1.15);z-index:4;overflow:visible;outline:none}
+.ww-act:hover .act-name,.ww-act:focus-visible .act-name{position:absolute;left:0;top:calc(100% + 2px);z-index:5;padding:2px 6px;background:#16171a;border:1px solid var(--gold);color:var(--text);white-space:nowrap;line-height:1.4;box-shadow:0 6px 16px rgba(0,0,0,.45)}
 .ww-act.R{background:linear-gradient(90deg,color-mix(in srgb,var(--el) 70%,#000),color-mix(in srgb,var(--el) 30%,#000));box-shadow:0 0 10px var(--el)}
 .ww-act.Q{background:#2a2414;border-left-color:var(--gold);color:var(--gold2)}
 .ww-act.I::before,.ww-act.O::before{content:"";position:absolute;top:-6px;left:-5px;width:8px;height:8px;background:var(--cyan)}
@@ -165,9 +167,15 @@ html[data-theme="ww"] [data-confidence="low"]:not(.ww-tag)::after{border-radius:
 .ww-modal>.body{padding:14px 16px;overflow:auto}
 .ww-modal>footer{display:flex;justify-content:flex-end;gap:8px;padding:10px 16px;border-top:1px solid var(--line)}
 .ww-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.ww-pick .it{display:flex;align-items:center;gap:8px;padding:8px;border:1px solid var(--line);cursor:pointer;background:rgba(255,255,255,.02)}
-.ww-pick .it:hover{border-color:var(--el,var(--gold))}
+.ww-pick .it{display:flex;align-items:center;gap:8px;padding:8px;border:1px solid var(--line);cursor:pointer;background:rgba(255,255,255,.02);font:inherit;color:inherit;text-align:left;width:100%}
+.ww-pick .it:hover,.ww-pick .it:focus-visible{border-color:var(--el,var(--gold));outline:none}
 .ww-pick .it.cur{border-color:var(--gold)}
+.ww-filters{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.ww-filters button{appearance:none;font:inherit;font-size:12px;color:var(--muted);background:transparent;border:1px solid var(--line2);padding:3px 8px;cursor:pointer}
+.ww-filters button.on,.ww-filters button[aria-pressed="true"]{color:#1a140c;background:var(--gold);border-color:var(--gold)}
+.ww-filters button:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+button.ww-slot{appearance:none;display:block;font:inherit;color:inherit;text-align:left;width:100%}
+.ww-slot .slot-swap{position:absolute;left:8px;bottom:8px;font-size:10px;letter-spacing:1px;color:var(--gold2);border:1px solid rgba(217,180,106,.45);padding:0 5px;line-height:16px}
 .ww-toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);padding:8px 18px;background:#16171a;border:1px solid var(--gold);z-index:60;letter-spacing:1px}
 
 html[data-theme="ww"] #loader .ld-mark{display:flex;gap:4px;align-items:center;height:40px}
@@ -275,6 +283,7 @@ html[data-theme="ww"] #loader .ld-text::before{content:"频率同调中 · "}
 .ww-lane.res .track{height:18px}
 .ww-lane.res .who{font-size:10.5px;color:var(--dim)}
 .ww-lane.res svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ww-lane.res .res-axis{position:absolute;left:3px;top:1px;bottom:1px;display:flex;flex-direction:column;justify-content:space-between;font-size:9px;line-height:1;color:var(--muted);pointer-events:none;z-index:1;text-shadow:0 0 3px #0a0b0d}
 .ww-lane.res svg path{fill:none;stroke:var(--el,var(--gold));stroke-width:1.5;vector-effect:non-scaling-stroke}
 .ww-buff.auto-off .nm::after{content:"条件未识别·默认关闭";margin-left:6px;font-size:10px;color:var(--warn)}
 .ww-mult .z[data-mech="corroborated"]{border-color:rgba(127,214,220,.35)}
@@ -424,3 +433,31 @@ html[data-reduced-motion] .gload-shim{animation:none;background:color-mix(in srg
 .gload-retry:focus-visible{outline:2px solid var(--gi-acc);outline-offset:2px}
 .gswcd{position:absolute;top:6px;height:18px;min-width:3px;box-sizing:border-box;border:1px dashed rgba(255,190,90,.8);background:repeating-linear-gradient(135deg,rgba(255,190,90,.16) 0 4px,transparent 4px 8px);cursor:help}
 .gswcd:hover{background-color:rgba(255,190,90,.12)}
+
+/* UI pass: contrast tokens for shared components, compact bar, stale result, cumulative chart.
+   interact.css / resultbar.js stay the HSR copies; these rules only retint WW. */
+html[data-theme="ww"]{--gi-dim:#c2c1bb;--gi-mut:#d0cfc9}
+.ww-panel,#ww-summary{scroll-margin-top:88px}
+#ww-summary.stale{outline:1px dashed rgba(240,179,90,.75);outline-offset:4px}
+#ww-summary.stale::before{content:"已过期 · 参数已修改，结果待更新";display:block;margin:0 0 8px;padding:6px 10px;background:rgba(240,179,90,.14);color:#f6d7a2;font-size:12px;letter-spacing:1px}
+.ww-top .status{margin-left:auto;font-size:12px;color:var(--muted);white-space:nowrap}
+.ww-top .status.err{color:#ffb4b4}
+.ww-top .status.run{color:var(--gold2)}
+.ww-delta{margin-left:6px;font-size:11px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.ww-delta.up{color:var(--ok)}.ww-delta.down{color:#ffb4b4}
+.ww-cum{margin:8px 0 12px}
+.ww-cum .cap{font-size:12px;color:var(--muted);margin-bottom:4px}
+.ww-cum svg{width:100%;height:auto;display:block}
+.ww-cum .grid{stroke:rgba(255,255,255,.12);stroke-width:1}
+.ww-cum .ax{stroke:rgba(255,255,255,.28);stroke-width:1}
+.ww-cum text{fill:#d0cfc9;font-size:10px}
+html[data-theme="ww"] .top.more-open .top-more{background:rgba(16,17,19,.97);border-color:rgba(217,180,106,.4)}
+@media (max-width:720px){
+  .ww-brand .sub{display:none}
+  .ww-brand h1{font-size:16px}
+  .ww-panel,#ww-summary{scroll-margin-top:108px}
+  html.gresultbar-on .ww-toast{bottom:78px}
+  html[data-theme="ww"] .gresultbar{background:rgba(10,11,13,.94);border-top-color:rgba(217,180,106,.4);color:#ecebe7}
+  html[data-theme="ww"] .gresultbar .k,html[data-theme="ww"] .gresultbar .st{color:#d0cfc9}
+  html[data-theme="ww"] .gresultbar .jump{background:linear-gradient(120deg,#d9b46a,#8a6a32);color:#1a140c}
+}

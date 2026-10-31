@@ -9,12 +9,16 @@
 </head>
 <body>
 <!-- 页面骨架：容器 id 固定，引擎往里渲染；见 COMPONENTS.md -->
-<header class="ww-top" id="ww-top">
-  <div class="ww-brand">
+<header class="ww-top top" id="ww-top">
+  <div class="ww-brand logo">
     <svg class="mark" viewBox="0 0 32 32" fill="none" stroke="#d9b46a" stroke-width="1.5"><circle cx="16" cy="16" r="14" stroke-opacity=".5"/><path d="M3 16q3-8 6 0t6 0 6 0 6 0 3 0" stroke="#f1d9a0"/><circle cx="16" cy="16" r="7" stroke="#7fd6dc" stroke-opacity=".6"/></svg>
     <div><h1>鸣潮 · 伤害模拟器</h1><div class="sub">Wuthering Waves · Resonance Lab <span id="ww-ver"></span></div></div>
   </div>
-  <div id="ww-top-actions" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+  <div class="top-more" id="top-more">
+    <div id="ww-top-actions" class="tb" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+  </div>
+  <div class="top-run" id="ww-top-run"></div>
+  <div class="status" id="ww-status"></div>
 </header>
 
 <main class="ww-layout">
