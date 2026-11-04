@@ -484,6 +484,7 @@
         }
       }
       for (const s of e.subs || []) {
+        if (!s || s.stat == null || s.stat === '') continue; // UI keeps a fixed 5-slot list; empty slots are null and do not shift the rest
         const pk = subKey(s.stat);
         if (!pk) { warn.push({ level: 'warn', text: `${where}: 未知副词条 ${s.stat}` }); continue; }
         let v = resolveSubstat(s, opts.substatTiers, warn, where);
@@ -1195,7 +1196,8 @@
     const mem = ctx.members[mi];
     const panel = finalPanel(mem, buffStats);
     if (act.forceCrit) panel.critRate = 1;
-    const k = times || 1;
+    // times 0 is a real zero (window credit of an action that starts on the boundary). `times || 1` treated that as "missing" and counted the hit in full.
+    const k = times == null ? 1 : times;
     let expected = 0, crit = 0, noncrit = 0, heal = 0;
     const parts = [];
     for (const h of scaledHits(act)) {
@@ -1902,6 +1904,7 @@
   }
   function addDamage(ctx, s, mi, act, extraStats, o) {
     o = o || {};
+    const mul = o.times == null ? 1 : o.times; // 0 stays 0; see actionDamage
     const statsAt = (t) => {
       let bs = activeStats(ctx, s, mi, t).concat(extraStats || []);
       // 协同攻击伤害加成/加深（dmg:coord / deep:coord，如 釉瑚 延奏 鉴珍）只作用于协同攻击（sideDamage coord !== false）
@@ -1910,11 +1913,11 @@
     };
     const groups = hitGroups(ctx, s, mi, act, o);
     let d;
-    if (!groups) d = actionDamage(ctx, mi, act, statsAt(s.t), !!ctx._detail, o.times || 1);
+    if (!groups) d = actionDamage(ctx, mi, act, statsAt(s.t), !!ctx._detail, mul);
     else {
       // v3.4.1 MECH.buffTiming 'hit': each hit group is resolved with the buffs active at its first hit (weights = per-hit multiplier share)
       for (const gr of groups) {
-        const dg = actionDamage(ctx, mi, act, statsAt(gr.t), !!ctx._detail, (o.times || 1) * gr.frac);
+        const dg = actionDamage(ctx, mi, act, statsAt(gr.t), !!ctx._detail, mul * gr.frac);
         // detail parts stay per unit of o.times (consumers multiply by it): part total = Σ group frac × group per-hit total
         const sc = (p) => Object.assign({}, p, { r: Object.assign({}, p.r, { total: { expected: p.r.total.expected * gr.frac, crit: p.r.total.crit * gr.frac, noncrit: p.r.total.noncrit * gr.frac }, heal: (p.r.heal || 0) * gr.frac }) });
         if (!d) { d = dg; d.hitGroups = 1; d.parts = d.parts.map(sc); continue; }
@@ -1925,13 +1928,13 @@
     s.damage += d.value; s.heal += d.heal; s.perMember[mi] += d.value;
     if (ctx._detail) for (const p of d.parts) {
       const ty = p.r.type || p.hit.type; if (!ty || p.hit.calc === 'heal') continue;
-      s.byType[ty] = (s.byType[ty] || 0) + (ctx.mode === 'crit' ? p.r.total.crit : ctx.mode === 'noncrit' ? p.r.total.noncrit : p.r.total.expected) * (o.times || 1);
+      s.byType[ty] = (s.byType[ty] || 0) + (ctx.mode === 'crit' ? p.r.total.crit : ctx.mode === 'noncrit' ? p.r.total.noncrit : p.r.total.expected) * mul;
     }
     const mem = ctx.members[mi], ms = s.m[mi];
     const eBefore = ms.energy, cBefore = ms.concerto;
     if (!o.noGain) {
-      ms.energy = Math.min(maxEnergy(mem), ms.energy + act.energy * (o.times || 1) * d.panel.energyRegen);
-      ms.concerto = Math.min(100, ms.concerto + act.concerto * (o.times || 1));
+      ms.energy = Math.min(maxEnergy(mem), ms.energy + act.energy * mul * d.panel.energyRegen);
+      ms.concerto = Math.min(100, ms.concerto + act.concerto * mul);
     }
     const el = (act.hits.find((h) => h.calc !== 'heal' && ELEMENTS.includes(h.element)) || {}).element || null;
     if (d.value > 0 && !o.noEvent) dispatch(ctx, s, { type: 'damage', mi, el, coord: !!o.coord, t: s.t, dur: o.coord ? 0 : act.duration || 0, act });
@@ -1989,7 +1992,11 @@
     if (ctx._detail) {
       s.action.res = resSnapshot(ctx, s);
       if (r) {
-        s.action.parts = r.d.parts.map((p) => ({ label: p.hit.label, element: p.r.element, type: p.r.type, count: p.hit.count || 1, value: pv(p), heal: p.r.heal, zones: p.r.zones, confidence: p.hit.confidence, lowReason: p.hit.lowReason }));
+        // addDamage leaves part totals "per unit of o.times" (hit-group weights only). The consumer has to multiply by the
+        // window credit, same as sideDamage. Without it, a truncated action's breakdown row shows the full hit while total uses the fraction.
+        const credit = ctx.cfg.endCredit === 'full' || !act || !(act.duration > EPS) || !(t0 + act.duration > ctx.duration + EPS)
+          ? 1 : Math.min(1, Math.max(0, (ctx.duration - t0) / act.duration));
+        s.action.parts = r.d.parts.map((p) => ({ label: p.hit.label, element: p.r.element, type: p.r.type, count: p.hit.count || 1, value: pv(p) * credit, heal: (p.r.heal || 0) * credit, zones: p.r.zones, confidence: p.hit.confidence, lowReason: p.hit.lowReason }));
         s.action.panel = { atk: round(r.d.panel.atk, 2), hp: round(r.d.panel.hp, 2), critRate: round(r.d.panel.critRate, 4), critDmg: round(r.d.panel.critDmg, 4), energyRegen: round(r.d.panel.energyRegen, 4) };
       }
     }
@@ -2000,6 +2007,8 @@
     const n = clone(s);
     const mi = a.mi;
     const mem = ctx.members[mi], ms = n.m[mi];
+    // An action that would start at or after the window does not happen. A wait may still clamp onto the boundary.
+    if (a.wait == null && s.t >= ctx.duration - EPS) return null;
     if (a.wait != null) {
       n.t = Math.min(ctx.duration, s.t + a.wait); advanceAnomalies(ctx, n, n.t); pruneBuffs(n, ctx);
       n.action = { t: s.t, endT: n.t, mi, cls: 'W', tok: 'W' + round(a.wait, 2), label: '等待', damage: 0, energyBefore: ms.energy, energyAfter: ms.energy, concertoBefore: ms.concerto, concertoAfter: ms.concerto, est: false,
@@ -2080,8 +2089,18 @@
         swCdWait = t1 - n.t; n.swapCdWait = (n.swapCdWait || 0) + swCdWait; n.swapCdN = (n.swapCdN || 0) + 1;
         n.t = t1; advanceAnomalies(ctx, n, n.t); pruneBuffs(n, ctx);
       }
-      n.lastOut = (n.lastOut || []).slice(); n.lastOut[mi] = n.t;
     }
+    // The cooldown wait used up the rest of the window. Outro/intro would otherwise start at t = D.
+    // A 0-duration outro is not prorated (duration is not > 0), so it used to count in full on that boundary.
+    if (n.t >= ctx.duration - EPS) {
+      record(ctx, n, mi, 'W', null, Math.min(s.t, n.t), n.t, null, a.tok);
+      n.action.label = '等待切人冷却';
+      n.action.est = false;
+      if (swCdWait > EPS) n.action.delayedBy = round(swCdWait, 4);
+      pruneBuffs(n, ctx);
+      return n;
+    }
+    if (swCd > 0) { n.lastOut = (n.lastOut || []).slice(); n.lastOut[mi] = n.t; }
     const full = ms.concerto >= 100 - EPS;
     const so = mem.mod && mem.mod.swapOut ? mem.mod.swapOut(mkApi(ctx, n, mi), j) || {} : {};
     const trig = full || !!so.force;
@@ -2194,6 +2213,7 @@
           if (r.blocked && r.cdWait != null && onBlocked === 'wait') {
             s = applyAction(s, { mi, wait: r.cdWait }, ctx);
             steps.push({ raw: 'W' + round(r.cdWait, 2), ok: true, auto: true, reason: '等待冷却' });
+            if (s.t >= ctx.duration - EPS) { steps.push({ index: pi, raw: p.raw, ok: false, reason: '超出时长' }); continue; }
             r = resolveButton(ctx, s, mi, p.t);
           }
           if (r.blocked) { reason = r.blocked; p.noStamina = !!r.noStamina; }

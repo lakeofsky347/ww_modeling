@@ -140,7 +140,10 @@ test('liberation gating: R blocked with insufficient energy (manual reports reas
   assert.ok(!E.actionsFor(E.initialState(ctx), ctx).some((a) => a.tok === 'R'));
 });
 test('echo cooldown: second Q waits for cooldown (onBlocked=wait) or is skipped', () => {
-  const ctx = E.buildContext(ex('jinhsi_solo.json'), idx);
+  // 角's echo CD is 20s and the example window is also 20s, so the second Q would start exactly at the end.
+  // That cast is outside the window (credit 0). Give it room so the cooldown gap itself is what this checks.
+  const cfg = ex('jinhsi_solo.json'); cfg.duration = 25;
+  const ctx = E.buildContext(cfg, idx);
   const cd = ctx.members[0].kit.Q.cooldown;
   assert.ok(cd > 0);
   const r = E.runSequence(ctx, 'Q Q', { onBlocked: 'wait' });
