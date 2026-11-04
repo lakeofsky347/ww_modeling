@@ -47,7 +47,7 @@ var STORE = CFG.storageKey || 'ww-sim:config:v1';
 // ---------------------------------------------------------------- state
 var S = { data: null, chars: null, weapons: null, sonatas: null, echoes: null, tiers: [], tierByKey: {}, config: null, sel: 0, echoSel: 0,
   view: null, lastSearch: null, error: null, running: false, pending: false, jobId: 0, worker: null, workerReady: false, ms: null, modules: {}, runMeta: {},
-  auto: true, dirty: false };
+  auto: true, dirty: false, editGen: 0 };
 // v3.2 engine events & API (bridge: pipeline/shared/sim_bridge.js, prepended by build_page.py)
 var SIM = window.__mkSimBridge('ww', (window.__WW_PAGE__ || {}).engineVersion || window.__SIM_ENGINE_VERSION__);   // v3.3 engineVersion (build constant)
 // v3.3 chunks (pipeline/shared/sim_chunks.js; COMPONENTS.md「v3.3 数据分块与按需加载」): the index (data/ww.json) carries slim resonator /
@@ -201,6 +201,7 @@ function tierVal(t, i) { return t.unit === 'fraction' ? pctTxt(t.values[i]) : fm
 function normalizeImported(cfg) {
   // values that match a tier become tier selections (round-trips export → import)
   (cfg.team || []).forEach(function (m) { (m.echoes || []).forEach(function (e) { (e.subs || []).forEach(function (s) {
+    if (!s) return;
     var k = subKey(s); if (S.tierByKey[k]) { var i = tierOf(s); s.stat = k; if (i >= 0) { s.tier = i; delete s.value; } }
   }); }); });
   return cfg;
@@ -209,6 +210,7 @@ function exportConfig() {
   // self-contained: tier selections are written as values (format of VALIDATION_CASES.md; runnable with engine/cli.js)
   var c = clone(S.config);
   (c.team || []).forEach(function (m) { (m.echoes || []).forEach(function (e) { (e.subs || []).forEach(function (s) {
+    if (!s) return;
     var t = S.tierByKey[subKey(s)]; if (t && s.tier != null) { var i = tierOf(s); if (i >= 0) { s.value = t.values[i]; delete s.tier; } }
   }); }); });
   delete c.actionFrames; delete c.substatTiers;
@@ -270,7 +272,7 @@ function run() {
   }
   S.pending = false; S.running = true; S.jobId += 1;
   var id = S.jobId, cfg = simConfig();
-  S.runMeta[id] = { rid: SIM.begin(), cfg: clone(cfg), src: rotationSourceOf(cfg) };
+  S.runMeta[id] = { rid: SIM.begin(), cfg: clone(cfg), src: rotationSourceOf(cfg), gen: S.editGen };
   renderStatus();
   if (S.worker && S.workerReady) postSim(id, cfg);
   else if (S.worker && !S.workerReady) S.queued = { id: id, cfg: cfg };   // posted when the worker reports ready (same job id)
@@ -278,10 +280,18 @@ function run() {
 }
 function onResult(m) {
   S.running = false;
-  S.dirty = false;
-  clearStale();
   var meta = S.runMeta[m.id]; delete S.runMeta[m.id];
   if (m.id !== S.jobId) { if (meta) SIM.fail(meta.rid, '已被新的计算取代'); if (S.pending) run(); return; }
+  // The in-flight run cloned the config when it started. An edit during the run (自动计算 off, or before the
+  // debounced follow-up) must not clear the stale flag and paint that older total as current.
+  if (meta && meta.gen !== S.editGen) {
+    SIM.fail(meta.rid, '参数已变更，这次结果未采用');
+    renderStatus();
+    if (S.pending) run();
+    return;
+  }
+  S.dirty = false;
+  clearStale();
   S.ms = m.ms;
   if (m.error) { S.error = m.error; S.view = null; }
   else {
@@ -406,6 +416,7 @@ function applyNow(config, opts) {
     var bad = validConfig(c);
     if (bad) throw new Error(bad);
   } catch (e) { SIM.abort(q.runId, e && e.message || e); return q.promise; }
+  S.editGen += 1;
   S.config = c; S.sel = 0; S.echoSel = 0; S.lastSearch = null; save(); renderInputs();
   run();
   return q.promise;
@@ -423,6 +434,7 @@ function renderTop() {
     '<button type="button" class="ww-btn pri" id="ww-run">计算</button>';
   $('ww-preset').onchange = function () {
     var p = CFG.presets[+this.value]; if (!p) return;
+    S.editGen += 1;
     S.config = clone(p.config); S.rotTag = p.config.rotation && p.config.rotation.mode === 'manual' ? { kind: 'preset', seq: p.config.rotation.sequence } : null;
     S.sel = 0; S.echoSel = 0; S.lastSearch = null; S.dirty = false; clearStale(); save(); renderInputs(); run(); this.value = '';
     toast('已载入预设：' + p.name);
@@ -707,9 +719,11 @@ function setPath(path, raw, el) {
   if (/\.subs\.\d+\.stat$/.test(path)) {
     var ec = S.config; for (var q = 0; q < parts.length - 3; q++) ec = ec[parts[q]];
     var arr = ec.subs || (ec.subs = []), k2 = +parts[parts.length - 2];
-    if (!raw) { if (k2 < arr.length) arr.splice(k2, 1); return; }
+    // Fixed slots: clearing 副词条 3 must not shift 4 and 5 forward, and filling a later slot must not land in an earlier hole.
+    if (!raw) { arr[k2] = null; return; }
     var tt = S.tierByKey[raw], obj = { stat: raw, tier: tt ? Math.min(3, tt.values.length - 1) : 0 };
-    if (k2 >= arr.length) arr.push(obj); else arr[k2] = obj;
+    while (arr.length <= k2) arr.push(null);
+    arr[k2] = obj;
     return;
   }
   for (var i = 0; i < parts.length - 1; i++) {
@@ -741,6 +755,7 @@ function bindInputs(root) {
   });
 }
 function changed(structural) {
+  S.editGen += 1;
   save();
   S.dirty = true;
   markStale();
@@ -1040,7 +1055,12 @@ function renderSearch() {
   if (!searchable) html = '<div class="ww-disabled-note">' + esc(reason) + '</div><div class="ww-disabled" aria-disabled="true">' + inner + '</div>';
   else html = inner;
   $('ww-search').innerHTML = html;
-  var b = $('ww-do-search'); if (b) b.onclick = function () { S.config.rotation.mode = 'search'; changed(false); };
+  var b = $('ww-do-search'); if (b) b.onclick = function () {
+    S.config.rotation.mode = 'search';
+    changed(false);
+    // Explicit run. changed() only queues a recompute when 自动计算 is on; run() clears that timer and starts now.
+    if (!invalidCount()) run();
+  };
   Array.prototype.forEach.call($('ww-search').querySelectorAll('.ww-cand'), function (el) {
     el.onclick = function () { S.config.rotation = Object.assign({}, S.config.rotation, { mode: 'manual', sequence: el.getAttribute('data-seq') }); changed(false); toast('已套用候选序列'); };
   });
@@ -1148,6 +1168,7 @@ function openImport() {
           var showErr = function (e) { err.innerHTML = '<div class="ww-err">' + esc('导入失败：' + (e && e.message || e)) + '</div>'; };
           ensure(o, 'lazy').then(function () {   // v3.3: validation needs the full records
             var bad = validConfig(o); if (bad) return showErr(bad);
+            S.editGen += 1;
             S.config = normalizeImported(o); S.sel = 0; S.echoSel = 0; S.lastSearch = null; save(); close(); renderInputs(); run(); toast('已导入');
           }, showErr);
         } catch (e) { err.innerHTML = '<div class="ww-err">' + esc('导入失败：' + (e && e.message || e)) + '</div>'; }
