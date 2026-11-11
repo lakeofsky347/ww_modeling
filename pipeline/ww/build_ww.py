@@ -551,6 +551,24 @@ class Builder:
                 if lows:
                     e['lowReason'] = '; '.join(lows)
                 effs.append(e)
+            # 安魂 21030076: 「获得{5}声骸技能伤害加成」 uses 获得, not 提升/增加/提高/加深.
+            # Kept narrower than a global 获得 verb so 景燃/尤诺/导电漂泊者 「获得N%」 sentences stay untouched.
+            for m in re.finditer(r'获得\s*\{(\d+)\}\s*声骸技能伤害加成', sent):
+                idx = int(m.group(1))
+                vals = [num(p[idx]) if idx < len(p) else None for p in params_by_rank]
+                pre = sent[:m.start()]
+                e = OrderedDict([
+                    ('stat', 'DamageChangePhantom'), ('verb', '获得'),
+                    ('values', [None if v is None else round(v / 100.0, 6) for v in vals]),
+                    ('isPercentText', all(idx < len(p) and '%' in str(p[idx]) for p in params_by_rank)),
+                    ('conditional', True), ('text', clean(sent).strip()),
+                ])
+                du = re.search(r'持续\{(\d+)\}秒', sent[m.end():]) or re.search(r'持续\{(\d+)\}秒', sent)
+                if du:
+                    e['duration'] = [num(p[int(du.group(1))]) for p in params_by_rank]
+                e['confidence'] = 'low'
+                e['lowReason'] = 'verb 获得 is outside the 提升 lexicon; 安魂（21030076）「重击造成治疗时」echo-skill bonus. Engine maps that clause to a heavy-attack heal, not an always-on stat'
+                effs.append(e)
         return effs
 
     # ------------------------------------------------ weapons
@@ -966,7 +984,7 @@ class Builder:
         meta['weaponTypes'] = {}
         meta['properties'] = self.properties_meta()
         meta['assumptions'] = [
-            'Playable resonator = roleinfo.RoleType==1 and not IsTrial (includes each Rover element variant as its own entry).',
+            'Playable resonator = roleinfo.RoleType==1 and not IsTrial (includes each Rover element variant as its own entry). roleinfo.RoleSubType (added in 3.8; a list, non-empty only on trial id 5067) is not read. Trial ids 5067/5068/5070 stay out of the roster.',
             'Hit attribution: a description multiplier term x%*n is tied to damage.json rows whose RateLv equals round(x*100) (+-1) at every skill level; ties within the same skill first, then anywhere in the role. Matched -> confidence high; else low with lowReason.',
             'damage rows listed in a skill but not referenced by any multiplier are exported under unlinkedDamage (confidence low).',
             'Energy = damage.Energy/100 resonance energy per hit; concerto = damage.ElementPower/100 per hit (ElementPowerType equals the attacker element in 93% of hits - treated as a tag, not a unit). Resonance skill / liberation / intro rows usually carry ElementPower 0: their concerto gain is the skill-level param 回复协奏能量 (exported as skill.concertoGain), presumably granted on cast by a buff - see MECHANICS.md.',

@@ -27,7 +27,7 @@ test('registry: four modules registered by id with resource defs', () => {
 test('no module: manual works, search disabled with reason, view exposes searchable/noModule', () => {
   const c = ex('jinhsi_solo.json');
   // any resonator without a module (ids get modules over time: 相里要 1305 got one from stream B) — pick the first unmodelled 5★ rectifier-free id dynamically
-  // 17:2x: all 64 resonators now have modules → fall back to 相里要 with module:false (same no-module code path)
+  // 3.8: 莉莉 1512 has table data and no module, so she is the dynamic no-module case. If every id has a module again, fall back to 相里要 with module:false.
   const noMod = [...idx.res.values()].find((R) => !E.getChar(R.id) && R.id < 1700) || Object.assign({ forced: true }, idx.res.get(1305));
   if (noMod.forced) c.team[0].module = false;
   c.team[0].id = noMod.id; c.team[0].weapon = { id: [0, 21010015, 21020015, 21030015, 21040015, 21050015][noMod.weaponType] || 21050016, level: 90, rank: 1 };

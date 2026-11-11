@@ -316,6 +316,21 @@
         out.push({ key: 'resShred:' + (el ? el[0] : 'all'), verb: '减抗', value: parseFloat(rs[1]) / 100, conditional: true, trigger: detectTrigger(sent),
           target: 'team', duration: du ? parseFloat(du[1]) : null, maxStacks: stacksOf(sent), text: sent.trim() });   // v3.5 N11b (减抗 branch)
       }
+      // 安魂（21030076）幻梦安魂语: 「重击造成治疗时，队伍中的登场角色获得{5}声骸技能伤害加成，持续{6}秒。」
+      // The main regex only sees 提升/提高/增加/加深, so 获得 is missed. Do not widen 获得 globally:
+      // 景燃 / 尤诺 / 导电漂泊者 also say 获得N% for other stats that their modules already own.
+      const gotEcho = /获得\s*(\d+(?:\.\d+)?)%\s*声骸技能伤害加成/.exec(sent);
+      if (gotEcho) {
+        const pre = sent.slice(0, gotEcho.index);
+        const heavyHeal = /重击造成治疗/.test(pre);
+        const duE = /(?:持续|存在)\s*(\d+(?:\.\d+)?)\s*秒/.exec(sent.slice(gotEcho.index)) || /(?:持续|存在)\s*(\d+(?:\.\d+)?)\s*秒/.exec(sent);
+        // kinds:['H'] is the same heal filter as 「共鸣技能造成治疗」(kinds E): the action must be a heavy and must contain a heal row.
+        const trig = heavyHeal ? { on: 'heal', kinds: ['H'] } : (COND_RE.test(pre) ? detectTrigger(pre) : null);
+        out.push({
+          key: 'dmg:echo', verb: '获得', value: parseFloat(gotEcho[1]) / 100, conditional: true, trigger: trig,
+          target: detectTarget(sent), duration: duE ? parseFloat(duE[1]) : null, maxStacks: 1, text: sent.trim(),
+        });
+      }
     }
     return out.concat(late);
   }
