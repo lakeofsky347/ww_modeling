@@ -262,8 +262,28 @@ test('安魂 21030076: heavy-attack heal grants 24% echo skill damage for 30s', 
   near(echo.stats[0].value, 0.24);
   assert.equal(echo.duration, 30);
   assert.equal(echo.mode, 'auto');
+  assert.equal(echo.target, 'active', '队伍中的登场角色, not the weapon holder');
   assert.deepEqual(echo.trigger, { on: 'heal', kinds: ['H'] });
   assert.equal(echo.confidence, 'low');
+  // A heavy-attack heal while 莉莉 is on field grants the bonus to her, then it moves to the teammate who takes the field.
+  const ctx2 = E.buildContext({
+    duration: 40,
+    team: [
+      { id: 1512, level: 90, chain: 0, weapon: { id: 21030076, level: 90, rank: 1 }, echoes: [] },
+      { id: 1102, level: 90, chain: 0, weapon: { id: 21020015, level: 90, rank: 1 }, echoes: [] },
+    ],
+    rotation: { mode: 'manual', sequence: '', start: 0 },
+  }, WW);
+  const heal = E.makeAct(ctx2.members[0], { key: 'Hh', cls: 'H', skill: 6, labels: [/重击·编织的梦之童话治疗/], levelKey: 'forte', dur: 1 });
+  heal.duration = 1;
+  assert.ok(heal.hits.some((h) => h.calc === 'heal'), 'forte heavy includes a heal row');
+  let st = E.initialState(ctx2);
+  st = E.applyAction(st, { mi: 0, act: heal }, ctx2);
+  assert.ok(st && st.buffs.some((b) => b.followActive && b.target === 0), 'on-field wielder receives it');
+  assert.ok(!st.buffs.some((b) => b.followActive && b.target === 1));
+  st = E.applyAction(st, { mi: 0, swapTo: 1 }, ctx2);
+  assert.ok(st && st.buffs.some((b) => b.followActive && b.target === 1), 'teammate who takes the field receives the remaining window');
+  assert.ok(!st.buffs.some((b) => b.followActive && b.target === 0));
 });
 test('compareGear: ranked rows with deltas', () => {
   const c = ex('jinhsi_solo.json');
