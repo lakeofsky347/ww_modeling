@@ -294,7 +294,7 @@ with sync_playwright() as pw:
     # ---- picker: no-module character → manual only / search disabled
     p.click('#ww-team .ww-slot.sel')
     npick = p.evaluate("() => document.querySelectorAll('.ww-pick .it').length")
-    ok('picker lists 64', npick == 64, npick)  # coverage: every resonator in the picker; modules 64/64 as of 17:2x
+    ok('picker lists 65', npick == 65, npick)  # 3.8.6: 64 modules + 莉莉 1512 (table only). Trials 5067/5068/5070 stay out.
     p.fill('#ww-pick-q', '炽霞')
     p.wait_for_timeout(100)
     p.screenshot(path=os.path.join(OUT, 'ww-picker.png'))

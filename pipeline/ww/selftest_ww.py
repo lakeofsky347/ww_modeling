@@ -9,7 +9,7 @@ from collections import defaultdict
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 API = 'https://api-v2.encore.moe/api/zh-Hans/'
-SPOT = {'character': [1402, 1208, 1209, 1308, 1506, 1304], 'weapon': [21010074, 21020015], 'echo': [6000038, 6000053], 'monster': [310000010]}
+SPOT = {'character': [1402, 1208, 1209, 1308, 1506, 1304, 1512], 'weapon': [21010074, 21020015, 21030076], 'echo': [6000038, 6000053], 'monster': [310000010]}
 
 ap = argparse.ArgumentParser()
 ap.add_argument('--data', default=os.path.join(HERE, '..', 'out', 'ww.json'))
@@ -54,7 +54,18 @@ for k, v in m['counts'].items():
 ec = (m.get('encore') or {}).get('encoreCounts') or {}
 for k, v in ec.items():
     check(f'count {k} == encore list ({v})', m['counts'].get(k) == v, f"repo={m['counts'].get(k)}")
-check('resonators == 64 playable (RoleType 1, non-trial)', m['counts']['resonators'] == 64)
+check('resonators == 65 playable (RoleType 1, non-trial; 3.8 adds 1512 莉莉)', m['counts']['resonators'] == 65)
+ids = {r['id'] for r in D['resonators']}
+check('莉莉 1512 is playable', 1512 in ids and next(r['name'] for r in D['resonators'] if r['id'] == 1512) == '莉莉')
+check('trial ids 5067/5068/5070 are not selectable', not (ids & {5067, 5068, 5070}))
+anhun = next((w for w in D['weapons'] if w['id'] == 21030076), None)
+check('安魂 21030076 is a weapon', bool(anhun) and anhun.get('name') == '安魂' and anhun.get('weaponType') == 3)
+if anhun:
+    d1 = anhun['passive']['descByRank'][0]
+    check('安魂 triggers on heavy-attack healing', '重击造成治疗时' in d1)
+    check('安魂 echo-skill duration param is 30s', anhun['passive']['params'][6][0] == '30' and '持续6秒' not in d1)
+    echo_fx = [e for e in anhun['passive']['effects'] if e.get('stat') == 'DamageChangePhantom']
+    check('安魂 echo-skill bonus parsed from 获得{5}', bool(echo_fx) and echo_fx[0]['values'][0] == 0.24 and echo_fx[0]['duration'][0] == 30)
 check('every resonator has 6 chains', all(len(r['chains']) == 6 for r in D['resonators']))
 check('every resonator has skill types 1,2,3,5,6,11', all({1, 2, 3, 5, 6, 11} <= {s['type'] for s in r['skills']} for r in D['resonators']),
       str([r['name'] for r in D['resonators'] if not {1, 2, 3, 5, 6, 11} <= {s['type'] for s in r['skills']}]))

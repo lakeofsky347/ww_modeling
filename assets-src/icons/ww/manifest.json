@@ -329,6 +329,12 @@
   "name": "露西",
   "fetched": "2026-10-09T23:45:46+08:00"
  },
+ "1512": {
+  "src": "https://api-v2.encore.moe/resource/Data/Game/Aki/UI/UIResources/Common/Image/IconRoleHead256/T_IconRoleHead256_77_UI.webp",
+  "file": "1512.webp",
+  "name": "莉莉",
+  "fetched": "2026-11-11T04:12:44+00:00"
+ },
  "1601": {
   "src": "https://api.encore.moe/resource/Data/Game/Aki/UI/UIResources/Common/Image/IconRoleHead256/T_IconRoleHead256_9_UI.webp",
   "file": "1601.webp",

@@ -238,6 +238,53 @@ test('toView: contract shapes', () => {
   assert.ok(v.buffs.every((b) => b.uptimePct >= 0 && b.uptimePct <= 100));
   assert.ok(v.search.candidates[0].best && v.search.candidates[0].gapPct === 0);
 });
+test('安魂 21030076: heavy-attack heal grants 24% echo skill damage for 30s', () => {
+  // Source: weaponconf 21030076 Desc + DescParams (Arikatsu 49d6562). Rank-1 text is substituted from those params.
+  const W = WW.weapons.find((w) => w.id === 21030076);
+  assert.equal(W.name, '安魂');
+  assert.equal(W.weaponType, 3);
+  assert.match(W.passive.descByRank[0], /重击造成治疗时/);
+  assert.equal(W.passive.params[6][0], '30');
+  assert.equal(W.passive.effects.find((e) => e.stat === 'DamageChangePhantom').duration[0], 30);
+  const ctx = E.buildContext({
+    duration: 25, team: [{ id: 1512, level: 90, chain: 0, weapon: { id: 21030076, level: 90, rank: 1 }, echoes: [] }],
+    rotation: { mode: 'manual', sequence: '' },
+  }, WW);
+  const buffs = ctx.members[0].buffDefs.filter((b) => b.kind === 'weapon');
+  const hp = buffs.find((b) => b.stats[0] && b.stats[0].key === 'hpPct');
+  const atk = buffs.find((b) => b.stats[0] && b.stats[0].key === 'atkPct');
+  const echo = buffs.find((b) => b.stats[0] && b.stats[0].key === 'dmg:echo');
+  assert.equal(hp.mode, 'on');
+  near(hp.stats[0].value, 0.12);
+  near(atk.stats[0].value, 0.16);
+  assert.equal(atk.duration, 30);
+  assert.equal(atk.mode, 'off', 'unison-during-落梦归魂 is not a modelled trigger');
+  near(echo.stats[0].value, 0.24);
+  assert.equal(echo.duration, 30);
+  assert.equal(echo.mode, 'auto');
+  assert.equal(echo.target, 'active', '队伍中的登场角色, not the weapon holder');
+  assert.deepEqual(echo.trigger, { on: 'heal', kinds: ['H'] });
+  assert.equal(echo.confidence, 'low');
+  // A heavy-attack heal while 莉莉 is on field grants the bonus to her, then it moves to the teammate who takes the field.
+  const ctx2 = E.buildContext({
+    duration: 40,
+    team: [
+      { id: 1512, level: 90, chain: 0, weapon: { id: 21030076, level: 90, rank: 1 }, echoes: [] },
+      { id: 1102, level: 90, chain: 0, weapon: { id: 21020015, level: 90, rank: 1 }, echoes: [] },
+    ],
+    rotation: { mode: 'manual', sequence: '', start: 0 },
+  }, WW);
+  const heal = E.makeAct(ctx2.members[0], { key: 'Hh', cls: 'H', skill: 6, labels: [/重击·编织的梦之童话治疗/], levelKey: 'forte', dur: 1 });
+  heal.duration = 1;
+  assert.ok(heal.hits.some((h) => h.calc === 'heal'), 'forte heavy includes a heal row');
+  let st = E.initialState(ctx2);
+  st = E.applyAction(st, { mi: 0, act: heal }, ctx2);
+  assert.ok(st && st.buffs.some((b) => b.followActive && b.target === 0), 'on-field wielder receives it');
+  assert.ok(!st.buffs.some((b) => b.followActive && b.target === 1));
+  st = E.applyAction(st, { mi: 0, swapTo: 1 }, ctx2);
+  assert.ok(st && st.buffs.some((b) => b.followActive && b.target === 1), 'teammate who takes the field receives the remaining window');
+  assert.ok(!st.buffs.some((b) => b.followActive && b.target === 0));
+});
 test('compareGear: ranked rows with deltas', () => {
   const c = ex('jinhsi_solo.json');
   const out = E.compareGear(c, idx, [...E.weaponVariants(idx, 0, [21010015, 21010026]), ...E.echoMainVariants(0, 0, ['Crit', 'Atk%'])]);

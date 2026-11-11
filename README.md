@@ -5,8 +5,8 @@
 纯静态网页，全部计算在浏览器本地完成：自选队伍与配装，引擎按动作帧排轴（支持自动搜索），结算单目标期望伤害，并逐乘区标出数据可信度。
 
 - 发布版本：**v3.5**（计算口径 `ww-calc-3.5`，打包 2026-10-13）。v3.2–v3.5 的行为变化（切人冷却、易伤乘区、双时钟、分块加载、搜索档位、判定修正）见 [`dist/README-ww.md`](dist/README-ww.md)；公式出处在引擎 `MECH` 表
-- 数据版本：**3.7.8**（游戏 3.7.0；上游 [Arikatsu/WutheringWaves_Data](https://github.com/Arikatsu/WutheringWaves_Data) commit `9218d61`）
-- 64 名共鸣者全部有角色模块，均可自动搜索
+- 数据版本：**3.8.6**（游戏 3.8.0；上游 [Arikatsu/WutheringWaves_Data](https://github.com/Arikatsu/WutheringWaves_Data) commit `49d6562`）
+- 65 名可玩共鸣者（3.8 新增莉莉）。64 名既有角色仍有角色模块；莉莉只有表数据，专属资源与重击切换未建模，自动搜索关闭。试用角色不进入可选列表
 
 ## 一、怎么用
 
@@ -45,7 +45,7 @@
 `pipeline/out/ww.json` 已随仓库提供，直接 `npm run build` 即可。若要从游戏数据重新生成：
 
     git clone https://github.com/Arikatsu/WutheringWaves_Data ww-WutheringWaves_Data   # 仓库根目录下，不提交
-    git -C ww-WutheringWaves_Data checkout 9218d612ad815e398e064e577e42aaf878899968
+    git -C ww-WutheringWaves_Data checkout 49d65625340a32cec6851a12baedc03b5a630b25
     python3 pipeline/ww/build_ww.py              # 数值与 encore.moe 核对，页面缓存到 cache/encore/（不提交）
     python3 pipeline/ww/selftest_ww.py
     npm run build

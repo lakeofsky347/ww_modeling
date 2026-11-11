@@ -34,7 +34,7 @@ ROOT = os.path.dirname(PIPE)
 sys.path.insert(0, HERE)
 from runtime_data import runtime  # noqa: E402
 
-EXPECT_VERSION = '3.7.8'
+EXPECT_VERSION = '3.8.6'
 ENGINE_VERSION = 'ww-calc-3.5'
 STORAGE_KEY = 'ww-sim:config:v1'
 # Release manifest stamp (sim-ww-20261013.zip). Content hashes do not depend on it;

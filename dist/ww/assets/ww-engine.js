@@ -320,6 +320,25 @@
         out.push({ key: 'resShred:' + (el ? el[0] : 'all'), verb: '减抗', value: parseFloat(rs[1]) / 100, conditional: true, trigger: detectTrigger(sent),
           target: 'team', duration: du ? parseFloat(du[1]) : null, maxStacks: stacksOf(sent), text: sent.trim() });   // v3.5 N11b (减抗 branch)
       }
+      // 安魂（21030076）幻梦安魂语: 「重击造成治疗时，队伍中的登场角色获得{5}声骸技能伤害加成，持续{6}秒。」
+      // The main regex only sees 提升/提高/增加/加深, so 获得 is missed. Do not widen 获得 globally:
+      // 景燃 / 尤诺 / 导电漂泊者 also say 获得N% for other stats that their modules already own.
+      const gotEcho = /获得\s*(\d+(?:\.\d+)?)%\s*声骸技能伤害加成/.exec(sent);
+      if (gotEcho) {
+        const pre = sent.slice(0, gotEcho.index);
+        const heavyHeal = /重击造成治疗/.test(pre);
+        const duE = /(?:持续|存在)\s*(\d+(?:\.\d+)?)\s*秒/.exec(sent.slice(gotEcho.index)) || /(?:持续|存在)\s*(\d+(?:\.\d+)?)\s*秒/.exec(sent);
+        // kinds:['H'] is the same heal filter as 「共鸣技能造成治疗」(kinds E): the action must be a heavy and must contain a heal row.
+        const trig = heavyHeal ? { on: 'heal', kinds: ['H'] } : (COND_RE.test(pre) ? detectTrigger(pre) : null);
+        // 「队伍中的登场角色」is the on-field resonator, not the weapon holder. detectTarget misses
+        // the 的 in 队伍中的登场角色 and falls through to self. target 'active' is granted to s.active
+        // and follows the on-field member for the remaining duration (see fire / applySwap).
+        const onField = /登场角色/.test(sent);
+        out.push({
+          key: 'dmg:echo', verb: '获得', value: parseFloat(gotEcho[1]) / 100, conditional: true, trigger: trig,
+          target: onField ? 'active' : detectTarget(sent), duration: duE ? parseFloat(duE[1]) : null, maxStacks: 1, text: sent.trim(),
+        });
+      }
     }
     return out.concat(late);
   }
@@ -1793,12 +1812,12 @@
     for (const b of ctx.members[owner].buffDefs) {
       if (b.mode !== 'auto' || b.unmodeled || !trigMatches(b.trigger, on, kind, key)) continue;
       const targets = b.target === 'team' ? ctx.members.map((_, i) => i) : b.target === 'others' ? ctx.members.map((_, i) => i).filter((i) => i !== owner)
-        : b.target === 'incoming' ? (incoming != null ? [incoming] : []) : [owner];
+        : b.target === 'incoming' ? (incoming != null ? [incoming] : []) : b.target === 'active' ? [s.active] : [owner];
       const dur = b.duration || ctx.cfg.defaultBuffDuration || 10;
       for (const ti of targets) {
         const ex = s.buffs.find((x) => x.id === b.id && x.target === ti && x.until > s.t + EPS);
-        if (ex) { ex.stacks = Math.min(b.maxStacks || 1, ex.stacks + 1); ex.until = s.t + dur; }
-        else s.buffs.push({ id: b.id, target: ti, stacks: 1, start: s.t, until: s.t + dur, endsOnSwap: b.endsOnSwap });
+        if (ex) { ex.stacks = Math.min(b.maxStacks || 1, ex.stacks + 1); ex.until = s.t + dur; if (b.target === 'active') ex.followActive = true; }
+        else s.buffs.push({ id: b.id, target: ti, stacks: 1, start: s.t, until: s.t + dur, endsOnSwap: b.endsOnSwap, followActive: b.target === 'active' });
       }
     }
   }
@@ -2128,6 +2147,8 @@
     }
     expireOnSwap(n, mi);
     n.active = j;
+    // 安魂「队伍中的登场角色」: the echo-skill bonus stays with whoever is on field for the rest of its duration.
+    for (const b of n.buffs) if (b.followActive && b.until > n.t + EPS) b.target = j;
     const inc = ctx.members[j];
     const t0 = n.t;
     let I = null, meta = {};
